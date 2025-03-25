@@ -1,6 +1,8 @@
 using Backend.Application.Common.Interfaces.Authentication;
+using Backend.Application.Common.Interfaces.Persistence;
 using Backend.Application.Common.Interfaces.Services;
 using Backend.Infrastructure.Authentication;
+using Backend.Infrastructure.Persistence;
 using Backend.Infrastructure.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,8 +14,11 @@ namespace Backend.Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, ConfigurationManager configuration)
         {
             services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
+
             services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
             services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+
+            services.AddScoped<IUserRepository, UserRepository>();
             return services;
         }
     }

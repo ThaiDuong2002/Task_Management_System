@@ -1,7 +1,9 @@
+using Backend.Domain.Entities;
+
 namespace Backend.Application.Common.Interfaces.Authentication
 {
     public interface IJwtTokenGenerator
     {
-        string GenerateToken(Guid userId, string firstName, string lastName);
+        string GenerateToken(User user);
     }
 }
