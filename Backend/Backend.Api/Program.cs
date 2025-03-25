@@ -1,3 +1,4 @@
+using Backend.Api.Middlewares;
 using Backend.Application;
 using Backend.Infrastructure;
 
@@ -8,6 +9,7 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 
+app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseHttpsRedirection();
 app.MapControllers();
 
