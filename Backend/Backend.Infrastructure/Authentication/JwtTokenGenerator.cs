@@ -2,6 +2,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Backend.Application.Common.Interfaces.Authentication;
+using Backend.Application.Common.Interfaces.Services;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 
@@ -9,9 +11,18 @@ namespace Backend.Infrastructure.Authentication
 {
     public class JwtTokenGenerator : IJwtTokenGenerator
     {
+        private readonly JwtSettings _jwtSettings;
+        private readonly IDateTimeProvider _dateTimeProvider;
+
+        public JwtTokenGenerator(IDateTimeProvider dateTimeProvider, IOptions<JwtSettings> jwtOptions)
+        {
+            _dateTimeProvider = dateTimeProvider;
+            _jwtSettings = jwtOptions.Value;
+        }
+
         public string GenerateToken(Guid userId, string firstName, string lastName)
         {
-            var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your-super-long-secret-key-32-characters")), SecurityAlgorithms.HmacSha256);
+            var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret)), SecurityAlgorithms.HmacSha256);
 
             var claims = new[] {
                 new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
@@ -21,7 +32,9 @@ namespace Backend.Infrastructure.Authentication
             };
 
             var securityToken = new JwtSecurityToken(claims: claims, signingCredentials: signingCredentials,
-            issuer: "Backend", expires: DateTime.Now.AddDays(1));
+            issuer: _jwtSettings.Issuer,
+            audience: _jwtSettings.Audience,
+            expires: _dateTimeProvider.UtcNow.AddMinutes(_jwtSettings.ExpiryMinutes));
 
             return new JwtSecurityTokenHandler().WriteToken(securityToken);
         }
