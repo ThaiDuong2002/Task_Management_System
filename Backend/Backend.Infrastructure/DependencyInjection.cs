@@ -1,3 +1,5 @@
+using Backend.Application.Common.Interfaces.Authentication;
+using Backend.Infrastructure.Authentication;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Backend.Infrastructure
@@ -6,6 +8,7 @@ namespace Backend.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
+            services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
             return services;
         }
     }
