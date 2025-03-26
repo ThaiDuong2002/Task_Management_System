@@ -1,6 +1,6 @@
-namespace Backend.Contracts.Authentication
-{
-    public record LoginRequest(
-      string Email,
-      string Password);
-}
+namespace Backend.Contracts.Authentication;
+
+public record LoginRequest(
+    string Email,
+    string Password
+);

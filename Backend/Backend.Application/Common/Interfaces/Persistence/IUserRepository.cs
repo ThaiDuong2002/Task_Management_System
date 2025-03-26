@@ -1,10 +1,9 @@
 using Backend.Domain.Entities;
 
-namespace Backend.Application.Common.Interfaces.Persistence
+namespace Backend.Application.Common.Interfaces.Persistence;
+
+public interface IUserRepository
 {
-    public interface IUserRepository
-    {
-        User? GetUserByEmail(string email);
-        void Add(User user);
-    }
+    User? GetUserByEmail(string email);
+    void Add(User user);
 }

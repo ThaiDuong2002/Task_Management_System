@@ -1,37 +1,36 @@
 using System.Net;
 using System.Text.Json;
 
-namespace Backend.Api.Middlewares
+namespace Backend.Api.Middlewares;
+
+public class ErrorHandlingMiddleware
 {
-    public class ErrorHandlingMiddleware
+    private readonly RequestDelegate _next;
+
+    public ErrorHandlingMiddleware(RequestDelegate next)
     {
-        private readonly RequestDelegate _next;
+        _next = next;
+    }
 
-        public ErrorHandlingMiddleware(RequestDelegate next)
+    public async Task Invoke(HttpContext context)
+    {
+        try
         {
-            _next = next;
+            await _next(context);
         }
-
-        public async Task Invoke(HttpContext context)
+        catch (Exception ex)
         {
-            try
-            {
-                await _next(context);
-            }
-            catch (Exception ex)
-            {
-                await HandleExceptionAsync(context, ex);
-            }
+            await HandleExceptionAsync(context, ex);
         }
+    }
 
-        private static Task HandleExceptionAsync(HttpContext context, Exception exception)
-        {
-            var code = HttpStatusCode.InternalServerError;
-            var result = JsonSerializer.Serialize(new { error = "An Error occurred while processing the request." });
+    private static Task HandleExceptionAsync(HttpContext context, Exception exception)
+    {
+        var code = HttpStatusCode.InternalServerError;
+        var result = JsonSerializer.Serialize(new { error = "An Error occurred while processing the request." });
 
-            context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)code;
-            return context.Response.WriteAsync(result);
-        }
+        context.Response.ContentType = "application/json";
+        context.Response.StatusCode = (int)code;
+        return context.Response.WriteAsync(result);
     }
 }

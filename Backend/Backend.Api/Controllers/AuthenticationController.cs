@@ -2,57 +2,58 @@ using Backend.Application.Services.Authentication;
 using Backend.Contracts.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Backend.Api.Controllers
+namespace Backend.Api.Controllers;
+
+[ApiController]
+[Route("api/auth")]
+public class AuthenticationController : ControllerBase
 {
-    [ApiController]
-    [Route("api/auth")]
-    public class AuthenticationController : ControllerBase
+    private readonly IAuthenticationService _authenticationService;
+
+    public AuthenticationController(IAuthenticationService authenticationService)
     {
-        private readonly IAuthenticationService _authenticationService;
+        _authenticationService = authenticationService;
+    }
 
-        public AuthenticationController(IAuthenticationService authenticationService)
-        {
-            _authenticationService = authenticationService;
-        }
+    [HttpPost("register")]
+    public IActionResult Register(RegisterRequest request)
+    {
+        var authResult = _authenticationService.Register(
+            request.FirstName,
+            request.LastName,
+            request.Email,
+            request.Password
+        );
 
-        [HttpPost("register")]
-        public IActionResult Register(RegisterRequest request)
-        {
-            var authResult = _authenticationService.Register(
-                request.FirstName,
-                request.LastName,
-                request.Email,
-                request.Password
-            );
+        return authResult.MatchFirst(
+            result => Ok(MapAuthResult(result)),
+            firstError => Problem(statusCode: StatusCodes.Status409Conflict, detail: firstError.Description)
+        );
+    }
 
-            var response = new AuthenticationResponse(
-                authResult.User.Id,
-                authResult.User.FirstName,
-                authResult.User.LastName,
-                authResult.User.Email,
-                authResult.Token
-            );
+    private static AuthenticationResponse MapAuthResult(AuthenticationResult authResult)
+    {
+        var response = new AuthenticationResponse(
+            authResult.User.Id,
+            authResult.User.FirstName,
+            authResult.User.LastName,
+            authResult.User.Email,
+            authResult.Token
+        );
+        return response;
+    }
 
-            return Ok(response);
-        }
+    [HttpPost("login")]
+    public IActionResult Login(LoginRequest request)
+    {
+        var authResult = _authenticationService.Login(
+            request.Email,
+            request.Password
+        );
 
-        [HttpPost("login")]
-        public IActionResult Login(LoginRequest request)
-        {
-            var authResult = _authenticationService.Login(
-                request.Email,
-                request.Password
-            );
-
-            var response = new AuthenticationResponse(
-                authResult.User.Id,
-                authResult.User.FirstName,
-                authResult.User.LastName,
-                authResult.User.Email,
-                authResult.Token
-            );
-
-            return Ok(response);
-        }
+        return authResult.MatchFirst(
+            result => Ok(MapAuthResult(result)),
+            firstError => Problem(statusCode: StatusCodes.Status401Unauthorized, detail: firstError.Description)
+        );
     }
 }
