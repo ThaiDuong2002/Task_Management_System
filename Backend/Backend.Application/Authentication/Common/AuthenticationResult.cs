@@ -1,6 +1,6 @@
 using Backend.Domain.Entities;
 
-namespace Backend.Application.Services.Authentication.Common;
+namespace Backend.Application.Authentication.Common;
 
 public record AuthenticationResult(
     User User,

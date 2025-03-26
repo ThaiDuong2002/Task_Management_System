@@ -1,38 +1,38 @@
+﻿using Backend.Application.Authentication.Common;
 using Backend.Application.Common.Interfaces.Authentication;
 using Backend.Application.Common.Interfaces.Persistence;
-using Backend.Application.Services.Authentication.Common;
 using Backend.Domain.Common.Errors;
 using Backend.Domain.Entities;
 using ErrorOr;
+using MediatR;
 
-namespace Backend.Application.Services.Authentication.Commands;
+namespace Backend.Application.Authentication.Commands.Register;
 
-public class AuthenticationCommandService : IAuthenticationCommandService
+public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<AuthenticationResult>>
 {
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
     private readonly IUserRepository _userRepository;
 
-    public AuthenticationCommandService(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository)
+    public RegisterCommandHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository)
     {
         _jwtTokenGenerator = jwtTokenGenerator;
         _userRepository = userRepository;
     }
 
-    public ErrorOr<AuthenticationResult> Register(string firstName, string lastName, string email,
-        string password)
+    public async Task<ErrorOr<AuthenticationResult>> Handle(RegisterCommand command,
+        CancellationToken cancellationToken)
     {
-        // Check if user already exists
-        if (_userRepository.GetUserByEmail(email) is not null)
+        if (_userRepository.GetUserByEmail(command.Email) is not null)
             return Errors.User.DuplicateEmail;
         ;
 
         // Create user (generate unique id)
         var user = new User
         {
-            FirstName = firstName,
-            LastName = lastName,
-            Email = email,
-            Password = password
+            FirstName = command.FirstName,
+            LastName = command.LastName,
+            Email = command.Email,
+            Password = command.Password
         };
 
         _userRepository.Add(user);
