@@ -4,9 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Api.Controllers;
 
-[ApiController]
 [Route("api/auth")]
-public class AuthenticationController : ControllerBase
+public class AuthenticationController : ApiController
 {
     private readonly IAuthenticationService _authenticationService;
 
@@ -25,9 +24,24 @@ public class AuthenticationController : ControllerBase
             request.Password
         );
 
-        return authResult.MatchFirst(
+        return authResult.Match(
             result => Ok(MapAuthResult(result)),
-            firstError => Problem(statusCode: StatusCodes.Status409Conflict, detail: firstError.Description)
+            errors => Problem(errors)
+        );
+    }
+
+
+    [HttpPost("login")]
+    public IActionResult Login(LoginRequest request)
+    {
+        var authResult = _authenticationService.Login(
+            request.Email,
+            request.Password
+        );
+
+        return authResult.Match(
+            result => Ok(MapAuthResult(result)),
+            errors => Problem(errors)
         );
     }
 
@@ -41,19 +55,5 @@ public class AuthenticationController : ControllerBase
             authResult.Token
         );
         return response;
-    }
-
-    [HttpPost("login")]
-    public IActionResult Login(LoginRequest request)
-    {
-        var authResult = _authenticationService.Login(
-            request.Email,
-            request.Password
-        );
-
-        return authResult.MatchFirst(
-            result => Ok(MapAuthResult(result)),
-            firstError => Problem(statusCode: StatusCodes.Status401Unauthorized, detail: firstError.Description)
-        );
     }
 }
