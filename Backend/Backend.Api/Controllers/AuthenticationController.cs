@@ -1,5 +1,4 @@
 using Backend.Application.Authentication.Commands.Register;
-using Backend.Application.Authentication.Common;
 using Backend.Application.Authentication.Queries.Login;
 using Backend.Contracts.Authentication;
 using MapsterMapper;
@@ -27,7 +26,7 @@ public class AuthenticationController : ApiController
         var authResult = await _mediator.Send(command);
 
         return authResult.Match(
-            result => Ok(_mapper.Map<AuthenticationResult>(result)),
+            result => Ok(_mapper.Map<AuthenticationResponse>(result)),
             errors => Problem(errors)
         );
     }
@@ -40,7 +39,7 @@ public class AuthenticationController : ApiController
         var authResult = await _mediator.Send(query);
 
         return authResult.Match(
-            result => Ok(_mapper.Map<AuthenticationResult>(result)),
+            result => Ok(_mapper.Map<AuthenticationResponse>(result)),
             errors => Problem(errors)
         );
     }

@@ -90,7 +90,6 @@ public class BackendProblemDetailsFactory : ProblemDetailsFactory
 
         if (errors is not null) problemDetails.Extensions.Add("errorCodes", errors?.Select(e => e.Code));
 
-
         _configure?.Invoke(new ProblemDetailsContext { HttpContext = httpContext!, ProblemDetails = problemDetails });
     }
 }
