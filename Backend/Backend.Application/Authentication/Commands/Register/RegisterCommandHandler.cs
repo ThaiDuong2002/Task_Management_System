@@ -2,7 +2,7 @@
 using Backend.Application.Common.Interfaces.Authentication;
 using Backend.Application.Common.Interfaces.Persistence;
 using Backend.Domain.Common.Errors;
-using Backend.Domain.Entities;
+using Backend.Domain.User;
 using ErrorOr;
 using MediatR;
 

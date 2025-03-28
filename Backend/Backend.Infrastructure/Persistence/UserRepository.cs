@@ -1,5 +1,5 @@
 using Backend.Application.Common.Interfaces.Persistence;
-using Backend.Domain.Entities;
+using Backend.Domain.User;
 
 namespace Backend.Infrastructure.Persistence;
 

@@ -1,4 +1,4 @@
-using Backend.Domain.Entities;
+using Backend.Domain.User;
 
 namespace Backend.Application.Common.Interfaces.Authentication;
 
