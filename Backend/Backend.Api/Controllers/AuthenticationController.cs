@@ -3,11 +3,13 @@ using Backend.Application.Authentication.Queries.Login;
 using Backend.Contracts.Authentication;
 using MapsterMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Api.Controllers;
 
 [Route("api/auth")]
+[AllowAnonymous]
 public class AuthenticationController : ApiController
 {
     private readonly IMapper _mapper;
