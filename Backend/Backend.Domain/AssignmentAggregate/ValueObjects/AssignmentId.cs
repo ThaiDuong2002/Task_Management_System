@@ -9,7 +9,7 @@ public sealed class AssignmentId : ValueObject
         Value = value;
     }
 
-    private Guid Value { get; }
+    public Guid Value { get; }
 
     public static AssignmentId CreateUnique()
     {
@@ -19,5 +19,10 @@ public sealed class AssignmentId : ValueObject
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return Value;
+    }
+
+    public Guid GetValue()
+    {
+        return Value;
     }
 }

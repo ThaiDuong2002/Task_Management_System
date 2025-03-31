@@ -19,11 +19,4 @@
         <ProjectReference Include="..\Backend.Domain\Backend.Domain.csproj"/>
     </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="Assignments\Commands\DeleteAssignment\"/>
-        <Folder Include="Assignments\Commands\UpdateAssignment\"/>
-        <Folder Include="Assignments\Queries\GetAssignments\"/>
-        <Folder Include="Assignments\Queries\GetAssignment\"/>
-    </ItemGroup>
-
 </Project>

@@ -1,4 +1,7 @@
-﻿using Backend.Contracts.Assignments;
+﻿using Backend.Application.Assignments.Commands.CreateAssignment;
+using Backend.Contracts.Assignments;
+using MapsterMapper;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Api.Controllers;
@@ -6,6 +9,15 @@ namespace Backend.Api.Controllers;
 [Route("api/assignments")]
 public class AssignmentsController : ApiController
 {
+    private readonly IMapper _mapper;
+    private readonly ISender _mediator;
+
+    public AssignmentsController(IMapper mapper, ISender mediator)
+    {
+        _mapper = mapper;
+        _mediator = mediator;
+    }
+
     [HttpGet]
     public IActionResult GetAssignments([FromQuery] int page = 1, int limit = 10)
     {
@@ -13,9 +25,16 @@ public class AssignmentsController : ApiController
     }
 
     [HttpPost]
-    public IActionResult CreateAssignment(CreateAssignmentRequest request)
+    public async Task<IActionResult> CreateAssignment(CreateAssignmentRequest request)
     {
-        return Ok(request);
+        var command = _mapper.Map<CreateAssignmentCommand>(request);
+
+        var result = await _mediator.Send(command);
+
+        return result.Match(
+            assignment => Created(HttpContext.Request.Path, _mapper.Map<AssignmentResponse>(assignment)),
+            errors => Problem(errors)
+        );
     }
 
     [HttpGet("{id}")]

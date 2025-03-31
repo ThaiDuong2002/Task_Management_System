@@ -5,7 +5,7 @@ namespace Backend.Domain.AssignmentAggregate;
 
 public sealed class Assignment : AggregateRoot<AssignmentId>
 {
-    private Assignment(AssignmentId assignmentId, string title, string description, Status status, Priority priority,
+    private Assignment(AssignmentId assignmentId, string title, string? description, Status status, Priority priority,
         DateTime dueDate, DateTime createdAt, DateTime updatedAt) : base(
         assignmentId)
     {
@@ -19,14 +19,14 @@ public sealed class Assignment : AggregateRoot<AssignmentId>
     }
 
     public string Title { get; }
-    public string Description { get; }
+    public string? Description { get; }
     public Status Status { get; }
     public Priority Priority { get; }
     public DateTime DueDate { get; }
     public DateTime CreatedAt { get; }
     public DateTime UpdatedAt { get; }
 
-    public static Assignment Create(string title, string description, Status status, Priority priority,
+    public static Assignment Create(string title, string? description, Status status, Priority priority,
         DateTime dueDate, DateTime createdAt, DateTime updatedAt)
     {
         return new Assignment(AssignmentId.CreateUnique(), title, description, status, priority, dueDate, createdAt,

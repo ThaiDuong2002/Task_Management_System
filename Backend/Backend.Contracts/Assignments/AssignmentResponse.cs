@@ -6,5 +6,7 @@ public record AssignmentResponse(
     string Description,
     string Status,
     string Priority,
-    DateTime DueDate
+    DateTime DueDate,
+    DateTime CreatedAt,
+    DateTime UpdatedAt
 );
