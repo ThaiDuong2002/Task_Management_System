@@ -1,6 +1,6 @@
-﻿namespace Backend.Contracts.Tasks;
+﻿namespace Backend.Contracts.Assignments;
 
-public record CreateTaskRequest(
+public record CreateAssignmentRequest(
     string UserId,
     string Title,
     string Description,

@@ -1,13 +1,13 @@
-﻿using Backend.Domain.Common.Models;
-using Backend.Domain.TaskAggregate.ValueObjects;
+﻿using Backend.Domain.AssignmentAggregate.ValueObjects;
+using Backend.Domain.Common.Models;
 
-namespace Backend.Domain.TaskAggregate;
+namespace Backend.Domain.AssignmentAggregate;
 
-public sealed class Task : AggregateRoot<TaskId>
+public sealed class Assignment : AggregateRoot<AssignmentId>
 {
-    private Task(TaskId taskId, string title, string description, Status status, Priority priority,
+    private Assignment(AssignmentId assignmentId, string title, string description, Status status, Priority priority,
         DateTime dueDate, DateTime createdAt, DateTime updatedAt) : base(
-        taskId)
+        assignmentId)
     {
         Title = title;
         Description = description;
@@ -26,9 +26,10 @@ public sealed class Task : AggregateRoot<TaskId>
     public DateTime CreatedAt { get; }
     public DateTime UpdatedAt { get; }
 
-    public static Task Create(string title, string description, Status status, Priority priority,
+    public static Assignment Create(string title, string description, Status status, Priority priority,
         DateTime dueDate, DateTime createdAt, DateTime updatedAt)
     {
-        return new Task(TaskId.CreateUnique(), title, description, status, priority, dueDate, createdAt, updatedAt);
+        return new Assignment(AssignmentId.CreateUnique(), title, description, status, priority, dueDate, createdAt,
+            updatedAt);
     }
 }

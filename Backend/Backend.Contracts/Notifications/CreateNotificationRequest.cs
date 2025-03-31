@@ -2,7 +2,7 @@
 
 public record CreateNotificationRequest(
     string UserId,
-    string TaskId,
+    string AssignmentId,
     string Type,
     string Message
 );

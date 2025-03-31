@@ -1,6 +1,7 @@
-﻿namespace Backend.Contracts.Tasks;
+﻿namespace Backend.Contracts.Assignments;
 
-public record UpdateTaskRequest(
+public record AssignmentResponse(
+    string Id,
     string Title,
     string Description,
     string Status,

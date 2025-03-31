@@ -1,23 +1,24 @@
-﻿using Backend.Domain.Common.Models;
+﻿using Backend.Domain.AssignmentAggregate.ValueObjects;
+using Backend.Domain.Common.Models;
 using Backend.Domain.DependencyAggregate.ValueObjects;
-using Backend.Domain.TaskAggregate.ValueObjects;
 
 namespace Backend.Domain.DependencyAggregate;
 
 public class Dependency : Entity<DependencyId>
 {
-    private Dependency(DependencyId dependencyId, TaskId taskId, TaskId dependentTaskId) : base(
+    private Dependency(DependencyId dependencyId, AssignmentId assignmentId,
+        AssignmentId dependOnAssignmentIdId) : base(
         dependencyId)
     {
-        TaskId = taskId;
-        DependentTaskId = dependentTaskId;
+        AssignmentId = assignmentId;
+        DependOnAssignmentId = dependOnAssignmentIdId;
     }
 
-    public TaskId TaskId { get; }
-    public TaskId DependentTaskId { get; }
+    public AssignmentId AssignmentId { get; }
+    public AssignmentId DependOnAssignmentId { get; }
 
-    public static Dependency Create(TaskId taskId, TaskId dependentTaskId)
+    public static Dependency Create(AssignmentId assignmentId, AssignmentId dependOnAssignmentIdId)
     {
-        return new Dependency(DependencyId.CreateUnique(), taskId, dependentTaskId);
+        return new Dependency(DependencyId.CreateUnique(), assignmentId, dependOnAssignmentIdId);
     }
 }

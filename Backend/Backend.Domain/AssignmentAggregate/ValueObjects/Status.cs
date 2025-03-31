@@ -1,6 +1,6 @@
 ﻿using Backend.Domain.Common.Models;
 
-namespace Backend.Domain.TaskAggregate.ValueObjects;
+namespace Backend.Domain.AssignmentAggregate.ValueObjects;
 
 public class Status : ValueObject
 {

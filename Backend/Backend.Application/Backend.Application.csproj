@@ -7,16 +7,23 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="FluentResults" Version="3.16.0" />
-        <PackageReference Include="FluentValidation" Version="11.11.0" />
-        <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
-        <PackageReference Include="MediatR" Version="12.4.1" />
-        <PackageReference Include="MediatR.Contracts" Version="2.0.1" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.3" />
+        <PackageReference Include="FluentResults" Version="3.16.0"/>
+        <PackageReference Include="FluentValidation" Version="11.11.0"/>
+        <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0"/>
+        <PackageReference Include="MediatR" Version="12.4.1"/>
+        <PackageReference Include="MediatR.Contracts" Version="2.0.1"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.3"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Backend.Domain\Backend.Domain.csproj" />
+        <ProjectReference Include="..\Backend.Domain\Backend.Domain.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Assignments\Commands\DeleteAssignment\"/>
+        <Folder Include="Assignments\Commands\UpdateAssignment\"/>
+        <Folder Include="Assignments\Queries\GetAssignments\"/>
+        <Folder Include="Assignments\Queries\GetAssignment\"/>
     </ItemGroup>
 
 </Project>

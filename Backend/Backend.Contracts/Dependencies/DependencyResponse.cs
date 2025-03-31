@@ -2,6 +2,6 @@
 
 public record DependencyResponse(
     string Id,
-    string TaskId,
-    string DependencyTaskId
+    string AssignmentId,
+    string DependOnAssignmentId
 );
