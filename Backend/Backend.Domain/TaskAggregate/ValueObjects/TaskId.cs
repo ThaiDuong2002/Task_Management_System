@@ -1,6 +1,6 @@
 ﻿using Backend.Domain.Common.Models;
 
-namespace Backend.Domain.Task.ValueObjects;
+namespace Backend.Domain.TaskAggregate.ValueObjects;
 
 public sealed class TaskId : ValueObject
 {
@@ -9,7 +9,7 @@ public sealed class TaskId : ValueObject
         Value = value;
     }
 
-    public Guid Value { get; }
+    private Guid Value { get; }
 
     public static TaskId CreateUnique()
     {

@@ -1,19 +1,19 @@
 ﻿using Backend.Domain.Common.Models;
 
-namespace Backend.Domain.User.ValueObjects;
+namespace Backend.Domain.DependencyAggregate.ValueObjects;
 
-public class UserId : ValueObject
+public class DependencyId : ValueObject
 {
-    private UserId(Guid value)
+    private DependencyId(Guid value)
     {
         Value = value;
     }
 
     private Guid Value { get; }
 
-    public static UserId CreateUnique()
+    public static DependencyId CreateUnique()
     {
-        return new UserId(Guid.NewGuid());
+        return new DependencyId(Guid.NewGuid());
     }
 
     protected override IEnumerable<object> GetEqualityComponents()
