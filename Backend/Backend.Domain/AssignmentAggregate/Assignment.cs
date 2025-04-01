@@ -18,13 +18,13 @@ public sealed class Assignment : AggregateRoot<AssignmentId>
         UpdatedAt = updatedAt;
     }
 
-    public string Title { get; }
-    public string? Description { get; }
-    public Status Status { get; }
-    public Priority Priority { get; }
-    public DateTime DueDate { get; }
+    public string Title { get; set; }
+    public string? Description { get; set; }
+    public Status Status { get; set; }
+    public Priority Priority { get; set; }
+    public DateTime DueDate { get; set; }
     public DateTime CreatedAt { get; }
-    public DateTime UpdatedAt { get; }
+    public DateTime UpdatedAt { get; set; }
 
     public static Assignment Create(string title, string? description, Status status, Priority priority,
         DateTime dueDate, DateTime createdAt, DateTime updatedAt)
@@ -33,9 +33,14 @@ public sealed class Assignment : AggregateRoot<AssignmentId>
             updatedAt);
     }
 
-    public Assignment Update(string title, string? description, Status status, Priority priority,
+    public void Update(string title, string? description, Status status, Priority priority,
         DateTime dueDate, DateTime updatedAt)
     {
-        return new Assignment(Id, title, description, status, priority, dueDate, CreatedAt, updatedAt);
+        Title = title;
+        Description = description;
+        Status = status;
+        Priority = priority;
+        DueDate = dueDate;
+        UpdatedAt = updatedAt;
     }
 }

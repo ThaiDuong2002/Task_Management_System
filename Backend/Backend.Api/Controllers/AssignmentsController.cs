@@ -1,6 +1,8 @@
 ﻿using Backend.Application.Assignments.Commands.CreateAssignment;
 using Backend.Application.Assignments.Commands.DeleteAssignment;
 using Backend.Application.Assignments.Commands.UpdateAssignment;
+using Backend.Application.Assignments.Queries.GetAssignment;
+using Backend.Application.Assignments.Queries.GetAssignments;
 using Backend.Contracts.Assignments;
 using MapsterMapper;
 using MediatR;
@@ -21,9 +23,29 @@ public class AssignmentsController : ApiController
     }
 
     [HttpGet]
-    public IActionResult GetAssignments([FromQuery] int page = 1, int limit = 10)
+    public async Task<IActionResult> GetAssignments([FromQuery] int? page, int? limit, string? status, string? priority)
     {
-        return Ok(Array.Empty<StringComparer>());
+        var query = _mapper.Map<GetAssignmentsQuery>((page, limit, status, priority));
+
+        var result = await _mediator.Send(query);
+
+        return result.Match(
+            assignments => Ok(_mapper.Map<List<AssignmentResponse>>(assignments)),
+            errors => Problem(errors)
+        );
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetAssignment(Guid id)
+    {
+        var query = _mapper.Map<GetAssignmentQuery>(id);
+
+        var result = await _mediator.Send(query);
+
+        return result.Match(
+            assignment => Ok(_mapper.Map<AssignmentResponse>(assignment)),
+            errors => Problem(errors)
+        );
     }
 
     [HttpPost]
@@ -37,12 +59,6 @@ public class AssignmentsController : ApiController
             assignment => Created(HttpContext.Request.Path, _mapper.Map<AssignmentResponse>(assignment)),
             errors => Problem(errors)
         );
-    }
-
-    [HttpGet("{id}")]
-    public IActionResult GetAssignment(Guid id)
-    {
-        return Ok(id);
     }
 
     [HttpPut("{id}")]
