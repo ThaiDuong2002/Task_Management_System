@@ -32,4 +32,10 @@ public sealed class Assignment : AggregateRoot<AssignmentId>
         return new Assignment(AssignmentId.CreateUnique(), title, description, status, priority, dueDate, createdAt,
             updatedAt);
     }
+
+    public Assignment Update(string title, string? description, Status status, Priority priority,
+        DateTime dueDate, DateTime updatedAt)
+    {
+        return new Assignment(Id, title, description, status, priority, dueDate, CreatedAt, updatedAt);
+    }
 }

@@ -2,7 +2,7 @@
 
 public record UpdateAssignmentRequest(
     string Title,
-    string Description,
+    string? Description,
     string Status,
     string Priority,
     DateTime DueDate

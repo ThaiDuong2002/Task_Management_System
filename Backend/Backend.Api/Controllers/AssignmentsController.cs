@@ -1,4 +1,5 @@
 ﻿using Backend.Application.Assignments.Commands.CreateAssignment;
+using Backend.Application.Assignments.Commands.UpdateAssignment;
 using Backend.Contracts.Assignments;
 using MapsterMapper;
 using MediatR;
@@ -44,9 +45,16 @@ public class AssignmentsController : ApiController
     }
 
     [HttpPut("{id}")]
-    public IActionResult UpdateAssignment(UpdateAssignmentRequest request, Guid id)
+    public async Task<IActionResult> UpdateAssignment(UpdateAssignmentRequest request, Guid id)
     {
-        return Ok(request);
+        var command = _mapper.Map<UpdateAssignmentCommand>((request, id));
+
+        var result = await _mediator.Send(command);
+
+        return result.Match(
+            assignment => Ok(_mapper.Map<ModifyAssignmentResponse>(assignment)),
+            errors => Problem(errors)
+        );
     }
 
     [HttpDelete("{id}")]

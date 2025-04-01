@@ -27,6 +27,9 @@ public class CreateAssignmentCommandValidator : AbstractValidator<CreateAssignme
 
         RuleFor(x => x.DueDate)
             .NotEmpty()
-            .WithMessage("Due date is required.");
+            .WithMessage("Due date is required.")
+            .Must(date => date > DateTime.UtcNow)
+            .WithMessage("Due date must be in the future.");
+        ;
     }
 }
