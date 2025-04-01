@@ -2,6 +2,7 @@
 
 public record AssignmentResponse(
     string Id,
+    string UserId,
     string Title,
     string Description,
     string Status,

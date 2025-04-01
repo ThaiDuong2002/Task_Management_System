@@ -1,6 +1,7 @@
 ﻿using Backend.Application.Common.Interfaces.Persistence;
 using Backend.Domain.Models.AssignmentModel;
 using Backend.Domain.Models.AssignmentModel.ValueObjects;
+using Backend.Domain.Models.UserModel.ValueObjects;
 using ErrorOr;
 using MediatR;
 
@@ -20,6 +21,7 @@ public class CreateAssignmentCommandHandler : IRequestHandler<CreateAssignmentCo
         await Task.CompletedTask;
 
         var assignment = Assignment.Create(
+            UserId.Create(command.UserId),
             command.Title,
             command.Description,
             Status.Create(command.Status),

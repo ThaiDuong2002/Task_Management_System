@@ -10,12 +10,7 @@ namespace Backend.Infrastructure.Persistence.Repositories;
 public class AssignmentRepository : IAssignmentRepository
 {
     private static readonly List<Assignment> _assignments = new();
-    private readonly PostgresDbContext _dbContext;
-
-    public AssignmentRepository(PostgresDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
+    // private readonly PostgresDbContext _dbContext;
 
     public Guid? Update(UpdateAssignmentCommand command)
     {
@@ -40,7 +35,7 @@ public class AssignmentRepository : IAssignmentRepository
 
         if (existingAssignment is null) return null;
 
-        _dbContext.Remove(existingAssignment);
+        _assignments.Remove(existingAssignment);
 
         return existingAssignment.Id.Value;
     }
@@ -52,7 +47,7 @@ public class AssignmentRepository : IAssignmentRepository
 
     public void Create(Assignment assignment)
     {
-        _dbContext.Assignments.Add(assignment);
+        _assignments.Add(assignment);
     }
 
     public ReadOnlyCollection<Assignment> GetAll(int? page, int? limit, string? status, string? priority)

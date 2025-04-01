@@ -1,4 +1,5 @@
 ﻿using Backend.Domain.Common.Models;
+using Backend.Domain.Models.AssignmentModel;
 using Backend.Domain.Models.AssignmentModel.ValueObjects;
 using Backend.Domain.Models.DependencyModel.ValueObjects;
 
@@ -16,6 +17,9 @@ public class Dependency : Entity<DependencyId>
 
     public AssignmentId AssignmentId { get; }
     public AssignmentId DependOnAssignmentId { get; }
+
+    public Assignment Assignment { get; set; } = null!;
+    public Assignment DependOnAssignment { get; set; } = null!;
 
     public static Dependency Create(AssignmentId assignmentId, AssignmentId dependOnAssignmentIdId)
     {
