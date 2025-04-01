@@ -14,11 +14,11 @@ public class GetAssignmentQueryHandler : IRequestHandler<GetAssignmentQuery, Err
         _assignmentRepository = assignmentRepository;
     }
 
-    public async Task<ErrorOr<Assignment>> Handle(GetAssignmentQuery request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<Assignment>> Handle(GetAssignmentQuery query, CancellationToken cancellationToken)
     {
         await Task.CompletedTask;
 
-        var assignment = _assignmentRepository.GetById(request.Id);
+        var assignment = _assignmentRepository.GetById(query.Id);
 
         if (assignment is null) return Error.NotFound("Assignment not found");
 

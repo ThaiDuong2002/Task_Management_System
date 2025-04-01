@@ -12,7 +12,7 @@ public class NotificationRepository : INotificationRepository
     {
         var notifications = _notifications
             .Where(n => n.UserId.Value == userId)
-            .Skip(page * limit)
+            .Skip((page - 1) * limit)
             .Take(limit)
             .ToList();
 

@@ -8,12 +8,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace Backend.Api.Controllers;
 
 [Route("api/notifications")]
-public class NotificationController : ApiController
+public class NotificationsController : ApiController
 {
     private readonly IMapper _mapper;
     private readonly ISender _mediator;
 
-    public NotificationController(IMapper mapper, ISender mediator)
+    public NotificationsController(IMapper mapper, ISender mediator)
     {
         _mapper = mapper;
         _mediator = mediator;

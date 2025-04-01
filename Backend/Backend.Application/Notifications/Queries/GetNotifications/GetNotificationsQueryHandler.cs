@@ -16,12 +16,12 @@ public class
         _notificationRepository = notificationRepository;
     }
 
-    public async Task<ErrorOr<ReadOnlyCollection<Notification>>> Handle(GetNotificationsQuery request,
+    public async Task<ErrorOr<ReadOnlyCollection<Notification>>> Handle(GetNotificationsQuery query,
         CancellationToken cancellationToken)
     {
         await Task.CompletedTask;
 
-        var notifications = _notificationRepository.GetAll(Guid.Parse(request.UserId), request.Page, request.Limit);
+        var notifications = _notificationRepository.GetAll(Guid.Parse(query.UserId), query.Page, query.Limit);
 
         return notifications;
     }
