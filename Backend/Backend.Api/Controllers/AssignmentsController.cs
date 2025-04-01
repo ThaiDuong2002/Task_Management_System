@@ -1,4 +1,5 @@
 ﻿using Backend.Application.Assignments.Commands.CreateAssignment;
+using Backend.Application.Assignments.Commands.DeleteAssignment;
 using Backend.Application.Assignments.Commands.UpdateAssignment;
 using Backend.Contracts.Assignments;
 using MapsterMapper;
@@ -58,8 +59,15 @@ public class AssignmentsController : ApiController
     }
 
     [HttpDelete("{id}")]
-    public IActionResult DeleteAssignment(Guid id)
+    public async Task<IActionResult> DeleteAssignment(Guid id)
     {
-        return Ok(id);
+        var command = _mapper.Map<DeleteAssignmentCommand>(id);
+
+        var result = await _mediator.Send(command);
+
+        return result.Match(
+            assignment => Ok(_mapper.Map<ModifyAssignmentResponse>(assignment)),
+            errors => Problem(errors)
+        );
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Backend.Application.Assignments.Commands.CreateAssignment;
+using Backend.Application.Assignments.Commands.DeleteAssignment;
 using Backend.Application.Assignments.Commands.UpdateAssignment;
 using Backend.Contracts.Assignments;
 using Backend.Domain.AssignmentAggregate;
@@ -12,6 +13,9 @@ public class AssignmentMappingConfig : IRegister
     {
         config.NewConfig<CreateAssignmentRequest, CreateAssignmentCommand>()
             .Map(dest => dest.UserId, src => src.UserId);
+
+        config.NewConfig<Guid, DeleteAssignmentCommand>()
+            .Map(dest => dest.Id, src => src);
 
         config.NewConfig<(UpdateAssignmentRequest request, Guid Id), UpdateAssignmentCommand>()
             .Map(dest => dest.Id, src => src.Id)
