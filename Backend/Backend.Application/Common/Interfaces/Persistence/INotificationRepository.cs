@@ -1,5 +1,5 @@
 ﻿using System.Collections.ObjectModel;
-using Backend.Domain.NotificationAggregate;
+using Backend.Domain.Models.NotificationModel;
 
 namespace Backend.Application.Common.Interfaces.Persistence;
 

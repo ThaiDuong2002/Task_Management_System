@@ -1,4 +1,4 @@
-﻿using Backend.Domain.DependencyAggregate;
+﻿using Backend.Domain.Models.Dependency;
 
 namespace Backend.Application.Common.Interfaces.Persistence;
 

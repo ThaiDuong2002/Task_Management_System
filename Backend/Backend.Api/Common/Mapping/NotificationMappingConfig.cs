@@ -1,6 +1,6 @@
 ﻿using Backend.Application.Notifications.Queries.GetNotifications;
 using Backend.Contracts.Notifications;
-using Backend.Domain.NotificationAggregate;
+using Backend.Domain.Models.NotificationModel;
 using Mapster;
 
 namespace Backend.Api.Common.Mapping;

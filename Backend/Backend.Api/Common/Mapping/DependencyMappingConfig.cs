@@ -1,7 +1,7 @@
-﻿using Backend.Application.Dependencies.Commands.CreateDependency;
-using Backend.Application.Dependencies.Commands.DeleteDependency;
+﻿using Backend.Application.Services.Dependencies.Commands.CreateDependency;
+using Backend.Application.Services.Dependencies.Commands.DeleteDependency;
 using Backend.Contracts.Dependencies;
-using Backend.Domain.DependencyAggregate;
+using Backend.Domain.Models.Dependency;
 using Mapster;
 
 namespace Backend.Api.Common.Mapping;

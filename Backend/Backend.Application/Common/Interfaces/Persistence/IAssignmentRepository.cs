@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
-using Backend.Application.Assignments.Commands.DeleteAssignment;
-using Backend.Application.Assignments.Commands.UpdateAssignment;
-using Backend.Domain.AssignmentAggregate;
+using Backend.Application.Services.Assignments.Commands.DeleteAssignment;
+using Backend.Application.Services.Assignments.Commands.UpdateAssignment;
+using Backend.Domain.Models.AssignmentModel;
 
 namespace Backend.Application.Common.Interfaces.Persistence;
 

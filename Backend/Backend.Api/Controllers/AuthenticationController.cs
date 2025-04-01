@@ -1,5 +1,5 @@
-using Backend.Application.Authentication.Commands.Register;
-using Backend.Application.Authentication.Queries.Login;
+using Backend.Application.Services.Authentication.Commands.Register;
+using Backend.Application.Services.Authentication.Queries.Login;
 using Backend.Contracts.Authentication;
 using MapsterMapper;
 using MediatR;

@@ -1,4 +1,4 @@
-﻿using Backend.Application.Authentication.Common;
+﻿using Backend.Application.Services.Authentication.Common;
 using Backend.Contracts.Authentication;
 using Mapster;
 

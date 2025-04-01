@@ -4,8 +4,10 @@ using Backend.Application.Common.Interfaces.Persistence;
 using Backend.Application.Common.Interfaces.Services;
 using Backend.Infrastructure.Authentication;
 using Backend.Infrastructure.Persistence;
+using Backend.Infrastructure.Persistence.Repositories;
 using Backend.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -26,6 +28,8 @@ public static class DependencyInjection
 
     private static IServiceCollection AddPersistence(this IServiceCollection services)
     {
+        services.AddDbContext<PostgresDbContext>(options => options.UseNpgsql());
+
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IAssignmentRepository, AssignmentRepository>();
         services.AddScoped<IDependencyRepository, DependencyRepository>();

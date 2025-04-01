@@ -1,10 +1,10 @@
-﻿using Backend.Application.Assignments.Commands.CreateAssignment;
-using Backend.Application.Assignments.Commands.DeleteAssignment;
-using Backend.Application.Assignments.Commands.UpdateAssignment;
-using Backend.Application.Assignments.Queries.GetAssignment;
-using Backend.Application.Assignments.Queries.GetAssignments;
+﻿using Backend.Application.Assignments.Queries.GetAssignments;
+using Backend.Application.Services.Assignments.Commands.CreateAssignment;
+using Backend.Application.Services.Assignments.Commands.DeleteAssignment;
+using Backend.Application.Services.Assignments.Commands.UpdateAssignment;
+using Backend.Application.Services.Assignments.Queries.GetAssignment;
 using Backend.Contracts.Assignments;
-using Backend.Domain.AssignmentAggregate;
+using Backend.Domain.Models.AssignmentModel;
 using Mapster;
 
 namespace Backend.Api.Common.Mapping;
