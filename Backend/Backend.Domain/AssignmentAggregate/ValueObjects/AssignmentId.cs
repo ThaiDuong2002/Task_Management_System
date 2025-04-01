@@ -16,6 +16,11 @@ public sealed class AssignmentId : ValueObject
         return new AssignmentId(Guid.NewGuid());
     }
 
+    public static AssignmentId Create(Guid value)
+    {
+        return new AssignmentId(value);
+    }
+
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return Value;

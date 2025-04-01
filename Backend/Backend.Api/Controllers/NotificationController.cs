@@ -1,4 +1,8 @@
-﻿using Backend.Contracts.Notifications;
+﻿using Backend.Application.Notifications.Commands.CreateNotification;
+using Backend.Application.Notifications.Queries.GetNotifications;
+using Backend.Contracts.Notifications;
+using MapsterMapper;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Api.Controllers;
@@ -6,22 +10,38 @@ namespace Backend.Api.Controllers;
 [Route("api/notifications")]
 public class NotificationController : ApiController
 {
-    [HttpGet]
-    public IActionResult ListNotifications([FromQuery] int page = 1, int limit = 10)
-    {
-        return Ok(Array.Empty<string>());
-    }
+    private readonly IMapper _mapper;
+    private readonly ISender _mediator;
 
-    [HttpPost]
-    public IActionResult CreateNotification(CreateNotificationRequest request)
+    public NotificationController(IMapper mapper, ISender mediator)
     {
-        return Ok(request);
+        _mapper = mapper;
+        _mediator = mediator;
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetNotification(Guid id)
+    public async Task<IActionResult> ListNotifications(Guid id, [FromQuery] int page = 1, int limit = 10)
     {
-        return Ok(id);
+        var query = _mapper.Map<GetNotificationsQuery>((id, page, limit));
+
+        var result = await _mediator.Send(query);
+
+        return result.Match(
+            assignments => Ok(_mapper.Map<List<NotificationResponse>>(assignments)),
+            errors => Problem(errors)
+        );
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateNotification(CreateNotificationRequest request)
+    {
+        var command = _mapper.Map<CreateNotificationCommand>(request);
+        var result = await _mediator.Send(command);
+
+        return result.Match(
+            notification => Created(HttpContext.Request.Path, _mapper.Map<NotificationResponse>(notification)),
+            errors => Problem(errors)
+        );
     }
 
     [HttpDelete("{id}")]

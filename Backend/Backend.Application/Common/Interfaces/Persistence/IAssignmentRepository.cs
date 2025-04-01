@@ -9,7 +9,7 @@ public interface IAssignmentRepository
 {
     Assignment? GetById(Guid id);
     ReadOnlyCollection<Assignment> GetAll(int? page, int? limit, string? status, string? priority);
-    void Add(Assignment assignment);
+    void Create(Assignment assignment);
     Guid? Update(UpdateAssignmentCommand command);
     Guid? Delete(DeleteAssignmentCommand command);
 }

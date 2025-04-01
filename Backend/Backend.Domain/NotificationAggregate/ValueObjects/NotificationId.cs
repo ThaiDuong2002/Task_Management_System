@@ -9,11 +9,16 @@ public class NotificationId : ValueObject
         Value = value;
     }
 
-    private Guid Value { get; }
+    public Guid Value { get; }
 
     public static NotificationId CreateUnique()
     {
         return new NotificationId(Guid.NewGuid());
+    }
+
+    public static NotificationId Create(Guid value)
+    {
+        return new NotificationId(value);
     }
 
     protected override IEnumerable<object> GetEqualityComponents()

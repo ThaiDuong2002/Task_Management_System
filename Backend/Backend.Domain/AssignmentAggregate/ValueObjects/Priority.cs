@@ -4,6 +4,11 @@ namespace Backend.Domain.AssignmentAggregate.ValueObjects;
 
 public class Priority : ValueObject
 {
+    public static readonly Priority Low = new("Low");
+    public static readonly Priority Medium = new("Medium");
+    public static readonly Priority High = new("High");
+    public static readonly Priority Default = Medium;
+
     private Priority(string value)
     {
         Value = value;
@@ -20,10 +25,10 @@ public class Priority : ValueObject
     {
         return value switch
         {
-            "Low" => new Priority("Low"),
-            "Medium" => new Priority("Medium"),
-            "High" => new Priority("High"),
-            _ => new Priority("Medium")
+            "Low" => Low,
+            "Medium" => Medium,
+            "High" => High,
+            _ => Default
         };
     }
 }

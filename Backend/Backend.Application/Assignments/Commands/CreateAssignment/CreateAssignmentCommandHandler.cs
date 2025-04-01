@@ -29,7 +29,7 @@ public class CreateAssignmentCommandHandler : IRequestHandler<CreateAssignmentCo
             DateTime.UtcNow
         );
 
-        _assignmentRepository.Add(assignment);
+        _assignmentRepository.Create(assignment);
 
         return assignment;
     }

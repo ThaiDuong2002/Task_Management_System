@@ -16,7 +16,7 @@ public class AssignmentRepository : IAssignmentRepository
         return _assignments.FirstOrDefault(a => a.Id.Value == id);
     }
 
-    public void Add(Assignment assignment)
+    public void Create(Assignment assignment)
     {
         _assignments.Add(assignment);
     }

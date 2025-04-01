@@ -4,6 +4,11 @@ namespace Backend.Domain.AssignmentAggregate.ValueObjects;
 
 public class Status : ValueObject
 {
+    public static readonly Status Pending = new("Pending");
+    public static readonly Status InProgress = new("InProgress");
+    public static readonly Status Completed = new("Completed");
+    public static readonly Status Default = Pending;
+
     private Status(string value)
     {
         Value = value;
@@ -20,10 +25,10 @@ public class Status : ValueObject
     {
         return value switch
         {
-            "Pending" => new Status("Pending"),
-            "In Progress" => new Status("In Progress"),
-            "Completed" => new Status("Completed"),
-            _ => new Status("Pending")
+            "Pending" => Pending,
+            "InProgress" => InProgress,
+            "Completed" => Completed,
+            _ => Default
         };
     }
 }
