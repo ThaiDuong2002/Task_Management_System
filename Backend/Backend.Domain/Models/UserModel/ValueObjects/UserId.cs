@@ -1,6 +1,6 @@
 ﻿using Backend.Domain.Common.Models;
 
-namespace Backend.Domain.Models.User.ValueObjects;
+namespace Backend.Domain.Models.UserModel.ValueObjects;
 
 public class UserId : ValueObject
 {

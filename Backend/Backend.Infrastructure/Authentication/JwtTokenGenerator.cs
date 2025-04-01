@@ -3,7 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Backend.Application.Common.Interfaces.Authentication;
 using Backend.Application.Common.Interfaces.Services;
-using Backend.Domain.Models.User;
+using Backend.Domain.Models.UserModel;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 

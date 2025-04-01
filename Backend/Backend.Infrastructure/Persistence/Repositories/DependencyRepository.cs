@@ -1,5 +1,5 @@
 ﻿using Backend.Application.Common.Interfaces.Persistence;
-using Backend.Domain.Models.Dependency;
+using Backend.Domain.Models.DependencyModel;
 
 namespace Backend.Infrastructure.Persistence.Repositories;
 

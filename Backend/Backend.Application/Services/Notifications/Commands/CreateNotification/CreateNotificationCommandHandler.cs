@@ -2,7 +2,7 @@
 using Backend.Domain.Models.AssignmentModel.ValueObjects;
 using Backend.Domain.Models.NotificationModel;
 using Backend.Domain.Models.NotificationModel.ValueObjects;
-using Backend.Domain.Models.User.ValueObjects;
+using Backend.Domain.Models.UserModel.ValueObjects;
 using ErrorOr;
 using MediatR;
 

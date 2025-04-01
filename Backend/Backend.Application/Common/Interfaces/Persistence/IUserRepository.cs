@@ -1,4 +1,4 @@
-using Backend.Domain.Models.User;
+using Backend.Domain.Models.UserModel;
 
 namespace Backend.Application.Common.Interfaces.Persistence;
 

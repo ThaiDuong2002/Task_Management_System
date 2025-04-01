@@ -1,7 +1,7 @@
 ﻿using Backend.Application.Common.Interfaces.Persistence;
 using Backend.Domain.Common.Errors;
 using Backend.Domain.Models.AssignmentModel.ValueObjects;
-using Backend.Domain.Models.Dependency;
+using Backend.Domain.Models.DependencyModel;
 using ErrorOr;
 using MediatR;
 

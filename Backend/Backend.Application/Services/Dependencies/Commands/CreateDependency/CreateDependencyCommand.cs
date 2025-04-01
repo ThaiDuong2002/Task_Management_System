@@ -1,4 +1,4 @@
-﻿using Backend.Domain.Models.Dependency;
+﻿using Backend.Domain.Models.DependencyModel;
 using ErrorOr;
 using MediatR;
 

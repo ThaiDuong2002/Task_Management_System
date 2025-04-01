@@ -1,5 +1,5 @@
 using Backend.Application.Common.Interfaces.Persistence;
-using Backend.Domain.Models.User;
+using Backend.Domain.Models.UserModel;
 
 namespace Backend.Infrastructure.Persistence.Repositories;
 

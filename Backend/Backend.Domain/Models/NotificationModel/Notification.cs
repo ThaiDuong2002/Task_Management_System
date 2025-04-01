@@ -1,7 +1,7 @@
 ﻿using Backend.Domain.Common.Models;
 using Backend.Domain.Models.AssignmentModel.ValueObjects;
 using Backend.Domain.Models.NotificationModel.ValueObjects;
-using Backend.Domain.Models.User.ValueObjects;
+using Backend.Domain.Models.UserModel.ValueObjects;
 
 namespace Backend.Domain.Models.NotificationModel;
 

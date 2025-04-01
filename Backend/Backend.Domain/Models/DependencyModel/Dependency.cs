@@ -2,7 +2,7 @@
 using Backend.Domain.Models.AssignmentModel.ValueObjects;
 using Backend.Domain.Models.DependencyModel.ValueObjects;
 
-namespace Backend.Domain.Models.Dependency;
+namespace Backend.Domain.Models.DependencyModel;
 
 public class Dependency : Entity<DependencyId>
 {
