@@ -20,5 +20,10 @@ public static partial class Errors
             "User.InvalidCredentials",
             "Invalid credentials."
         );
+
+        public static Error NotFound => Error.NotFound(
+            "User.NotFound",
+            "User not found."
+        );
     }
 }

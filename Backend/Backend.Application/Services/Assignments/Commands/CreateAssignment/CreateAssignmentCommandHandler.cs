@@ -1,4 +1,5 @@
 ﻿using Backend.Application.Common.Interfaces.Persistence;
+using Backend.Domain.Common.Errors;
 using Backend.Domain.Models.AssignmentModel;
 using Backend.Domain.Models.AssignmentModel.ValueObjects;
 using Backend.Domain.Models.UserModel.ValueObjects;
@@ -10,15 +11,20 @@ namespace Backend.Application.Services.Assignments.Commands.CreateAssignment;
 public class CreateAssignmentCommandHandler : IRequestHandler<CreateAssignmentCommand, ErrorOr<Assignment>>
 {
     private readonly IAssignmentRepository _assignmentRepository;
+    private readonly IUserRepository _userRepository;
 
-    public CreateAssignmentCommandHandler(IAssignmentRepository assignmentRepository)
+    public CreateAssignmentCommandHandler(IAssignmentRepository assignmentRepository, IUserRepository userRepository)
     {
         _assignmentRepository = assignmentRepository;
+        _userRepository = userRepository;
     }
 
     public async Task<ErrorOr<Assignment>> Handle(CreateAssignmentCommand command, CancellationToken cancellationToken)
     {
-        await Task.CompletedTask;
+        // Check if the user exists
+        var userResult = await _userRepository.GetById(UserId.Create(command.UserId));
+
+        if (userResult is null) return Errors.User.NotFound;
 
         var assignment = Assignment.Create(
             UserId.Create(command.UserId),
@@ -29,7 +35,7 @@ public class CreateAssignmentCommandHandler : IRequestHandler<CreateAssignmentCo
             command.DueDate
         );
 
-        _assignmentRepository.Create(assignment);
+        await _assignmentRepository.Create(assignment);
 
         return assignment;
     }

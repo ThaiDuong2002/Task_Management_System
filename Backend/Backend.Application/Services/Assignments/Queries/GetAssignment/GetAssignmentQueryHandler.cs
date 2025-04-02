@@ -18,7 +18,7 @@ public class GetAssignmentQueryHandler : IRequestHandler<GetAssignmentQuery, Err
     {
         await Task.CompletedTask;
 
-        var assignment = _assignmentRepository.GetById(query.Id);
+        var assignment = await _assignmentRepository.GetById(query.Id);
 
         if (assignment is null) return Error.NotFound("Assignment not found");
 

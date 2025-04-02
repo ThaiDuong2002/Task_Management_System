@@ -15,15 +15,13 @@ public class UpdateAssignmentCommandHandler : IRequestHandler<UpdateAssignmentCo
         _assignmentRepository = assignmentRepository;
     }
 
-    public async Task<ErrorOr<ModifyAssignmentResult>> Handle(UpdateAssignmentCommand request,
+    public async Task<ErrorOr<ModifyAssignmentResult>> Handle(UpdateAssignmentCommand command,
         CancellationToken cancellationToken)
     {
-        await Task.CompletedTask;
+        var result = await _assignmentRepository.Update(command);
 
-        var result = _assignmentRepository.Update(request);
+        if (result == 0) return Errors.Assignment.NotFound;
 
-        if (result is null) return Errors.Assignment.NotFound;
-
-        return new ModifyAssignmentResult(result.Value);
+        return new ModifyAssignmentResult(command.Id);
     }
 }

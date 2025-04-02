@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using Backend.Application.Services.Assignments.Commands.DeleteAssignment;
+﻿using Backend.Application.Services.Assignments.Commands.DeleteAssignment;
 using Backend.Application.Services.Assignments.Commands.UpdateAssignment;
 using Backend.Domain.Models.AssignmentModel;
 
@@ -7,9 +6,9 @@ namespace Backend.Application.Common.Interfaces.Persistence;
 
 public interface IAssignmentRepository
 {
-    Assignment? GetById(Guid id);
-    ReadOnlyCollection<Assignment> GetAll(int? page, int? limit, string? status, string? priority);
-    void Create(Assignment assignment);
-    Guid? Update(UpdateAssignmentCommand command);
-    Guid? Delete(DeleteAssignmentCommand command);
+    Task<Assignment?> GetById(Guid id);
+    Task<List<Assignment>> GetAll(int? page, int? limit, string? status, string? priority);
+    Task<int> Create(Assignment assignment);
+    Task<int> Update(UpdateAssignmentCommand command);
+    Task<int> Delete(DeleteAssignmentCommand command);
 }

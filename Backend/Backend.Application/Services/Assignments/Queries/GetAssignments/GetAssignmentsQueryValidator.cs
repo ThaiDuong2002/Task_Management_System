@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Backend.Application.Assignments.Queries.GetAssignments;
+namespace Backend.Application.Services.Assignments.Queries.GetAssignments;
 
 public class GetAssignmentsQueryValidator : AbstractValidator<GetAssignmentsQuery>
 {

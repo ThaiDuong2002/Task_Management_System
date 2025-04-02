@@ -1,22 +1,26 @@
-﻿using System.Collections.ObjectModel;
-using Backend.Application.Common.Interfaces.Persistence;
+﻿using Backend.Application.Common.Interfaces.Persistence;
 using Backend.Application.Services.Assignments.Commands.DeleteAssignment;
 using Backend.Application.Services.Assignments.Commands.UpdateAssignment;
 using Backend.Domain.Models.AssignmentModel;
 using Backend.Domain.Models.AssignmentModel.ValueObjects;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Infrastructure.Persistence.Repositories;
 
 public class AssignmentRepository : IAssignmentRepository
 {
-    private static readonly List<Assignment> _assignments = new();
-    // private readonly PostgresDbContext _dbContext;
+    private readonly PostgresDbContext _dbContext;
 
-    public Guid? Update(UpdateAssignmentCommand command)
+    public AssignmentRepository(PostgresDbContext dbContext)
     {
-        var existingAssignment = _assignments.FirstOrDefault(a => a.Id.Value == command.Id);
+        _dbContext = dbContext;
+    }
 
-        if (existingAssignment is null) return null;
+    public async Task<int> Update(UpdateAssignmentCommand command)
+    {
+        var assignmentId = AssignmentId.Create(command.Id);
+        var existingAssignment = await _dbContext.Assignments.FirstOrDefaultAsync(a => a.Id == assignmentId);
+        if (existingAssignment is null) return 0;
 
         existingAssignment.Update(
             command.Title,
@@ -26,41 +30,42 @@ public class AssignmentRepository : IAssignmentRepository
             command.DueDate
         );
 
-        return existingAssignment.Id.Value;
+        _dbContext.Assignments.Update(existingAssignment);
+        return await _dbContext.SaveChangesAsync();
     }
 
-    public Guid? Delete(DeleteAssignmentCommand command)
+    public async Task<int> Delete(DeleteAssignmentCommand command)
     {
-        var existingAssignment = _assignments.FirstOrDefault(a => a.Id.Value == command.Id);
+        var assignmentId = AssignmentId.Create(command.Id);
+        var existingAssignment = await _dbContext.Assignments.FirstOrDefaultAsync(a => a.Id == assignmentId);
+        if (existingAssignment is null) return 0;
 
-        if (existingAssignment is null) return null;
-
-        _assignments.Remove(existingAssignment);
-
-        return existingAssignment.Id.Value;
+        _dbContext.Assignments.Remove(existingAssignment);
+        return await _dbContext.SaveChangesAsync();
     }
 
-    public Assignment? GetById(Guid id)
+    public async Task<Assignment?> GetById(Guid id)
     {
-        return _assignments.FirstOrDefault(a => a.Id.Value == id);
+        var assignmentId = AssignmentId.Create(id);
+        return await _dbContext.Assignments.FirstOrDefaultAsync(a => a.Id == assignmentId);
     }
 
-    public void Create(Assignment assignment)
+    public async Task<int> Create(Assignment assignment)
     {
-        _assignments.Add(assignment);
+        await _dbContext.Assignments.AddAsync(assignment);
+        return await _dbContext.SaveChangesAsync();
     }
 
-    public ReadOnlyCollection<Assignment> GetAll(int? page, int? limit, string? status, string? priority)
+    public async Task<List<Assignment>> GetAll(int? page, int? limit, string? status, string? priority)
     {
-        var assignments = _assignments.AsQueryable();
+        var query = _dbContext.Assignments.AsQueryable();
 
-        if (status is not null) assignments = assignments.Where(a => a.Status.ToString() == status);
+        if (status is not null) query = query.Where(a => a.Status.Value == status);
 
-        if (priority is not null) assignments = assignments.Where(a => a.Priority.ToString() == priority);
+        if (priority is not null) query = query.Where(a => a.Priority.Value == priority);
 
-        if (page.HasValue && limit.HasValue)
-            assignments = assignments.Skip((page.Value - 1) * limit.Value).Take(limit.Value);
+        if (page.HasValue && limit.HasValue) query = query.Skip((page.Value - 1) * limit.Value).Take(limit.Value);
 
-        return assignments.ToList().AsReadOnly();
+        return await query.ToListAsync();
     }
 }

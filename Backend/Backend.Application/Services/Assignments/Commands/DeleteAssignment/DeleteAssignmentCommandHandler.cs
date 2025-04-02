@@ -18,12 +18,10 @@ public class DeleteAssignmentCommandHandler : IRequestHandler<DeleteAssignmentCo
     public async Task<ErrorOr<ModifyAssignmentResult>> Handle(DeleteAssignmentCommand command,
         CancellationToken cancellationToken)
     {
-        await Task.CompletedTask;
+        var result = await _assignmentRepository.Delete(command);
 
-        var result = _assignmentRepository.Delete(command);
+        if (result == 0) return Errors.Assignment.NotFound;
 
-        if (result is null) return Errors.Assignment.NotFound;
-
-        return new ModifyAssignmentResult(result.Value);
+        return new ModifyAssignmentResult(command.Id);
     }
 }
