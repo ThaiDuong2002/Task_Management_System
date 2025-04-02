@@ -27,7 +27,7 @@ public class DeleteDependencyCommandHandler : IRequestHandler<DeleteDependencyCo
         if (dependentAssignment is null) return Errors.Assignment.DependentNotFound;
 
         // Check if the dependency exists
-        var dependencies = await _dependencyRepository.GetByAssignmentId(command.AssignmentId);
+        var dependencies = await _dependencyRepository.GetAll(command.AssignmentId);
         var existingDependency =
             dependencies.FirstOrDefault(d => d.DependOnAssignmentId.Value == command.DependOnAssignmentId);
 

@@ -22,20 +22,31 @@ public class DependencyRepository : IDependencyRepository
 
     public async Task<int> Delete(Dependency dependency)
     {
-        Console.WriteLine(dependency.AssignmentId.Value);
         _dbContext.Dependencies.Remove(dependency);
         return await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<List<Dependency>> GetAll()
+    public async Task<List<Dependency>> GetAll(Guid id)
     {
-        return await _dbContext.Dependencies.ToListAsync();
+        var query = _dbContext.Dependencies.AsQueryable();
+
+        var assignmentId = AssignmentId.Create(id);
+
+        if (id != Guid.Empty) query = query.Where(d => d.AssignmentId == assignmentId);
+
+        return await query.ToListAsync();
     }
 
-    public async Task<List<Dependency>> GetByAssignmentId(Guid id)
+    public async Task<List<Dependency>> GetByAssignmentId(Guid id, int? page, int? limit)
     {
-        return await _dbContext.Dependencies
-            .Where(d => d.AssignmentId == AssignmentId.Create(id))
-            .ToListAsync();
+        var query = _dbContext.Dependencies.AsQueryable();
+
+        var assignmentId = AssignmentId.Create(id);
+
+        if (id != Guid.Empty) query = query.Where(d => d.AssignmentId == assignmentId);
+
+        if (page.HasValue && limit.HasValue) query = query.Skip((page.Value - 1) * limit.Value).Take(limit.Value);
+
+        return await query.ToListAsync();
     }
 }

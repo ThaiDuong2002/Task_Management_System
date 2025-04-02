@@ -29,7 +29,7 @@ public class CreateDependencyCommandHandler : IRequestHandler<CreateDependencyCo
         if (dependentAssignment is null) return Errors.Assignment.DependentNotFound;
 
         // Check if the dependency exists
-        var dependencies = await _dependencyRepository.GetByAssignmentId(command.AssignmentId);
+        var dependencies = await _dependencyRepository.GetAll(command.AssignmentId);
         var dependencyExists = dependencies.Any(d => d.DependOnAssignmentId.Value == command.DependOnAssignmentId);
 
         if (dependencyExists) return Errors.Dependency.AlreadyExists;

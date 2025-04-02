@@ -1,5 +1,6 @@
 ﻿using Backend.Application.Services.Dependencies.Commands.CreateDependency;
 using Backend.Application.Services.Dependencies.Commands.DeleteDependency;
+using Backend.Application.Services.Dependencies.Queries.GetDependencies;
 using Backend.Contracts.Dependencies;
 using MapsterMapper;
 using MediatR;
@@ -20,9 +21,18 @@ public class DependenciesController : ApiController
     }
 
     [HttpGet]
-    public IActionResult ListDependencies(Guid taskId, [FromQuery] int page = 1, int limit = 10)
+    public async Task<IActionResult> ListDependencies(Guid assignmentId, [FromQuery] int? page, int? limit)
     {
-        return Ok(Array.Empty<string>());
+        var query = _mapper.Map<GetDependenciesQuery>((assignmentId, page, limit));
+        
+        Console.WriteLine(query.Id);
+
+        var result = await _mediator.Send(query);
+
+        return result.Match(
+            dependencies => Ok(_mapper.Map<List<DependencyResponse>>(dependencies)),
+            errors => Problem(errors)
+        );
     }
 
     [HttpPost]
