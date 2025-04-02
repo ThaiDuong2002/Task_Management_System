@@ -22,7 +22,7 @@ public class CreateAssignmentCommandHandler : IRequestHandler<CreateAssignmentCo
     public async Task<ErrorOr<Assignment>> Handle(CreateAssignmentCommand command, CancellationToken cancellationToken)
     {
         // Check if the user exists
-        var userResult = await _userRepository.GetById(UserId.Create(command.UserId));
+        var userResult = await _userRepository.GetById(command.UserId);
 
         if (userResult is null) return Errors.User.NotFound;
 

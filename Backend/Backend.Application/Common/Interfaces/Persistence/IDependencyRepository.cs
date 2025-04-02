@@ -4,6 +4,8 @@ namespace Backend.Application.Common.Interfaces.Persistence;
 
 public interface IDependencyRepository
 {
-    void Create(Dependency dependency);
-    int Delete(Dependency dependency);
+    Task<int> Create(Dependency dependency);
+    Task<int> Delete(Dependency dependency);
+    Task<List<Dependency>> GetAll();
+    Task<List<Dependency>> GetByAssignmentId(Guid id);
 }

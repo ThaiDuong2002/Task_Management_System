@@ -10,5 +10,10 @@ public static partial class Errors
             "Assignment.NotFound",
             "Assignment not found."
         );
+
+        public static Error DependentNotFound => Error.NotFound(
+            "Assignment.DependentNotFound",
+            "Dependent Assignment not found."
+        );
     }
 }

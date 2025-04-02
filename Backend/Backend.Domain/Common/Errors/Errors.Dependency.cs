@@ -10,5 +10,20 @@ public static partial class Errors
             "Dependency.NotFound",
             "Dependency not found."
         );
+
+        public static Error AlreadyExists => Error.Conflict(
+            "Dependency.AlreadyExists",
+            "Dependency already exists."
+        );
+
+        public static Error CreateFailed => Error.Failure(
+            "Dependency.CreateFailed",
+            "Failed to create dependency."
+        );
+
+        public static Error DeleteFailed => Error.Failure(
+            "Dependency.DeleteFailed",
+            "Failed to delete dependency."
+        );
     }
 }

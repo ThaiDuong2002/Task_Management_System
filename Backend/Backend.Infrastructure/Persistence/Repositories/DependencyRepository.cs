@@ -1,28 +1,41 @@
 ﻿using Backend.Application.Common.Interfaces.Persistence;
+using Backend.Domain.Models.AssignmentModel.ValueObjects;
 using Backend.Domain.Models.DependencyModel;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Infrastructure.Persistence.Repositories;
 
 public class DependencyRepository : IDependencyRepository
 {
-    private static readonly List<Dependency> _dependencies = new();
+    private readonly PostgresDbContext _dbContext;
 
-    public void Create(Dependency dependency)
+    public DependencyRepository(PostgresDbContext dbContext)
     {
-        _dependencies.Add(dependency);
+        _dbContext = dbContext;
     }
 
-    public int Delete(Dependency dependency)
+    public async Task<int> Create(Dependency dependency)
     {
-        var existingDependency = _dependencies.FirstOrDefault(
-            d => d.AssignmentId == dependency.AssignmentId
-                 && d.DependOnAssignmentId == dependency.DependOnAssignmentId
-        );
+        await _dbContext.Dependencies.AddAsync(dependency);
+        return await _dbContext.SaveChangesAsync();
+    }
 
-        if (existingDependency is null) return 0;
+    public async Task<int> Delete(Dependency dependency)
+    {
+        Console.WriteLine(dependency.AssignmentId.Value);
+        _dbContext.Dependencies.Remove(dependency);
+        return await _dbContext.SaveChangesAsync();
+    }
 
-        _dependencies.Remove(existingDependency);
+    public async Task<List<Dependency>> GetAll()
+    {
+        return await _dbContext.Dependencies.ToListAsync();
+    }
 
-        return 1;
+    public async Task<List<Dependency>> GetByAssignmentId(Guid id)
+    {
+        return await _dbContext.Dependencies
+            .Where(d => d.AssignmentId == AssignmentId.Create(id))
+            .ToListAsync();
     }
 }

@@ -1,7 +1,5 @@
 ﻿using Backend.Application.Common.Interfaces.Persistence;
 using Backend.Domain.Common.Errors;
-using Backend.Domain.Models.AssignmentModel.ValueObjects;
-using Backend.Domain.Models.DependencyModel;
 using ErrorOr;
 using MediatR;
 
@@ -9,26 +7,35 @@ namespace Backend.Application.Services.Dependencies.Commands.DeleteDependency;
 
 public class DeleteDependencyCommandHandler : IRequestHandler<DeleteDependencyCommand, ErrorOr<int>>
 {
+    private readonly IAssignmentRepository _assignmentRepository;
     private readonly IDependencyRepository _dependencyRepository;
 
-    public DeleteDependencyCommandHandler(IDependencyRepository dependencyRepository)
+    public DeleteDependencyCommandHandler(IDependencyRepository dependencyRepository,
+        IAssignmentRepository assignmentRepository)
     {
         _dependencyRepository = dependencyRepository;
+        _assignmentRepository = assignmentRepository;
     }
-
 
     public async Task<ErrorOr<int>> Handle(DeleteDependencyCommand command, CancellationToken cancellationToken)
     {
-        await Task.CompletedTask;
+        // Check if the assignment exists
+        var assignment = await _assignmentRepository.GetById(command.AssignmentId);
+        if (assignment is null) return Errors.Assignment.NotFound;
+        // Check if the dependent assignment exists
+        var dependentAssignment = await _assignmentRepository.GetById(command.DependOnAssignmentId);
+        if (dependentAssignment is null) return Errors.Assignment.DependentNotFound;
 
-        var dependency = Dependency.Create(
-            AssignmentId.Create(command.AssignmentId),
-            AssignmentId.Create(command.DependOnAssignmentId)
-        );
+        // Check if the dependency exists
+        var dependencies = await _dependencyRepository.GetByAssignmentId(command.AssignmentId);
+        var existingDependency =
+            dependencies.FirstOrDefault(d => d.DependOnAssignmentId.Value == command.DependOnAssignmentId);
 
-        var result = _dependencyRepository.Delete(dependency);
+        if (existingDependency is null) return Errors.Dependency.NotFound;
 
-        if (result == 0) return Errors.Dependency.NotFound;
+        var result = await _dependencyRepository.Delete(existingDependency);
+
+        if (result == 0) return Errors.Dependency.DeleteFailed;
 
         return result;
     }

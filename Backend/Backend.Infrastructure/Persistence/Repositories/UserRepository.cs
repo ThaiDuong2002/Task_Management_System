@@ -25,10 +25,11 @@ public class UserRepository : IUserRepository
         return await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
     }
 
-    public async Task<User?> GetById(UserId id)
+    public async Task<User?> GetById(Guid id)
     {
+        var userId = UserId.Create(id);
         return await _dbContext.Users
             .Include(u => u.Assignments)
-            .FirstOrDefaultAsync(u => u.Id == id);
+            .FirstOrDefaultAsync(u => u.Id == userId);
     }
 }
