@@ -16,12 +16,14 @@ public class UpdateAssignmentCommandValidator : AbstractValidator<UpdateAssignme
             .WithMessage("Description cannot be empty.");
 
         RuleFor(x => x.Status)
-            .NotEmpty()
-            .WithMessage("Status is required.");
+            .Must(status => status == null || new[] { "Pending", "In progress", "Completed" }
+                .Contains(status))
+            .WithMessage("Status must be 'Pending', 'In progress', or 'Completed'.");
 
         RuleFor(x => x.Priority)
-            .NotEmpty()
-            .WithMessage("Priority is required.");
+            .Must(priority => priority == null || new[] { "Low", "Medium", "High" }
+                .Contains(priority))
+            .WithMessage("Priority must be 'Low', 'Medium', or 'High'.");
 
         RuleFor(x => x.DueDate)
             .NotEmpty()

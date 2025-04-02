@@ -64,12 +64,10 @@ public class AssignmentConfigurations : IEntityTypeConfiguration<Assignment>
             .IsRequired();
 
         builder.Property(a => a.CreatedAt)
-            .HasDefaultValueSql("CURRENT_TIMESTAMP")
-            .ValueGeneratedOnAdd();
+            .IsRequired();
 
         builder.Property(a => a.UpdatedAt)
-            .HasDefaultValueSql("CURRENT_TIMESTAMP")
-            .ValueGeneratedOnAddOrUpdate();
+            .IsRequired();
 
         builder
             .HasMany(a => a.Dependencies)
