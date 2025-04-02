@@ -9,6 +9,10 @@ public class UserId : ValueObject
         Value = value;
     }
 
+    private UserId()
+    {
+    }
+
     public Guid Value { get; }
 
     public static UserId CreateUnique()

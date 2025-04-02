@@ -10,5 +10,15 @@ public static partial class Errors
             "User.DuplicateEmail",
             "Email is already in use."
         );
+
+        public static Error FailedToRegister => Error.Failure(
+            "User.FailedToRegister",
+            "Failed to register user."
+        );
+
+        public static Error InvalidCredentials => Error.Validation(
+            "User.InvalidCredentials",
+            "Invalid credentials."
+        );
     }
 }

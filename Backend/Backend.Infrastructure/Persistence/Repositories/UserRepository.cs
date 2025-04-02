@@ -5,15 +5,21 @@ namespace Backend.Infrastructure.Persistence.Repositories;
 
 public class UserRepository : IUserRepository
 {
-    private static readonly List<User> _users = new();
+    private readonly PostgresDbContext _dbContext;
 
-    public void Add(User user)
+    public UserRepository(PostgresDbContext dbContext)
     {
-        _users.Add(user);
+        _dbContext = dbContext;
+    }
+
+    public async Task<int> AddAsync(User user)
+    {
+        await _dbContext.Users.AddAsync(user);
+        return await _dbContext.SaveChangesAsync();
     }
 
     public User? GetUserByEmail(string email)
     {
-        return _users.FirstOrDefault(u => u.Email == email);
+        return _dbContext.Users.FirstOrDefault(u => u.Email == email);
     }
 }

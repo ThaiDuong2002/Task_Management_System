@@ -7,6 +7,11 @@ public abstract class Entity<TId> : IEquatable<Entity<TId>> where TId : notnull
         Id = id;
     }
 
+    protected Entity()
+    {
+        Id = default!;
+    }
+
     public TId Id { get; protected set; }
 
     public bool Equals(Entity<TId>? obj)

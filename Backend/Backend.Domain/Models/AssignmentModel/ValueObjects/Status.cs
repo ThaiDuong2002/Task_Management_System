@@ -14,6 +14,11 @@ public class Status : ValueObject
         Value = value;
     }
 
+    private Status()
+    {
+        Value = Default.Value;
+    }
+
     public string Value { get; }
 
     protected override IEnumerable<object> GetEqualityComponents()

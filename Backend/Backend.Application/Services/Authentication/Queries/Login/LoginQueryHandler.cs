@@ -11,12 +11,15 @@ namespace Backend.Application.Services.Authentication.Queries.Login;
 public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<AuthenticationResult>>
 {
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
+    private readonly ISecurePasswordProvider _securePasswordProvider;
     private readonly IUserRepository _userRepository;
 
-    public LoginQueryHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository)
+    public LoginQueryHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository,
+        ISecurePasswordProvider securePasswordProvider)
     {
         _jwtTokenGenerator = jwtTokenGenerator;
         _userRepository = userRepository;
+        _securePasswordProvider = securePasswordProvider;
     }
 
     public async Task<ErrorOr<AuthenticationResult>> Handle(LoginQuery query, CancellationToken cancellationToken)
@@ -27,7 +30,8 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<Authenticat
             return Errors.Authentication.InvalidCredentials;
 
         // 2. Validate the password is correct.
-        if (user.Password != query.Password) return Errors.Authentication.InvalidCredentials;
+        if (!_securePasswordProvider.Verify(query.Password, user.Password, query.Email))
+            return Errors.Authentication.InvalidCredentials;
         // 3. Create JWT token.
         var token = _jwtTokenGenerator.GenerateToken(user);
 

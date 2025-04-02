@@ -13,6 +13,11 @@ public class NotificationType : ValueObject
         Value = value;
     }
 
+    private NotificationType()
+    {
+        Value = Default.Value;
+    }
+
     public string Value { get; }
 
     protected override IEnumerable<object> GetEqualityComponents()

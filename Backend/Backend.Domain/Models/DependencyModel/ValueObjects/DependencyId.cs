@@ -9,6 +9,10 @@ public class DependencyId : ValueObject
         Value = value;
     }
 
+    private DependencyId()
+    {
+    }
+
     public Guid Value { get; }
 
     public static DependencyId CreateUnique()

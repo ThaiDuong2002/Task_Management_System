@@ -15,11 +15,17 @@ public class Dependency : Entity<DependencyId>
         DependOnAssignmentId = dependOnAssignmentIdId;
     }
 
-    public AssignmentId AssignmentId { get; }
-    public AssignmentId DependOnAssignmentId { get; }
+    private Dependency() : base(null!)
+    {
+        AssignmentId = null!;
+        DependOnAssignmentId = null!;
+    }
 
-    public Assignment Assignment { get; set; } = null!;
-    public Assignment DependOnAssignment { get; set; } = null!;
+    public AssignmentId AssignmentId { get; private set; }
+    public AssignmentId DependOnAssignmentId { get; private set; }
+
+    public Assignment Assignment { get; private set; } = null!;
+    public Assignment DependOnAssignment { get; private set; } = null!;
 
     public static Dependency Create(AssignmentId assignmentId, AssignmentId dependOnAssignmentIdId)
     {

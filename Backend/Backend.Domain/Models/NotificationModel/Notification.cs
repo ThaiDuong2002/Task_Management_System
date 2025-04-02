@@ -18,11 +18,20 @@ public class Notification : Entity<NotificationId>
         CreatedAt = createdAt;
     }
 
-    public UserId UserId { get; }
-    public AssignmentId AssignmentId { get; }
-    public NotificationType Type { get; }
-    public string Message { get; }
-    public DateTime CreatedAt { get; }
+    public Notification() : base(null!)
+    {
+        UserId = null!;
+        AssignmentId = null!;
+        Type = NotificationType.Default;
+        Message = null!;
+        CreatedAt = default!;
+    }
+
+    public UserId UserId { get; private set; }
+    public AssignmentId AssignmentId { get; private set; }
+    public NotificationType Type { get; private set; }
+    public string Message { get; private set; }
+    public DateTime CreatedAt { get; private set; }
 
     public static Notification Create(UserId userId, AssignmentId assignmentId, NotificationType type, string message,
         DateTime createdAt)

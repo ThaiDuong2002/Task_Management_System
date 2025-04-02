@@ -11,19 +11,20 @@ namespace Backend.Application.Services.Authentication.Commands.Register;
 public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<AuthenticationResult>>
 {
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
+    private readonly ISecurePasswordProvider _securePasswordProvider;
     private readonly IUserRepository _userRepository;
 
-    public RegisterCommandHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository)
+    public RegisterCommandHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository,
+        ISecurePasswordProvider securePasswordProvider)
     {
         _jwtTokenGenerator = jwtTokenGenerator;
         _userRepository = userRepository;
+        _securePasswordProvider = securePasswordProvider;
     }
 
     public async Task<ErrorOr<AuthenticationResult>> Handle(RegisterCommand command,
         CancellationToken cancellationToken)
     {
-        await Task.CompletedTask;
-
         if (_userRepository.GetUserByEmail(command.Email) is not null)
             return Errors.User.DuplicateEmail;
         ;
@@ -33,10 +34,14 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
             command.FirstName,
             command.LastName,
             command.Email,
-            command.Password
+            _securePasswordProvider.Encrypt(command.Password, command.Email)
         );
 
-        _userRepository.Add(user);
+        var result = await _userRepository.AddAsync(user);
+
+        if (result == 0)
+            return Errors.User.FailedToRegister;
+
         // Generate token
         var token = _jwtTokenGenerator.GenerateToken(user);
 

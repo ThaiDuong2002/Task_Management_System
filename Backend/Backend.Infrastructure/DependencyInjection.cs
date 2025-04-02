@@ -20,15 +20,17 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services,
         ConfigurationManager configuration)
     {
-        services.AddAuth(configuration).AddPersistence();
+        services.AddAuth(configuration).AddPersistence(configuration);
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 
         return services;
     }
 
-    private static IServiceCollection AddPersistence(this IServiceCollection services)
+    private static IServiceCollection AddPersistence(this IServiceCollection services,
+        ConfigurationManager configuration)
     {
-        services.AddDbContext<PostgresDbContext>(options => options.UseNpgsql());
+        services.AddDbContext<PostgresDbContext>(options =>
+            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IAssignmentRepository, AssignmentRepository>();
@@ -47,6 +49,8 @@ public static class DependencyInjection
         services.AddSingleton(Options.Create(jwtSettings));
         services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
+        services.AddScoped<ISecurePasswordProvider, SecurePasswordProvider>();
+
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
             options => options.TokenValidationParameters = new TokenValidationParameters
             {

@@ -14,6 +14,11 @@ public class Priority : ValueObject
         Value = value;
     }
 
+    private Priority()
+    {
+        Value = Default.Value;
+    }
+
     public string Value { get; }
 
     protected override IEnumerable<object> GetEqualityComponents()

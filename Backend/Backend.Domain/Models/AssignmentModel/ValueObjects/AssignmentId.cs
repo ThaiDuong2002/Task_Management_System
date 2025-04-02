@@ -9,6 +9,10 @@ public sealed class AssignmentId : ValueObject
         Value = value;
     }
 
+    private AssignmentId()
+    {
+    }
+
     public Guid Value { get; }
 
     public static AssignmentId CreateUnique()

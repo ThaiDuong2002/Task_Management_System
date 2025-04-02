@@ -9,6 +9,10 @@ public class NotificationId : ValueObject
         Value = value;
     }
 
+    private NotificationId()
+    {
+    }
+
     public Guid Value { get; }
 
     public static NotificationId CreateUnique()
