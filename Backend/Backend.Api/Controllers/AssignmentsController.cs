@@ -82,7 +82,7 @@ public class AssignmentsController : ApiController
         var result = await _mediator.Send(command);
 
         return result.Match(
-            assignment => Ok(_mapper.Map<ModifyAssignmentResponse>(assignment)),
+            _ => NoContent(),
             errors => Problem(errors)
         );
     }

@@ -1,6 +1,7 @@
 ﻿using Backend.Application.Common.Interfaces.Persistence;
 using Backend.Application.Services.Assignments.Common;
 using Backend.Domain.Common.Errors;
+using Backend.Domain.Models.AssignmentModel.ValueObjects;
 using ErrorOr;
 using MediatR;
 
@@ -18,10 +19,25 @@ public class UpdateAssignmentCommandHandler : IRequestHandler<UpdateAssignmentCo
     public async Task<ErrorOr<ModifyAssignmentResult>> Handle(UpdateAssignmentCommand command,
         CancellationToken cancellationToken)
     {
-        var result = await _assignmentRepository.Update(command);
+        // Check if the assignment exists
+        var assignment = await _assignmentRepository.GetById(command.Id);
+        if (assignment is null) return Errors.Assignment.NotFound;
 
-        if (result == 0) return Errors.Assignment.NotFound;
+        // Update the assignment
+        assignment.Update(
+            command.Title,
+            command.Description,
+            Status.Create(command.Status),
+            Priority.Create(command.Priority),
+            command.DueDate
+        );
 
-        return new ModifyAssignmentResult(command.Id);
+        // Save changes to the database
+        var result = await _assignmentRepository.Update(assignment);
+
+        if (result == 0) return Errors.Assignment.UpdateFailed;
+
+        // Return the result
+        return new ModifyAssignmentResult(assignment.Id.Value);
     }
 }

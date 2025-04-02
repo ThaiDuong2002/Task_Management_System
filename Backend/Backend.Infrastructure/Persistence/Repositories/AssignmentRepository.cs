@@ -1,6 +1,4 @@
 ﻿using Backend.Application.Common.Interfaces.Persistence;
-using Backend.Application.Services.Assignments.Commands.DeleteAssignment;
-using Backend.Application.Services.Assignments.Commands.UpdateAssignment;
 using Backend.Domain.Models.AssignmentModel;
 using Backend.Domain.Models.AssignmentModel.ValueObjects;
 using Microsoft.EntityFrameworkCore;
@@ -16,31 +14,15 @@ public class AssignmentRepository : IAssignmentRepository
         _dbContext = dbContext;
     }
 
-    public async Task<int> Update(UpdateAssignmentCommand command)
+    public async Task<int> Update(Assignment assignment)
     {
-        var assignmentId = AssignmentId.Create(command.Id);
-        var existingAssignment = await _dbContext.Assignments.FirstOrDefaultAsync(a => a.Id == assignmentId);
-        if (existingAssignment is null) return 0;
-
-        existingAssignment.Update(
-            command.Title,
-            command.Description,
-            Status.Create(command.Status),
-            Priority.Create(command.Priority),
-            command.DueDate
-        );
-
-        _dbContext.Assignments.Update(existingAssignment);
+        _dbContext.Assignments.Update(assignment);
         return await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<int> Delete(DeleteAssignmentCommand command)
+    public async Task<int> Delete(Assignment assignment)
     {
-        var assignmentId = AssignmentId.Create(command.Id);
-        var existingAssignment = await _dbContext.Assignments.FirstOrDefaultAsync(a => a.Id == assignmentId);
-        if (existingAssignment is null) return 0;
-
-        _dbContext.Assignments.Remove(existingAssignment);
+        _dbContext.Assignments.Remove(assignment);
         return await _dbContext.SaveChangesAsync();
     }
 

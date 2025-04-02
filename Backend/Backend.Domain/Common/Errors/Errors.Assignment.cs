@@ -15,5 +15,25 @@ public static partial class Errors
             "Assignment.DependentNotFound",
             "Dependent Assignment not found."
         );
+
+        public static Error UserNotFound => Error.NotFound(
+            "Assignment.UserNotFound",
+            "User not found."
+        );
+
+        public static Error CreateFailed => Error.Failure(
+            "Assignment.CreateFailed",
+            "Failed to create assignment."
+        );
+
+        public static Error DeleteFailed => Error.Failure(
+            "Assignment.DeleteFailed",
+            "Failed to delete assignment."
+        );
+
+        public static Error UpdateFailed => Error.Failure(
+            "Assignment.UpdateFailed",
+            "Failed to update assignment."
+        );
     }
 }

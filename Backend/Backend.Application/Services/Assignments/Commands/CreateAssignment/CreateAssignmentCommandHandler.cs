@@ -35,7 +35,9 @@ public class CreateAssignmentCommandHandler : IRequestHandler<CreateAssignmentCo
             command.DueDate
         );
 
-        await _assignmentRepository.Create(assignment);
+        var result = await _assignmentRepository.Create(assignment);
+
+        if (result == 0) return Errors.Assignment.CreateFailed;
 
         return assignment;
     }
