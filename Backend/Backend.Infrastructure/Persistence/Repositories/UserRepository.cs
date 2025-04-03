@@ -14,7 +14,7 @@ public class UserRepository : IUserRepository
         _dbContext = dbContext;
     }
 
-    public async Task<int> Create(User user)
+    public async Task<Guid?> Create(User user)
     {
         var userIdentity = new UserIdentity
         {
@@ -22,11 +22,18 @@ public class UserRepository : IUserRepository
             Email = user.Email,
             NormalizedEmail = user.Email.ToUpper(),
             NormalizedUserName = user.UserName.ToUpper(),
+            FirstName = user.FirstName,
+            LastName = user.LastName,
             PasswordHash = user.PasswordHash
         };
 
-        await _dbContext.Users.AddAsync(userIdentity);
-        return await _dbContext.SaveChangesAsync();
+        var result = await _dbContext.Users.AddAsync(userIdentity);
+        var flag = await _dbContext.SaveChangesAsync();
+        
+        if (flag == 0)
+            return null;
+        
+        return result.Entity.Id;
     }
 
     public async Task<User?> GetUserByEmail(string email)

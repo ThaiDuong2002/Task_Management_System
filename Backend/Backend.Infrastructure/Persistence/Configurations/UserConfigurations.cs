@@ -17,6 +17,14 @@ public class UserConfigurations : IEntityTypeConfiguration<UserIdentity>
 
         builder.HasKey(u => u.Id);
 
+        builder.Property(u => u.FirstName)
+            .HasMaxLength(256)
+            .IsRequired();
+        
+        builder.Property(u => u.LastName)
+            .HasMaxLength(256)
+            .IsRequired();
+
         builder.HasMany(u => u.Assignments)
             .WithOne()
             .HasForeignKey(a => a.UserId)

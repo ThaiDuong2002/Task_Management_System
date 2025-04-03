@@ -37,20 +37,18 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
             FirstName = command.FirstName,
             LastName = command.LastName,
             Email = command.Email,
-            PasswordHash = command.Password
+            PasswordHash = _securePasswordProvider.Encrypt(command.Password, command.Email)
         };
 
         var result = await _userRepository.Create(user);
 
-        if (result == 0)
+        if (result is null)
             return Errors.User.FailedToRegister;
-
-        // Generate token
-        var token = _jwtTokenGenerator.GenerateToken(user);
+        Console.WriteLine(result);
+        user.Id = result;
 
         return new AuthenticationResult(
-            user,
-            token
+            user
         );
     }
 }
