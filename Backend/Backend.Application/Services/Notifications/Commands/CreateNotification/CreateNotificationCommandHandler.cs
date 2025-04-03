@@ -2,11 +2,10 @@
 using Backend.Domain.Models.AssignmentModel.ValueObjects;
 using Backend.Domain.Models.NotificationModel;
 using Backend.Domain.Models.NotificationModel.ValueObjects;
-using Backend.Domain.Models.UserModel.ValueObjects;
 using ErrorOr;
 using MediatR;
 
-namespace Backend.Application.Notifications.Commands.CreateNotification;
+namespace Backend.Application.Services.Notifications.Commands.CreateNotification;
 
 public class CreateNotificationCommandHandler : IRequestHandler<CreateNotificationCommand, ErrorOr<Notification>>
 {
@@ -23,7 +22,7 @@ public class CreateNotificationCommandHandler : IRequestHandler<CreateNotificati
         await Task.CompletedTask;
 
         var notification = Notification.Create(
-            UserId.Create(Guid.Parse(command.UserId)),
+            command.UserId,
             AssignmentId.Create(Guid.Parse(command.AssignmentId)),
             NotificationType.Create(command.Type),
             command.Message,

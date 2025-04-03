@@ -1,5 +1,5 @@
-﻿using Backend.Application.Notifications.Commands.CreateNotification;
-using Backend.Application.Notifications.Queries.GetNotifications;
+﻿using Backend.Application.Notifications.Queries.GetNotifications;
+using Backend.Application.Services.Notifications.Commands.CreateNotification;
 using Backend.Contracts.Notifications;
 using MapsterMapper;
 using MediatR;

@@ -2,7 +2,6 @@
 using Backend.Domain.Common.Errors;
 using Backend.Domain.Models.AssignmentModel;
 using Backend.Domain.Models.AssignmentModel.ValueObjects;
-using Backend.Domain.Models.UserModel.ValueObjects;
 using ErrorOr;
 using MediatR;
 
@@ -27,7 +26,7 @@ public class CreateAssignmentCommandHandler : IRequestHandler<CreateAssignmentCo
         if (userResult is null) return Errors.User.NotFound;
 
         var assignment = Assignment.Create(
-            UserId.Create(command.UserId),
+            command.UserId,
             command.Title,
             command.Description,
             Status.Create(command.Status),

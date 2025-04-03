@@ -1,45 +1,21 @@
-﻿using Backend.Domain.Models.UserModel;
-using Backend.Domain.Models.UserModel.ValueObjects;
+﻿using Backend.Infrastructure.Authentication.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Backend.Infrastructure.Persistence.Configurations;
 
-public class UserConfigurations : IEntityTypeConfiguration<User>
+public class UserConfigurations : IEntityTypeConfiguration<UserIdentity>
 {
-    public void Configure(EntityTypeBuilder<User> builder)
+    public void Configure(EntityTypeBuilder<UserIdentity> builder)
     {
         ConfigureUsersTable(builder);
     }
 
-    private static void ConfigureUsersTable(EntityTypeBuilder<User> builder)
+    private static void ConfigureUsersTable(EntityTypeBuilder<UserIdentity> builder)
     {
-        builder.ToTable("Users");
+        builder.ToTable("AspNetUsers");
 
         builder.HasKey(u => u.Id);
-
-        builder.Property(u => u.Id)
-            .HasConversion(
-                id => id.Value,
-                value => UserId.Create(value)
-            )
-            .IsRequired();
-
-        builder.Property(u => u.FirstName)
-            .HasMaxLength(100)
-            .IsRequired();
-
-        builder.Property(u => u.LastName)
-            .HasMaxLength(100)
-            .IsRequired();
-
-        builder.Property(u => u.Email)
-            .HasMaxLength(255)
-            .IsRequired();
-
-        builder.Property(u => u.Password)
-            .HasMaxLength(255)
-            .IsRequired();
 
         builder.HasMany(u => u.Assignments)
             .WithOne()

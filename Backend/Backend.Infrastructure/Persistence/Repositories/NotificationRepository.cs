@@ -11,7 +11,7 @@ public class NotificationRepository : INotificationRepository
     public ReadOnlyCollection<Notification> GetAll(Guid userId, int page, int limit)
     {
         var notifications = _notifications
-            .Where(n => n.UserId.Value == userId)
+            .Where(n => n.UserId == userId)
             .Skip((page - 1) * limit)
             .Take(limit)
             .ToList();

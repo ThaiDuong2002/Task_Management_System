@@ -30,12 +30,15 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
         ;
 
         // Create user (generate unique id)
-        var user = User.Create(
-            command.FirstName,
-            command.LastName,
-            command.Email,
-            _securePasswordProvider.Encrypt(command.Password, command.Email)
-        );
+        var user = new User
+        {
+            Id = null,
+            UserName = command.UserName,
+            FirstName = command.FirstName,
+            LastName = command.LastName,
+            Email = command.Email,
+            PasswordHash = command.Password
+        };
 
         var result = await _userRepository.Create(user);
 

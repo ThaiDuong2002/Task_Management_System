@@ -25,6 +25,7 @@ public class AuthenticationController : ApiController
     public async Task<IActionResult> Register(RegisterRequest request)
     {
         var authResult = await _mediator.Send(new RegisterCommand(
+            request.UserName,
             request.FirstName,
             request.LastName,
             request.Email,

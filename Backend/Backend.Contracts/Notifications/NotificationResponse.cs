@@ -1,7 +1,7 @@
 ﻿namespace Backend.Contracts.Notifications;
 
 public record NotificationResponse(
-    string Id,
+    Guid Id,
     string UserId,
     string AssignmentId,
     string Message,

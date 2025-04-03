@@ -1,6 +1,5 @@
 ﻿using Backend.Domain.Models.AssignmentModel;
 using Backend.Domain.Models.AssignmentModel.ValueObjects;
-using Backend.Domain.Models.UserModel.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -30,10 +29,6 @@ public class AssignmentConfigurations : IEntityTypeConfiguration<Assignment>
 
         builder
             .Property(a => a.UserId)
-            .HasConversion(
-                id => id.Value,
-                value => UserId.Create(value)
-            )
             .IsRequired();
 
         builder

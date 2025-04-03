@@ -10,7 +10,7 @@ public class AssignmentMappingConfig : IRegister
     {
         config.NewConfig<Assignment, AssignmentResponse>()
             .Map(dest => dest.Id, src => src.Id.Value)
-            .Map(dest => dest.UserId, src => src.UserId.Value)
+            .Map(dest => dest.UserId, src => src.UserId)
             .Map(dest => dest.Status, src => src.Status.Value)
             .Map(dest => dest.Priority, src => src.Priority.Value)
             .Map(dest => dest.Title, src => src.Title)

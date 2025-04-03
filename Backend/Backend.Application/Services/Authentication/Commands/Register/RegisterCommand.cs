@@ -5,6 +5,7 @@ using MediatR;
 namespace Backend.Application.Services.Authentication.Commands.Register;
 
 public record RegisterCommand(
+    string UserName,
     string FirstName,
     string LastName,
     string Email,
