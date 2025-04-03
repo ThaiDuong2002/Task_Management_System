@@ -17,8 +17,6 @@ public class GetAssignmentsQueryHandler : IRequestHandler<GetAssignmentsQuery, E
     public async Task<ErrorOr<List<Assignment>>> Handle(GetAssignmentsQuery query,
         CancellationToken cancellationToken)
     {
-        await Task.CompletedTask;
-
         var assignments = await _assignmentRepository.GetAll(query.Page, query.Limit, query.Status, query.Priority);
 
         return assignments;

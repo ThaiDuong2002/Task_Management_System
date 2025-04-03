@@ -9,11 +9,6 @@ public class NotificationMappingConfig : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<(Guid id, int page, int limit), GetNotificationsQuery>()
-            .Map(dest => dest.UserId, src => src.id)
-            .Map(dest => dest.Page, src => src.page)
-            .Map(dest => dest.Limit, src => src.limit);
-
         config.NewConfig<Notification, NotificationResponse>()
             .Map(dest => dest.UserId, src => src.UserId.Value)
             .Map(dest => dest.AssignmentId, src => src.AssignmentId.Value)

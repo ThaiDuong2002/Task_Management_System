@@ -24,8 +24,12 @@ public class AuthenticationController : ApiController
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterRequest request)
     {
-        var command = _mapper.Map<RegisterCommand>(request);
-        var authResult = await _mediator.Send(command);
+        var authResult = await _mediator.Send(new RegisterCommand(
+            request.FirstName,
+            request.LastName,
+            request.Email,
+            request.Password
+        ));
 
         return authResult.Match(
             result => Ok(_mapper.Map<AuthenticationResponse>(result)),
@@ -36,9 +40,10 @@ public class AuthenticationController : ApiController
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginRequest request)
     {
-        var query = _mapper.Map<LoginQuery>(request);
-
-        var authResult = await _mediator.Send(query);
+        var authResult = await _mediator.Send(new LoginQuery(
+            request.Email,
+            request.Password
+        ));
 
         return authResult.Match(
             result => Ok(_mapper.Map<AuthenticationResponse>(result)),

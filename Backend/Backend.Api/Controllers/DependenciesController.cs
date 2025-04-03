@@ -23,11 +23,7 @@ public class DependenciesController : ApiController
     [HttpGet]
     public async Task<IActionResult> ListDependencies(Guid assignmentId, [FromQuery] int? page, int? limit)
     {
-        var query = _mapper.Map<GetDependenciesQuery>((assignmentId, page, limit));
-        
-        Console.WriteLine(query.Id);
-
-        var result = await _mediator.Send(query);
+        var result = await _mediator.Send(new GetDependenciesQuery(assignmentId, page, limit));
 
         return result.Match(
             dependencies => Ok(_mapper.Map<List<DependencyResponse>>(dependencies)),
@@ -38,9 +34,10 @@ public class DependenciesController : ApiController
     [HttpPost]
     public async Task<IActionResult> CreateDependency(Guid assignmentId, CreateDependencyRequest request)
     {
-        var command = _mapper.Map<CreateDependencyCommand>((assignmentId, request));
-
-        var result = await _mediator.Send(command);
+        var result = await _mediator.Send(new CreateDependencyCommand(
+            assignmentId,
+            request.DependOnAssignmentId
+        ));
 
         return result.Match(
             dependency => Created(HttpContext.Request.Path, _mapper.Map<DependencyResponse>(dependency)),
@@ -51,9 +48,7 @@ public class DependenciesController : ApiController
     [HttpDelete("{dependencyId}")]
     public async Task<IActionResult> DeleteDependency(Guid assignmentId, Guid dependencyId)
     {
-        var command = _mapper.Map<DeleteDependencyCommand>((assignmentId, dependencyId));
-
-        var result = await _mediator.Send(command);
+        var result = await _mediator.Send(new DeleteDependencyCommand(assignmentId, dependencyId));
 
         return result.Match(
             _ => NoContent(),

@@ -1,7 +1,7 @@
 ﻿namespace Backend.Contracts.Assignments;
 
 public record CreateAssignmentRequest(
-    string UserId,
+    Guid UserId,
     string Title,
     string? Description,
     string? Status,

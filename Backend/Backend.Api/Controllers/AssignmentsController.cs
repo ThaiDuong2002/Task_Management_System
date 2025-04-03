@@ -25,9 +25,7 @@ public class AssignmentsController : ApiController
     [HttpGet]
     public async Task<IActionResult> GetAssignments([FromQuery] int? page, int? limit, string? status, string? priority)
     {
-        var query = _mapper.Map<GetAssignmentsQuery>((page, limit, status, priority));
-
-        var result = await _mediator.Send(query);
+        var result = await _mediator.Send(new GetAssignmentsQuery(page, limit, status, priority));
 
         return result.Match(
             assignments => Ok(_mapper.Map<List<AssignmentResponse>>(assignments)),
@@ -38,9 +36,7 @@ public class AssignmentsController : ApiController
     [HttpGet("{id}")]
     public async Task<IActionResult> GetAssignment(Guid id)
     {
-        var query = _mapper.Map<GetAssignmentQuery>(id);
-
-        var result = await _mediator.Send(query);
+        var result = await _mediator.Send(new GetAssignmentQuery(id));
 
         return result.Match(
             assignment => Ok(_mapper.Map<AssignmentResponse>(assignment)),
@@ -51,9 +47,14 @@ public class AssignmentsController : ApiController
     [HttpPost]
     public async Task<IActionResult> CreateAssignment(CreateAssignmentRequest request)
     {
-        var command = _mapper.Map<CreateAssignmentCommand>(request);
-
-        var result = await _mediator.Send(command);
+        var result = await _mediator.Send(new CreateAssignmentCommand(
+            request.UserId,
+            request.Title,
+            request.Description,
+            request.Status,
+            request.Priority,
+            request.DueDate
+        ));
 
         return result.Match(
             assignment => Created(HttpContext.Request.Path, _mapper.Map<AssignmentResponse>(assignment)),
@@ -64,9 +65,14 @@ public class AssignmentsController : ApiController
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateAssignment(UpdateAssignmentRequest request, Guid id)
     {
-        var command = _mapper.Map<UpdateAssignmentCommand>((request, id));
-
-        var result = await _mediator.Send(command);
+        var result = await _mediator.Send(new UpdateAssignmentCommand(
+            id,
+            request.Title,
+            request.Description,
+            request.Status,
+            request.Priority,
+            request.DueDate
+        ));
 
         return result.Match(
             assignment => Ok(_mapper.Map<ModifyAssignmentResponse>(assignment)),
@@ -77,9 +83,7 @@ public class AssignmentsController : ApiController
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAssignment(Guid id)
     {
-        var command = _mapper.Map<DeleteAssignmentCommand>(id);
-
-        var result = await _mediator.Send(command);
+        var result = await _mediator.Send(new DeleteAssignmentCommand(id));
 
         return result.Match(
             _ => NoContent(),

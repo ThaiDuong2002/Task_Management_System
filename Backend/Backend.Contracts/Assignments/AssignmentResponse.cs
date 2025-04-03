@@ -1,7 +1,7 @@
 ﻿namespace Backend.Contracts.Assignments;
 
 public record AssignmentResponse(
-    string Id,
+    Guid Id,
     string UserId,
     string Title,
     string Description,
