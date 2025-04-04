@@ -20,7 +20,6 @@ public class GetDependenciesQueryHandler : IRequestHandler<GetDependenciesQuery,
 
     public async Task<ErrorOr<List<Dependency>>> Handle(GetDependenciesQuery query, CancellationToken cancellationToken)
     {
-        Console.WriteLine(query.Id);
         // Check if the assignment exists
         var assignment = await _assignmentRepository.GetById(query.Id);
 

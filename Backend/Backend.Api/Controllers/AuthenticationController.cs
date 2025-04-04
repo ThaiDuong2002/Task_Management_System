@@ -1,3 +1,4 @@
+using Backend.Application.Services.Authentication.Commands.RefreshToken;
 using Backend.Application.Services.Authentication.Commands.Register;
 using Backend.Application.Services.Authentication.Queries.Login;
 using Backend.Contracts.Authentication;
@@ -48,6 +49,20 @@ public class AuthenticationController : ApiController
 
         return authResult.Match(
             result => Ok(_mapper.Map<LoginResponse>(result)),
+            errors => Problem(errors)
+        );
+    }
+
+    [HttpPost("refresh-token")]
+    public async Task<IActionResult> RefreshToken(TokenRequest request)
+    {
+        var authResult = await _mediator.Send(new RefreshTokenCommand(
+            request.AccessToken,
+            request.RefreshToken
+        ));
+
+        return authResult.Match(
+            result => Ok(_mapper.Map<TokenResponse>(result)),
             errors => Problem(errors)
         );
     }

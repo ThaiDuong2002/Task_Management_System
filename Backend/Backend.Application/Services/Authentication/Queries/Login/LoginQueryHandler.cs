@@ -32,11 +32,16 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<Authenticat
         if (!_securePasswordProvider.Verify(query.Password, user.PasswordHash, query.Email))
             return Errors.Authentication.InvalidCredentials;
         // 3. Create JWT token.
-        var token = _jwtTokenGenerator.GenerateToken(user);
+        var accessToken = _jwtTokenGenerator.GenerateToken(user);
+        var refreshToken = _jwtTokenGenerator.GenerateRefreshToken();
+
+        // 4. Store the refresh token in the database.
+        await _userRepository.StoreRefreshToken(user.Id!.Value.ToString(), refreshToken);
 
         return new AuthenticationResult(
             user,
-            token
+            accessToken,
+            refreshToken
         );
     }
 }

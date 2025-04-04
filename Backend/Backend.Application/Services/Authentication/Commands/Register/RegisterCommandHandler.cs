@@ -44,7 +44,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
 
         if (result is null)
             return Errors.User.FailedToRegister;
-        Console.WriteLine(result);
+
         user.Id = result;
 
         return new AuthenticationResult(

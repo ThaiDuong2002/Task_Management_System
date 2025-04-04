@@ -10,5 +10,15 @@ public static partial class Errors
             "Auth.InvalidCred",
             "Invalid credentials."
         );
+
+        public static Error InvalidToken => Error.Validation(
+            "Auth.InvalidToken",
+            "Invalid token."
+        );
+
+        public static Error Unauthorized => Error.Unauthorized(
+            "Auth.Unauthorized",
+            "Unauthorized."
+        );
     }
 }

@@ -3,10 +3,12 @@ using Backend.Application.Common.Interfaces.Authentication;
 using Backend.Application.Common.Interfaces.Persistence;
 using Backend.Application.Common.Interfaces.Services;
 using Backend.Infrastructure.Authentication;
+using Backend.Infrastructure.Authentication.Identity;
 using Backend.Infrastructure.Persistence;
 using Backend.Infrastructure.Persistence.Repositories;
 using Backend.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,6 +33,10 @@ public static class DependencyInjection
     {
         services.AddDbContext<PostgresDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+
+        services.AddIdentity<UserIdentity, IdentityRole<Guid>>()
+            .AddEntityFrameworkStores<PostgresDbContext>()
+            .AddDefaultTokenProviders();
 
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IAssignmentRepository, AssignmentRepository>();
