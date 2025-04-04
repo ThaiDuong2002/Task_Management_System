@@ -1,4 +1,5 @@
 using Backend.Api;
+using Backend.Api.Middlewares;
 using Backend.Application;
 using Backend.Infrastructure;
 
@@ -12,6 +13,7 @@ builder.Services
 var app = builder.Build();
 
 app.UseExceptionHandler("/error");
+app.UseMiddleware<LogHeadersMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseAuthentication();

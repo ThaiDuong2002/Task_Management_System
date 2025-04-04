@@ -87,9 +87,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
             ValidAudience = _jwtSettings.Audience,
             ValidateIssuer = true,
             ValidIssuer = _jwtSettings.Issuer,
-            ValidateLifetime = true,
-            LifetimeValidator = (before, expires, token1, parameters) =>
-                expires != null && expires > _dateTimeProvider.UtcNow,
+            ValidateLifetime = false,
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret))
         };
