@@ -8,7 +8,19 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/lib/*": ["./src/lib/*"],
+      "@/utils/*": ["./src/utils/*"],
+      "@/pages/*": ["./src/pages/*"],
+      "@/assets/*": ["./src/assets/*"],
+      "@/ui/*": ["./src/components/ui/*"],
+      "@/constants/*": ["./src/constants/*"],
+      "@/components/*": ["./src/components/*"],
+      "@/composables/*": ["./src/composables/*"]
+    }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
 }
