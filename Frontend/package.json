@@ -9,12 +9,19 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vueuse/core": "^13.0.0",
+    "axios": "^1.8.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-vue-next": "^0.487.0",
+    "pinia": "^3.0.1",
+    "reka-ui": "^2.2.0",
     "tailwind-merge": "^3.2.0",
     "tw-animate-css": "^1.2.5",
-    "vue": "^3.5.13"
+    "vee-validate": "^4.15.0",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.3",
@@ -25,5 +32,6 @@
     "typescript": "~5.7.3",
     "vite": "^6.2.0",
     "vue-tsc": "^2.2.4"
-  }
+  },
+  "packageManager": "pnpm@10.4.0+sha512.6b849d0787d97f8f4e1f03a9b8ff8f038e79e153d6f11ae539ae7c435ff9e796df6a862c991502695c7f9e8fac8aeafc1ac5a8dab47e36148d183832d886dd52"
 }
