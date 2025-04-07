@@ -8,7 +8,6 @@ using Backend.Infrastructure.Persistence;
 using Backend.Infrastructure.Persistence.Repositories;
 using Backend.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -40,7 +39,7 @@ public static class DependencyInjection
         Log.Logger = new LoggerConfiguration()
             .Enrich.FromLogContext()
             .WriteTo.Console()
-            .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day)
+            .WriteTo.File("../Logs/log-.txt", rollingInterval: RollingInterval.Day)
             .CreateLogger();
 
         services.AddLogging(loggingBuilder =>
