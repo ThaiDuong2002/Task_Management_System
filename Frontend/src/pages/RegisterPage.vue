@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/card";
 import {
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -57,9 +56,6 @@ const onSubmit = handleSubmit((values) => {
                     v-bind="componentField"
                   />
                 </FormControl>
-                <FormDescription>
-                  This will be your unique identifier on our platform.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             </FormField>
@@ -77,9 +73,6 @@ const onSubmit = handleSubmit((values) => {
                     v-bind="componentField"
                   />
                 </FormControl>
-                <FormDescription>
-                  We'll never share your email with anyone else.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             </FormField>
@@ -98,9 +91,6 @@ const onSubmit = handleSubmit((values) => {
                       v-bind="componentField"
                     />
                   </FormControl>
-                  <FormDescription>
-                    This is the name that will be displayed on your profile.
-                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               </FormField>
@@ -118,9 +108,6 @@ const onSubmit = handleSubmit((values) => {
                       v-bind="componentField"
                     />
                   </FormControl>
-                  <FormDescription>
-                    This is the name that will be displayed on your profile.
-                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               </FormField>
@@ -139,9 +126,6 @@ const onSubmit = handleSubmit((values) => {
                     v-bind="componentField"
                   />
                 </FormControl>
-                <FormDescription>
-                  Enter a strong password to keep your account secure.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             </FormField>
@@ -159,9 +143,6 @@ const onSubmit = handleSubmit((values) => {
                     v-bind="componentField"
                   />
                 </FormControl>
-                <FormDescription>
-                  Please confirm your password.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             </FormField>

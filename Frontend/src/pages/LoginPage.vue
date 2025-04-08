@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/card";
 import {
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -57,9 +56,6 @@ const onSubmit = handleSubmit((values) => {
                     v-bind="componentField"
                   />
                 </FormControl>
-                <FormDescription>
-                  This is the email you used to login your account.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             </FormField>
@@ -77,9 +73,6 @@ const onSubmit = handleSubmit((values) => {
                     v-bind="componentField"
                   />
                 </FormControl>
-                <FormDescription>
-                  This is the password you used to login your account.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             </FormField>
