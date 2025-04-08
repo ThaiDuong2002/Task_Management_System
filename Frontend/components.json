@@ -12,9 +12,12 @@
   "aliases": {
     "lib": "@/lib",
     "pages": "@/pages",
+    "store": "@/store",
     "assets": "@/assets",
+    "router": "@/router",
     "utils": "@/lib/utils",
     "ui": "@/components/ui",
+    "services": "@/services",
     "constants": "@/constants",
     "components": "@/components",
     "composables": "@/composables"

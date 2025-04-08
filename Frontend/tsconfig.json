@@ -9,10 +9,13 @@
     "paths": {
       "@/*": ["./src/*"],
       "@/lib/*": ["./src/lib/*"],
+      "@/store/*": ["./src/store/*"],
       "@/utils/*": ["./src/utils/*"],
       "@/pages/*": ["./src/pages/*"],
       "@/assets/*": ["./src/assets/*"],
+      "@/router/*": ["./src/router/*"],
       "@/ui/*": ["./src/components/ui/*"],
+      "@/services/*": ["./src/services/*"],
       "@/constants/*": ["./src/constants/*"],
       "@/components/*": ["./src/components/*"],
       "@/composables/*": ["./src/composables/*"]

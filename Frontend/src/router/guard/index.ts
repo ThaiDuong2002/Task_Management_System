@@ -1,5 +1,5 @@
 import type { RouteRecordRaw } from "vue-router";
-const TasksPage = () => import("@/pages/TasksPage/index.vue");
+const TasksPage = () => import("@/pages/TasksPage");
 
 const guardRoutes: RouteRecordRaw[] = [
   {

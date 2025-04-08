@@ -1,6 +1,6 @@
+import commonRoutes from "@/router/common";
+import guardRoutes from "@/router/guard";
 import { createRouter, createWebHistory } from "vue-router";
-import commonRoutes from "./common";
-import guardRoutes from "./guard";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -8,8 +8,12 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  document.title = to.meta.title as string || "Tasks Manager";
-  next();
+  document.title = (to.meta.title as string) || "Tasks Manager";
+  if (to.meta.requiresAuth) {
+    next({ name: "login" });
+  } else {
+    next();
+  }
 });
 
 export default router;
