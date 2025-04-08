@@ -30,9 +30,9 @@ const onSubmit = handleSubmit((values) => {
 </script>
 
 <template>
-  <div class="flex justify-center items-center w-screen h-auto min-h-screen">
+  <div class="flex justify-center items-center w-full h-auto min-h-screen">
     <MaxWidthWrapper class="w-full max-w-2xl h-auto">
-      <Card class="my-10">
+      <Card class="my-10 py-10">
         <CardHeader>
           <CardTitle class="max-sm:text-3xl text-4xl text-center"
             >Register</CardTitle
@@ -171,6 +171,14 @@ const onSubmit = handleSubmit((values) => {
               >
             </div>
           </form>
+          <div class="flex flex-col justify-center items-center mt-4">
+            <p class="text-gray-500 text-sm text-center">
+              Already have an account?
+              <router-link to="/login" class="text-blue-500 hover:underline">
+                Login
+              </router-link>
+            </p>
+          </div>
         </CardContent>
       </Card>
     </MaxWidthWrapper>
