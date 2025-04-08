@@ -16,11 +16,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import loginSchema from "@/validations/login-schema";
+import { LoginSchema } from "@/validations";
 import { useForm } from "vee-validate";
 
 const { isFieldDirty, handleSubmit } = useForm({
-  validationSchema: loginSchema,
+  validationSchema: LoginSchema,
 });
 
 const onSubmit = handleSubmit((values) => {

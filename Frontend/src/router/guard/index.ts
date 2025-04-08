@@ -1,13 +1,13 @@
 import type { RouteRecordRaw } from "vue-router";
-const TasksPage = () => import("@/pages/TasksPage");
+const AssignmentsPage = () => import("@/pages/AssignmentsPage");
 
 const guardRoutes: RouteRecordRaw[] = [
   {
-    path: "/tasks",
-    name: "tasks",
-    component: TasksPage,
+    path: "/assignments",
+    name: "assignments",
+    component: AssignmentsPage,
     meta: {
-      title: "Tasks",
+      title: "Assignments",
       requiresAuth: true,
     },
   },

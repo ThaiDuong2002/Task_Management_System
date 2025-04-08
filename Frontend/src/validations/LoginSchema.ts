@@ -1,7 +1,7 @@
 import { toTypedSchema } from "@vee-validate/zod";
 import * as z from "zod";
 
-const loginSchema = z.object({
+const LoginSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
   password: z
     .string()
@@ -15,5 +15,4 @@ const loginSchema = z.object({
     ),
 });
 
-export default toTypedSchema(loginSchema);
-export type LoginSchema = z.infer<typeof loginSchema>;
+export default toTypedSchema(LoginSchema);

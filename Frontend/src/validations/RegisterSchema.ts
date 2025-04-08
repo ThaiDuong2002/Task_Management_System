@@ -1,7 +1,7 @@
 import { toTypedSchema } from "@vee-validate/zod";
 import * as z from "zod";
 
-const registerSchema = z
+const RegisterSchema = z
   .object({
     username: z
       .string()
@@ -44,5 +44,4 @@ const registerSchema = z
     }
   });
 
-export default toTypedSchema(registerSchema);
-export type RegisterSchema = z.infer<typeof registerSchema>;
+export default toTypedSchema(RegisterSchema);
