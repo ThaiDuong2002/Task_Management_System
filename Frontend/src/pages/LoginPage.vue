@@ -41,7 +41,7 @@ const onSubmit = handleSubmit((values) => {
           >
         </CardHeader>
         <CardContent>
-          <form class="space-y-6 min-sm:px-10" @submit="onSubmit">
+          <form class="space-y-6 min-sm:px-10" @submit.prevent="onSubmit">
             <FormField
               name="email"
               v-slot="{ componentField }"

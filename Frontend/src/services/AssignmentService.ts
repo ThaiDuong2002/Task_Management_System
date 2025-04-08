@@ -1,3 +1,5 @@
-class AssignmentService {}
+class AssignmentService {
+  
+}
 
 export default AssignmentService;
