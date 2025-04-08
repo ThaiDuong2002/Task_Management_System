@@ -32,7 +32,7 @@ const onSubmit = handleSubmit((values) => {
 <template>
   <div class="flex justify-center items-center w-screen h-screen">
     <MaxWidthWrapper class="w-full max-w-2xl">
-      <Card>
+      <Card class="my-10">
         <CardHeader>
           <CardTitle class="max-sm:text-3xl text-4xl text-center"
             >Login</CardTitle
@@ -58,7 +58,7 @@ const onSubmit = handleSubmit((values) => {
                   />
                 </FormControl>
                 <FormDescription>
-                  This is the email you used to register your account.
+                  This is the email you used to login your account.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -78,13 +78,15 @@ const onSubmit = handleSubmit((values) => {
                   />
                 </FormControl>
                 <FormDescription>
-                  This is the password you used to register your account.
+                  This is the password you used to login your account.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
             </FormField>
             <div class="flex justify-center items-center w-full">
-              <Button type="submit" size="lg" class="text-lg">Login</Button>
+              <Button type="submit" size="lg" class="text-lg cursor-pointer"
+                >Login</Button
+              >
             </div>
           </form>
         </CardContent>
