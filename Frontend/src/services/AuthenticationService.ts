@@ -61,17 +61,15 @@ class AuthenticationService {
     }
   }
 
-  async getMe(token: string): Promise<IUser> {
+  async getMe(token: IToken): Promise<ILoginResponse> {
     try {
-      const response = await commonInstance.post("/auth/get-me", {
-        accessToken: token,
-      });
+      const response = await commonInstance.post("/auth/get-me", token);
 
       if (response.status !== 200) {
         throw new Error("Get user failed: " + response.statusText);
       }
 
-      return response.data as IUser;
+      return response.data as ILoginResponse;
     } catch (error) {
       throw new Error("Get user failed: " + (error as Error).message);
     }

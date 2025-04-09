@@ -1,5 +1,12 @@
+import {
+  GetAccessToken,
+  GetRefreshToken,
+  RemoveToken,
+  StoreToken,
+} from "@/stores";
 import { apiDomain } from "@/utils/constants";
 import axios, { type AxiosInstance } from "axios";
+import AuthenticationService from "../AuthenticationService";
 
 class AxiosService {
   private static authInstance: AxiosInstance;
@@ -32,7 +39,34 @@ class AxiosService {
       (response) => response,
       async (error) => {
         if (error) {
-          const originalRequest = error.config;
+          const originalRequest = error?.config;
+          if (error?.response?.status === 401) {
+            originalRequest.sent = true;
+            const refreshToken = GetRefreshToken();
+            const accessToken = GetAccessToken();
+            if (refreshToken && accessToken) {
+              try {
+                const response = await AuthenticationService.refreshToken({
+                  accessToken,
+                  refreshToken,
+                });
+
+                StoreToken({
+                  accessToken: response.accessToken,
+                  refreshToken: response.refreshToken,
+                });
+
+                const newConfig = { ...originalRequest };
+                newConfig.headers.Authorization = `Bearer ${response.accessToken}`;
+
+                return axios(newConfig);
+              } catch (err) {
+                RemoveToken();
+                window.location.href = "/login";
+                console.error("Error refreshing token:", err);
+              }
+            }
+          }
         }
       }
     );

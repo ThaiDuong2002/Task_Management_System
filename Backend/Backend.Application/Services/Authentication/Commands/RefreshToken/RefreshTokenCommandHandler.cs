@@ -24,7 +24,7 @@ public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, E
 
     public async Task<ErrorOr<TokenResult>> Handle(RefreshTokenCommand command, CancellationToken cancellationToken)
     {
-        // 1. Validate the refresh token
+        // 1. Validate the access token
         var principal = _jwtTokenGenerator.GetPrincipalFromExpiredToken(command.AccessToken);
         var userId = principal?.FindFirstValue(ClaimTypes.NameIdentifier);
 

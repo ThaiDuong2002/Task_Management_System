@@ -101,4 +101,27 @@ public class JwtTokenGenerator : IJwtTokenGenerator
 
         return principal;
     }
+
+    public ClaimsPrincipal? GetPrincipalFromToken(string token)
+    {
+        var tokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateAudience = true,
+            ValidAudience = _jwtSettings.Audience,
+            ValidateIssuer = true,
+            ValidIssuer = _jwtSettings.Issuer,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret))
+        };
+
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out var securityToken);
+
+        if (securityToken is not JwtSecurityToken jwtSecurityToken || !jwtSecurityToken.Header.Alg.Equals(
+                SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+            return null;
+
+        return principal;
+    }
 }

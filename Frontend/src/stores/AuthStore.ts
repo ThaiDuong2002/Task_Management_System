@@ -5,6 +5,7 @@ import {
   RemoveToken,
   StoreToken,
 } from "@/stores";
+import { isTokenExpired } from "@/utils/functions";
 import type { ILoginInput } from "@/utils/interfaces";
 import type { AuthState } from "@/utils/types";
 import { defineStore } from "pinia";
@@ -59,28 +60,27 @@ const useAuthStore = defineStore("auth", {
         const accessToken = GetAccessToken();
         const refreshToken = GetRefreshToken();
 
-        if (!accessToken || !refreshToken) {
-          this.isAuthenticated = false;
-          this.user = null;
-          this.token = null;
-          this.isLoading = false;
-          RemoveToken();
+        if (!accessToken || !refreshToken || isTokenExpired(refreshToken)) {
+          this.logout();
           return;
         }
 
-        const response = await AuthenticationService.getMe(accessToken);
+        const response = await AuthenticationService.getMe({
+          accessToken,
+          refreshToken,
+        });
 
-        this.user = response;
+        this.user = response.user;
         this.token = {
-          accessToken: accessToken,
-          refreshToken: refreshToken,
+          accessToken: response.token.accessToken,
+          refreshToken: response.token.refreshToken,
         };
 
         this.isAuthenticated = true;
 
         this.isLoading = false;
       } catch (error) {
-        this.isLoading = false;
+        this.logout();
         throw error;
       }
     },

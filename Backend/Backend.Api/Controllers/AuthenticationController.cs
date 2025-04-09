@@ -3,7 +3,6 @@ using Backend.Application.Services.Authentication.Commands.Register;
 using Backend.Application.Services.Authentication.Queries.GetMe;
 using Backend.Application.Services.Authentication.Queries.Login;
 using Backend.Contracts.Authentication;
-using Backend.Contracts.Users;
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -72,10 +71,10 @@ public class AuthenticationController : ApiController
     [HttpPost("get-me")]
     public async Task<IActionResult> GetMe(GetMeRequest request)
     {
-        var authResult = await _mediator.Send(new GetMeQuery(request.AccessToken));
+        var authResult = await _mediator.Send(new GetMeQuery(request.AccessToken, request.RefreshToken));
 
         return authResult.Match(
-            result => Ok(_mapper.Map<UserResponse>(result)),
+            result => Ok(_mapper.Map<LoginResponse>(result)),
             errors => Problem(errors)
         );
     }
