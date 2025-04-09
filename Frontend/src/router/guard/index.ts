@@ -1,5 +1,6 @@
 import type { RouteRecordRaw } from "vue-router";
-const AssignmentsPage = () => import("@/pages/AssignmentsPage");
+const AssignmentsPage = () =>
+  import("@/pages/AssignmentsPage/AssignmentsPage.vue");
 
 const guardRoutes: RouteRecordRaw[] = [
   {

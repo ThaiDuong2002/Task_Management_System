@@ -1,5 +1,10 @@
 import { AuthenticationService } from "@/services";
-import { GetAccessToken, GetRefreshToken, StoreToken } from "@/stores";
+import {
+  GetAccessToken,
+  GetRefreshToken,
+  RemoveToken,
+  StoreToken,
+} from "@/stores";
 import type { ILoginInput } from "@/utils/interfaces";
 import type { AuthState } from "@/utils/types";
 import { defineStore } from "pinia";
@@ -39,13 +44,15 @@ const useAuthStore = defineStore("auth", {
         this.token = null;
         this.isAuthenticated = false;
 
+        RemoveToken();
+
         this.isLoading = false;
       } catch (error) {
         this.isLoading = false;
         throw error;
       }
     },
-    async loadStoredAuth() {
+    async checkAuthStatus() {
       try {
         this.isLoading = true;
 
@@ -57,6 +64,7 @@ const useAuthStore = defineStore("auth", {
           this.user = null;
           this.token = null;
           this.isLoading = false;
+          RemoveToken();
           return;
         }
 

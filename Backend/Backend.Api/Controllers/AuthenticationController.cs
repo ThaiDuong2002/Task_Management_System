@@ -36,7 +36,7 @@ public class AuthenticationController : ApiController
         ));
 
         return authResult.Match(
-            result => Ok(_mapper.Map<RegisterResponse>(result)),
+            result => Created(HttpContext.Request.Path, _mapper.Map<RegisterResponse>(result)),
             errors => Problem(errors)
         );
     }

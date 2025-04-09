@@ -16,15 +16,28 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useAuthStore } from "@/stores";
 import { LoginSchema } from "@/validations";
 import { useForm } from "vee-validate";
+import { useRouter } from "vue-router";
 
 const { isFieldDirty, handleSubmit } = useForm({
   validationSchema: LoginSchema,
 });
 
+const auth = useAuthStore();
+const router = useRouter();
+
 const onSubmit = handleSubmit((values) => {
-  console.log(values);
+  const { email, password } = values;
+  auth
+    .login({ email, password })
+    .then(() => {
+      router.push({ name: "assignments" });
+    })
+    .catch((error) => {
+      console.error("Login error:", error);
+    });
 });
 </script>
 

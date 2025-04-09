@@ -1,5 +1,4 @@
 import type { RouteRecordRaw } from "vue-router";
-
 const LoginPage = () => import("@/pages/LoginPage.vue");
 const RegisterPage = () => import("@/pages/RegisterPage.vue");
 
