@@ -12,7 +12,7 @@
   "aliases": {
     "lib": "@/lib",
     "pages": "@/pages",
-    "store": "@/store",
+    "stores": "@/stores",
     "assets": "@/assets",
     "router": "@/router",
     "utils": "@/lib/utils",

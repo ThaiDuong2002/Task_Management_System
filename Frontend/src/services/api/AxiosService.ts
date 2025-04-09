@@ -27,6 +27,15 @@ class AxiosService {
       )}`;
       return request;
     });
+
+    AxiosService.authInstance.interceptors.response.use(
+      (response) => response,
+      async (error) => {
+        if (error) {
+          const originalRequest = error.config;
+        }
+      }
+    );
   }
 
   public static getCommonInstance(): AxiosInstance {
