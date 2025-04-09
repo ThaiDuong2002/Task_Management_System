@@ -13,7 +13,6 @@ builder.Services
 var app = builder.Build();
 
 app.UseExceptionHandler("/error");
-app.UseMiddleware<LogHeadersMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseAuthentication();

@@ -2,6 +2,6 @@
 using ErrorOr;
 using MediatR;
 
-namespace Backend.Application.Services.Users.Queries.GetMe;
+namespace Backend.Application.Services.Authentication.Queries.GetMe;
 
 public record GetMeQuery(string token) : IRequest<ErrorOr<UserResult>>;

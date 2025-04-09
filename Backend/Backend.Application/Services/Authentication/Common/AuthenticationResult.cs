@@ -4,6 +4,5 @@ namespace Backend.Application.Services.Authentication.Common;
 
 public record AuthenticationResult(
     User User,
-    string? AccessToken = null,
-    string? RefreshToken = null
+    TokenResult TokenResult
 );

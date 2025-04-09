@@ -1,6 +1,7 @@
-﻿namespace Backend.Application.Services.Users.Queries.GetUserByEmail;
+﻿using Backend.Application.Services.Users.Common;
+using ErrorOr;
+using MediatR;
 
-public class GetUserByEmailCommand
-{
-    
-}
+namespace Backend.Application.Services.Users.Queries.GetUserByEmail;
+
+public record GetUserByEmailQuery(string Email) : IRequest<ErrorOr<UserResult>>;

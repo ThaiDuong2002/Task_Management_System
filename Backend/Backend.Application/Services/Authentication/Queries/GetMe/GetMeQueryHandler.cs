@@ -6,7 +6,7 @@ using Backend.Domain.Common.Errors;
 using ErrorOr;
 using MediatR;
 
-namespace Backend.Application.Services.Users.Queries.GetMe;
+namespace Backend.Application.Services.Authentication.Queries.GetMe;
 
 public class GetMeQueryHandler : IRequestHandler<GetMeQuery, ErrorOr<UserResult>>
 {

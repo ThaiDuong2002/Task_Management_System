@@ -31,7 +31,7 @@ public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, E
         if (userId == null) return Errors.Authentication.InvalidToken;
 
         // 2. Get the user from the database
-        var user = await _userRepository.GetById(Guid.Parse(userId));
+        var user = await _userRepository.GetUserById(Guid.Parse(userId));
 
         if (user == null) return Errors.Authentication.InvalidToken;
 

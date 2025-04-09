@@ -20,9 +20,15 @@ public class UserConfigurations : IEntityTypeConfiguration<UserIdentity>
         builder.Property(u => u.FirstName)
             .HasMaxLength(256)
             .IsRequired();
-        
+
         builder.Property(u => u.LastName)
             .HasMaxLength(256)
+            .IsRequired();
+
+        builder.Property(u => u.CreatedAt)
+            .IsRequired();
+
+        builder.Property(u => u.UpdatedAt)
             .IsRequired();
 
         builder.HasMany(u => u.Assignments)

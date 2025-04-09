@@ -1,6 +1,5 @@
 ﻿namespace Backend.Contracts.Authentication;
 
-public class GetMeRequest
-{
-    
-}
+public record GetMeRequest(
+    string AccessToken
+);

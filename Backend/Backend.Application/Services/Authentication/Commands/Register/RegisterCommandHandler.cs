@@ -37,7 +37,9 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
             FirstName = command.FirstName,
             LastName = command.LastName,
             Email = command.Email,
-            PasswordHash = _securePasswordProvider.Encrypt(command.Password, command.Email)
+            PasswordHash = _securePasswordProvider.Encrypt(command.Password, command.Email),
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
         };
 
         var result = await _userRepository.Create(user);
@@ -47,8 +49,12 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
 
         user.Id = result;
 
+        var accessToken = _jwtTokenGenerator.GenerateToken(user);
+        var refreshToken = _jwtTokenGenerator.GenerateRefreshToken();
+
         return new AuthenticationResult(
-            user
+            user,
+            new TokenResult(accessToken, refreshToken)
         );
     }
 }

@@ -33,7 +33,9 @@ public class UserRepository : IUserRepository
             FirstName = user.FirstName,
             LastName = user.LastName,
             PasswordHash = user.PasswordHash,
-            SecurityStamp = Guid.NewGuid().ToString()
+            SecurityStamp = Guid.NewGuid().ToString(),
+            CreatedAt = user.CreatedAt,
+            UpdatedAt = user.UpdatedAt
         };
 
         var result = await _dbContext.Users.AddAsync(userIdentity);
@@ -63,7 +65,7 @@ public class UserRepository : IUserRepository
         };
     }
 
-    public async Task<User?> GetById(Guid id)
+    public async Task<User?> GetUserById(Guid id)
     {
         var result = await _dbContext.Users
             .Include(u => u.Assignments)
@@ -79,7 +81,9 @@ public class UserRepository : IUserRepository
             FirstName = result.FirstName,
             LastName = result.LastName,
             UserName = result.UserName!,
-            PasswordHash = result.PasswordHash!
+            PasswordHash = result.PasswordHash!,
+            CreatedAt = result.CreatedAt,
+            UpdatedAt = result.UpdatedAt
         };
     }
 

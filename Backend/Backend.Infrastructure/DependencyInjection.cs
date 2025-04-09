@@ -38,7 +38,6 @@ public static class DependencyInjection
     {
         Log.Logger = new LoggerConfiguration()
             .Enrich.FromLogContext()
-            .WriteTo.Console()
             .WriteTo.File("../Logs/log-.txt", rollingInterval: RollingInterval.Day)
             .CreateLogger();
 

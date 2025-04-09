@@ -1,4 +1,4 @@
-﻿namespace Backend.Contracts.Authentication;
+﻿namespace Backend.Contracts.Users;
 
 public record UserResponse(
     Guid Id,

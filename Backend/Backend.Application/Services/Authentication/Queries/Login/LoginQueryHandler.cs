@@ -40,8 +40,7 @@ public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<Authenticat
 
         return new AuthenticationResult(
             user,
-            accessToken,
-            refreshToken
+            new TokenResult(accessToken, refreshToken)
         );
     }
 }
