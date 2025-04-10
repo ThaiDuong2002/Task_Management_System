@@ -29,7 +29,7 @@ const router = useRouter();
 
 const onSubmit = handleSubmit((values) => {
   const { username, email, firstName, lastName, password } = values;
-  
+
   AuthenticationService.register({
     username,
     email,
@@ -48,7 +48,7 @@ const onSubmit = handleSubmit((values) => {
 
 <template>
   <div class="flex justify-center items-center w-full h-auto min-h-screen">
-    <MaxWidthWrapper class="w-full max-w-2xl h-auto">
+    <MaxWidthWrapper class="w-full max-w-xl h-auto">
       <Card class="my-10 py-10">
         <CardHeader>
           <CardTitle class="max-sm:text-3xl text-4xl text-center"
@@ -59,7 +59,7 @@ const onSubmit = handleSubmit((values) => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form class="space-y-6 min-sm:px-10" @submit.prevent="onSubmit">
+          <form class="space-y-6" @submit.prevent="onSubmit">
             <FormField
               name="username"
               v-slot="{ componentField }"

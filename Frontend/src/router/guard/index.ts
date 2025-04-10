@@ -9,7 +9,6 @@ const guardRoutes: RouteRecordRaw[] = [
     component: AssignmentsPage,
     meta: {
       title: "Assignments",
-      requiresAuth: true,
     },
   },
 ];

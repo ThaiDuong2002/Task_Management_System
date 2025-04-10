@@ -43,7 +43,7 @@ const onSubmit = handleSubmit((values) => {
 
 <template>
   <div class="flex justify-center items-center w-screen h-screen">
-    <MaxWidthWrapper class="w-full max-w-2xl">
+    <MaxWidthWrapper class="w-full max-w-xl">
       <Card class="my-10 py-10">
         <CardHeader>
           <CardTitle class="max-sm:text-3xl text-4xl text-center"
@@ -54,7 +54,7 @@ const onSubmit = handleSubmit((values) => {
           >
         </CardHeader>
         <CardContent>
-          <form class="space-y-6 min-sm:px-10" @submit.prevent="onSubmit">
+          <form class="space-y-6" @submit.prevent="onSubmit">
             <FormField
               name="email"
               v-slot="{ componentField }"
@@ -90,7 +90,7 @@ const onSubmit = handleSubmit((values) => {
               </FormItem>
             </FormField>
             <div class="flex justify-center items-center w-full">
-              <Button type="submit" size="lg" class="text-lg cursor-pointer"
+              <Button type="submit" size="lg" class="w-full text-lg cursor-pointer"
                 >Login</Button
               >
             </div>
