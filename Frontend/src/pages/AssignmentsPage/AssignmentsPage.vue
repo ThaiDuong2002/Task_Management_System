@@ -1,37 +1,29 @@
 <script setup lang="ts">
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
-import AssignmentsSidebar from "@/pages/AssignmentsPage/AssignmentsSidebar.vue";
+import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 </script>
 
 <template>
-  <SidebarProvider>
-    <AssignmentsSidebar />
-    <SidebarInset>
-      <header
-        class="flex items-center gap-2 h-16 group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 transition-[width,height] ease-linear shrink-0"
-      >
-        <div class="flex items-center gap-2 px-4">
-          <SidebarTrigger class="-ml-1" />
-          <Separator orientation="vertical" class="mr-2 h-4" />
-          <Label>Assignments</Label>
-        </div>
-      </header>
-      <div class="flex flex-col flex-1 gap-4 p-4 pt-0">
-        <div class="gap-4 grid md:grid-cols-3 auto-rows-min">
-          <div class="bg-muted/50 rounded-xl aspect-video" />
-          <div class="bg-muted/50 rounded-xl aspect-video" />
-          <div class="bg-muted/50 rounded-xl aspect-video" />
-        </div>
-        <div class="flex-1 bg-muted/50 rounded-xl min-h-[100vh] md:min-h-min" />
+  <SidebarInset>
+    <header
+      class="flex items-center gap-2 h-16 group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 transition-[width,height] ease-linear shrink-0"
+    >
+      <div class="flex items-center gap-2 px-4">
+        <SidebarTrigger class="-ml-1" />
+        <Separator orientation="vertical" class="mr-2 h-4" />
+        <Label>Assignments</Label>
       </div>
-    </SidebarInset>
-  </SidebarProvider>
+    </header>
+    <div class="flex flex-col flex-1 gap-4 p-4 pt-0">
+      <div class="gap-4 grid md:grid-cols-3 auto-rows-min">
+        <div class="bg-muted/50 rounded-xl aspect-video" />
+        <div class="bg-muted/50 rounded-xl aspect-video" />
+        <div class="bg-muted/50 rounded-xl aspect-video" />
+      </div>
+      <div class="flex-1 bg-muted/50 rounded-xl min-h-[100vh] md:min-h-min" />
+    </div>
+  </SidebarInset>
 </template>
 
 <style lang="scss" scoped></style>

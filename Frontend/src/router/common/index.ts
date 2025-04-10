@@ -9,6 +9,8 @@ const commonRoutes: RouteRecordRaw[] = [
     component: LoginPage,
     meta: {
       title: "Login",
+      layout: "default",
+      requiresAuth: false,
     },
   },
   {
@@ -17,6 +19,8 @@ const commonRoutes: RouteRecordRaw[] = [
     component: RegisterPage,
     meta: {
       title: "Register",
+      layout: "default",
+      requiresAuth: false,
     },
   },
 ];

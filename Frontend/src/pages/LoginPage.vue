@@ -90,7 +90,10 @@ const onSubmit = handleSubmit((values) => {
               </FormItem>
             </FormField>
             <div class="flex justify-center items-center w-full">
-              <Button type="submit" size="lg" class="w-full text-lg cursor-pointer"
+              <Button
+                type="submit"
+                size="lg"
+                class="w-full text-lg cursor-pointer"
                 >Login</Button
               >
             </div>

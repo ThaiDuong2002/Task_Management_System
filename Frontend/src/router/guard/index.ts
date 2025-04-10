@@ -10,6 +10,7 @@ const guardRoutes: RouteRecordRaw[] = [
     meta: {
       title: "Assignments",
       requiresAuth: true,
+      layout: "main",
     },
   },
 ];

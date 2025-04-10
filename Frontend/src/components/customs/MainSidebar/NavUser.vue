@@ -41,7 +41,7 @@ const handleLogout = () => {
   <SidebarMenu>
     <SidebarMenuItem>
       <DropdownMenu>
-        <DropdownMenuTrigger as-child>
+        <DropdownMenuTrigger as-child class="cursor-pointer">
           <SidebarMenuButton
             size="lg"
             class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
@@ -85,16 +85,16 @@ const handleLogout = () => {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem>
+            <DropdownMenuItem class="cursor-pointer">
               <CircleUser />
               Account
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem class="cursor-pointer">
               <Bell />
               Notifications
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem @click="handleLogout()">
+            <DropdownMenuItem class="cursor-pointer" @click="handleLogout">
               <LogOut />
               Logout
             </DropdownMenuItem>
