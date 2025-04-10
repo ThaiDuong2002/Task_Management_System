@@ -1,5 +1,12 @@
 <script setup lang="ts">
-import { Label } from "@/components/ui/label";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 </script>
@@ -10,9 +17,19 @@ import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
       class="flex items-center gap-2 h-16 group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 transition-[width,height] ease-linear shrink-0"
     >
       <div class="flex items-center gap-2 px-4">
-        <SidebarTrigger class="-ml-1" />
+        <SidebarTrigger class="-ml-1 cursor-pointer" />
         <Separator orientation="vertical" class="mr-2 h-4" />
-        <Label>Assignments</Label>
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/assignments">Assignments</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator class="hidden md:block" />
+            <BreadcrumbItem>
+              <BreadcrumbPage>In Progress</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
       </div>
     </header>
     <div class="flex flex-col flex-1 gap-4 p-4 pt-0">
