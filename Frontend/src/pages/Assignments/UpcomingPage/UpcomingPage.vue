@@ -26,7 +26,7 @@ import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
             </BreadcrumbItem>
             <BreadcrumbSeparator class="hidden md:block" />
             <BreadcrumbItem>
-              <BreadcrumbPage>In Progress</BreadcrumbPage>
+              <BreadcrumbPage>Upcoming</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>

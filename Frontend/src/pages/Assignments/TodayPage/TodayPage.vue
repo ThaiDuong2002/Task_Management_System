@@ -22,11 +22,11 @@ import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink href="/assignments">Group Assignments</BreadcrumbLink>
+              <BreadcrumbLink href="/assignments">Assignments</BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator class="hidden md:block" />
             <BreadcrumbItem>
-              <BreadcrumbPage>In Progress</BreadcrumbPage>
+              <BreadcrumbPage>Today</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
@@ -43,4 +43,4 @@ import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
   </SidebarInset>
 </template>
 
-<style scoped></style>
+<style lang="scss" scoped></style>

@@ -11,44 +11,44 @@ export const sidebarGroups = {
     {
       name: "Important",
       icon: Star,
-      url: "/important",
+      url: "/assignments/important",
     },
     {
       name: "Today",
       icon: CalendarClock,
-      url: "/today",
+      url: "/assignments/today",
     },
     {
       name: "Upcoming",
       icon: CalendarRange,
-      url: "/upcoming",
+      url: "/assignments/upcoming",
     },
     {
       name: "Overdue",
       icon: AlarmClock,
-      url: "/overdue",
+      url: "/assignments/overdue",
     },
     {
       name: "Completed",
       icon: GalleryVertical,
-      url: "/completed",
+      url: "/assignments/completed",
     },
   ],
   dependencies: [
     {
       name: "Important",
       icon: Star,
-      url: "/important",
+      url: "/group-assignments/important",
     },
     {
       name: "Overdue",
       icon: AlarmClock,
-      url: "/overdue",
+      url: "/group-assignments/overdue",
     },
     {
       name: "Completed",
       icon: GalleryVertical,
-      url: "/completed",
+      url: "/group-assignments/completed",
     },
   ],
 };
