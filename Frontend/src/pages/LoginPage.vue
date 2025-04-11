@@ -18,6 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { AuthenticationService } from "@/services";
 import { useAuthStore } from "@/stores";
+import { InvalidCredentialsException } from "@/utils/exceptions";
 import { LoginSchema } from "@/validations";
 import { useForm, useSetFormErrors } from "vee-validate";
 import { useRouter } from "vue-router";
@@ -37,9 +38,16 @@ const onSubmit = handleSubmit(async (values) => {
     auth.setAuth(response);
     router.push("/assignments");
   } catch (error: any) {
-    setError({
-      password: error.message,
-    });
+    if (error instanceof InvalidCredentialsException) {
+      setError({
+        password: error.message,
+      });
+    } else {
+      setError({
+        email: "An error occurred. Please try again.",
+        password: "An error occurred. Please try again.",
+      });
+    }
   }
 });
 </script>

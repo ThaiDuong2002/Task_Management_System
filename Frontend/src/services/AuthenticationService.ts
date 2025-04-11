@@ -1,3 +1,8 @@
+import {
+  DuplicateEmailException,
+  InvalidCredentialsException,
+  RegisterFailedException,
+} from "@/utils/exceptions";
 import type {
   ILoginInput,
   ILoginResponse,
@@ -25,7 +30,9 @@ class AuthenticationService {
 
       return response.data as ILoginResponse;
     } catch (error: any) {
-      throw new Error(error.response.data.errors["Auth.InvalidCred"][0]);
+      throw new InvalidCredentialsException(
+        error.response.data.errors["Auth.InvalidCred"][0]
+      );
     }
   }
 
@@ -33,13 +40,18 @@ class AuthenticationService {
     try {
       const response = await commonInstance.post("/auth/register", input);
 
-      if (response.status !== 201) {
-        throw new Error("Registration failed: " + response.statusText);
-      }
-
       return response.data as IUser;
-    } catch (error) {
-      throw new Error("Registration failed: " + (error as Error).message);
+    } catch (error: any) {
+      if (error.response.data.errors["User.FailedToRegister"].length > 0) {
+        throw new RegisterFailedException(
+          error.response.data.errors["User.FailedToRegister"][0]
+        );
+      } else if (error.response.data.errorCodes.length > 0) {
+        console.log(error.response.data.errorCodes[0]);
+        throw new DuplicateEmailException(error.response.data.errorCodes[0]);
+      } else {
+        throw new Error("Registration failed!");
+      }
     }
   }
 

@@ -17,8 +17,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { AuthenticationService } from "@/services";
+import {
+  DuplicateEmailException,
+  RegisterFailedException,
+} from "@/utils/exceptions";
 import { RegisterSchema } from "@/validations";
-import { useForm } from "vee-validate";
+import { useForm, useSetFormErrors } from "vee-validate";
 import { useRouter } from "vue-router";
 
 const { isFieldDirty, handleSubmit } = useForm({
@@ -26,23 +30,35 @@ const { isFieldDirty, handleSubmit } = useForm({
 });
 
 const router = useRouter();
+const setError = useSetFormErrors();
 
-const onSubmit = handleSubmit((values) => {
+const onSubmit = handleSubmit(async (values) => {
   const { username, email, firstName, lastName, password } = values;
 
-  AuthenticationService.register({
-    username,
-    email,
-    firstName,
-    lastName,
-    password,
-  })
-    .then(() => {
-      router.push({ name: "login" });
-    })
-    .catch((error) => {
-      console.error("Registration error:", error);
+  try {
+    await AuthenticationService.register({
+      username,
+      email,
+      firstName,
+      lastName,
+      password,
     });
+    router.push("/login");
+  } catch (error: any) {
+    if (error instanceof RegisterFailedException) {
+      setError({
+        confirmPassword: error.message,
+      });
+    } else if (error instanceof DuplicateEmailException) {
+      setError({
+        email: error.message,
+      });
+    } else {
+      setError({
+        confirmPassword: "An error occurred. Please try again.",
+      });
+    }
+  }
 });
 </script>
 
