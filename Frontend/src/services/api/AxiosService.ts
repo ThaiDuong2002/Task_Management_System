@@ -1,8 +1,8 @@
 import {
   GetAccessToken,
   GetRefreshToken,
-  RemoveToken,
   StoreToken,
+  useAuthStore,
 } from "@/stores";
 import { apiDomain } from "@/utils/constants";
 import axios, { type AxiosInstance } from "axios";
@@ -61,10 +61,13 @@ class AxiosService {
 
                 return axios(newConfig);
               } catch (err) {
-                RemoveToken();
+                useAuthStore().logout();
                 window.location.href = "/login";
                 console.error("Error refreshing token:", err);
               }
+            } else {
+              useAuthStore().logout();
+              window.location.href = "/login";
             }
           }
         }
