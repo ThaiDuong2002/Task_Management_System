@@ -34,14 +34,7 @@ import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
         </Breadcrumb>
       </div>
     </header>
-    <div class="flex flex-col flex-1 gap-4 p-4 pt-0">
-      <div class="gap-4 grid md:grid-cols-3 auto-rows-min">
-        <div class="bg-muted/50 rounded-xl aspect-video" />
-        <div class="bg-muted/50 rounded-xl aspect-video" />
-        <div class="bg-muted/50 rounded-xl aspect-video" />
-      </div>
-      <div class="flex-1 bg-muted/50 rounded-xl min-h-[100vh] md:min-h-min" />
-    </div>
+    <div class="flex flex-col flex-1 gap-4 bg-red-100 p-4 pt-0"></div>
   </SidebarInset>
 </template>
 
