@@ -6,7 +6,7 @@ import {
   StoreToken,
 } from "@/stores";
 import { isTokenExpired } from "@/utils/functions";
-import type { ILoginInput } from "@/utils/interfaces";
+import type { ILoginResponse } from "@/utils/interfaces";
 import type { AuthState } from "@/utils/types";
 import { defineStore } from "pinia";
 
@@ -19,15 +19,14 @@ const useAuthStore = defineStore("auth", {
       isLoading: false,
     } as AuthState),
   actions: {
-    async login(login: ILoginInput) {
+    async setAuth(input: ILoginResponse) {
       try {
         this.isLoading = true;
 
-        const response = await AuthenticationService.login(login);
-        this.user = response.user;
-        this.token = response.token;
+        this.user = input.user;
+        this.token = input.token;
 
-        StoreToken(response.token);
+        StoreToken(input.token);
 
         this.isAuthenticated = true;
 

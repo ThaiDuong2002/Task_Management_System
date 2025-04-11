@@ -42,12 +42,7 @@ public class GetMeQueryHandler : IRequestHandler<GetMeQuery, ErrorOr<Authenticat
             return Errors.Authentication.InvalidToken;
 
         // Check if refresh token is expired
-        if (_jwtTokenGenerator.IsTokenExpired(refreshToken))
-        {
-            accessToken = _jwtTokenGenerator.GenerateToken(user);
-            refreshToken = _jwtTokenGenerator.GenerateRefreshToken();
-            await _userRepository.StoreRefreshToken(userId, refreshToken);
-        }
+        if (_jwtTokenGenerator.IsTokenExpired(refreshToken)) return Errors.Authentication.Unauthorized;
 
         return new AuthenticationResult(user, new TokenResult(accessToken, refreshToken));
     }

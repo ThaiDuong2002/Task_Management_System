@@ -23,13 +23,9 @@ class AuthenticationService {
     try {
       const response = await commonInstance.post("/auth/login", input);
 
-      if (response.status !== 200) {
-        throw new Error("Login failed: " + response.statusText);
-      }
-
       return response.data as ILoginResponse;
-    } catch (error) {
-      throw new Error("Login failed: " + (error as Error).message);
+    } catch (error: any) {
+      throw new Error(error.response.data.errors["Auth.InvalidCred"][0]);
     }
   }
 

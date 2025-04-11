@@ -27,8 +27,8 @@ const data = sidebarGroups;
       <MainHeader />
     </SidebarHeader>
     <SidebarContent>
-      <NavIndependents :independents="data.independents" />
-      <NavDependents />
+      <NavIndependents :independencies="data.independencies" />
+      <NavDependents :dependencies="data.dependencies" />
     </SidebarContent>
     <SidebarFooter>
       <NavUser

@@ -16,9 +16,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { AuthenticationService } from "@/services";
 import { useAuthStore } from "@/stores";
 import { LoginSchema } from "@/validations";
-import { useForm } from "vee-validate";
+import { useForm, useSetFormErrors } from "vee-validate";
 import { useRouter } from "vue-router";
 
 const { isFieldDirty, handleSubmit } = useForm({
@@ -27,17 +28,19 @@ const { isFieldDirty, handleSubmit } = useForm({
 
 const auth = useAuthStore();
 const router = useRouter();
+const setError = useSetFormErrors();
 
-const onSubmit = handleSubmit((values) => {
+const onSubmit = handleSubmit(async (values) => {
   const { email, password } = values;
-  auth
-    .login({ email, password })
-    .then(() => {
-      router.push({ name: "assignments" });
-    })
-    .catch((error) => {
-      console.error("Login error:", error);
+  try {
+    const response = await AuthenticationService.login({ email, password });
+    auth.setAuth(response);
+    router.push("/assignments");
+  } catch (error: any) {
+    setError({
+      password: error.message,
     });
+  }
 });
 </script>
 

@@ -7,7 +7,7 @@ import {
 } from "lucide-vue-next";
 
 export const sidebarGroups = {
-  independents: [
+  independencies: [
     {
       name: "Important",
       icon: Star,
@@ -22,6 +22,23 @@ export const sidebarGroups = {
       name: "Upcoming",
       icon: CalendarRange,
       url: "/upcoming",
+    },
+    {
+      name: "Overdue",
+      icon: AlarmClock,
+      url: "/overdue",
+    },
+    {
+      name: "Completed",
+      icon: GalleryVertical,
+      url: "/completed",
+    },
+  ],
+  dependencies: [
+    {
+      name: "Important",
+      icon: Star,
+      url: "/important",
     },
     {
       name: "Overdue",

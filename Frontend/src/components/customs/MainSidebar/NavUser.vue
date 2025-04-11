@@ -24,7 +24,7 @@ const auth = useAuthStore();
 const router = useRouter();
 
 const props = defineProps<{
-  user: {
+  user?: {
     name: string;
     email: string;
     avatar: string;
@@ -47,15 +47,15 @@ const handleLogout = () => {
             class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
           >
             <Avatar class="rounded-lg w-8 h-8">
-              <AvatarImage :src="user.avatar" :alt="user.name" />
+              <AvatarImage :src="user?.avatar || ''" :alt="user?.name" />
               <AvatarFallback class="rounded-lg">
-                {{ user.name.substring(0, 2).toUpperCase() }}
+                {{ user?.name?.substring(0, 2).toUpperCase() }}
               </AvatarFallback>
             </Avatar>
-            <div class="flex-1 grid text-lefttext-sm leading-tight">
-              <span class="font-semibold truncate">{{ user.name }}</span>
+            <div class="flex-1 grid text-sm text-left leading-tight">
+              <span class="font-semibold truncate">{{ user?.name }}</span>
               <span class="text-muted-foreground text-xs truncate">
-                {{ user.email }}
+                {{ user?.email || '' }}
               </span>
             </div>
             <ChevronsUpDown class="ml-auto size-4" />
@@ -70,15 +70,15 @@ const handleLogout = () => {
           <DropdownMenuLabel class="p-0 font-normal">
             <div class="flex items-center gap-2 px-1 py-1.5 text-sm text-left">
               <Avatar class="rounded-lg w-8 h-8">
-                <AvatarImage :src="user.avatar" :alt="user.name" />
+                <AvatarImage :src="user?.avatar || ''" :alt="user?.name" />
                 <AvatarFallback class="rounded-lg">
-                  {{ user.name.substring(0, 2).toUpperCase() }}
+                  {{ user?.name?.substring(0, 2).toUpperCase() }}
                 </AvatarFallback>
               </Avatar>
               <div class="flex-1 grid text-sm text-left leading-tight">
-                <span class="font-semibold truncate">{{ user.name }}</span>
+                <span class="font-semibold truncate">{{ user?.name }}</span>
                 <span class="text-muted-foreground text-xs truncate">
-                  {{ user.email }}
+                  {{ user?.email || '' }}
                 </span>
               </div>
             </div>

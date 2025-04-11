@@ -10,7 +10,7 @@ import type { LucideProps } from "lucide-vue-next";
 import type { FunctionalComponent } from "vue";
 
 defineProps<{
-  independents: {
+  independencies: {
     name: string;
     icon: FunctionalComponent<LucideProps, {}, any, {}>;
     url: string;
@@ -22,7 +22,7 @@ defineProps<{
   <SidebarGroup class="group-data-[collapsible=icon]:hidden">
     <SidebarGroupLabel>Assignments</SidebarGroupLabel>
     <SidebarMenu>
-      <SidebarMenuItem v-for="item in independents" :key="item.name">
+      <SidebarMenuItem v-for="item in independencies" :key="item.name">
         <SidebarMenuButton as-child>
           <a :href="item.url">
             <component :is="item.icon" />
