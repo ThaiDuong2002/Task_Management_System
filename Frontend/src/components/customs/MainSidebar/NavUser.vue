@@ -18,6 +18,7 @@ import {
 import { useAuthStore } from "@/stores";
 import { Bell, ChevronsUpDown, CircleUser, LogOut } from "lucide-vue-next";
 import { useRouter } from "vue-router";
+import ConfirmDialog from "../ConfirmDialog/ConfirmDialog.vue";
 
 const { isMobile } = useSidebar();
 const auth = useAuthStore();
@@ -55,7 +56,7 @@ const handleLogout = () => {
             <div class="flex-1 grid text-sm text-left leading-tight">
               <span class="font-semibold truncate">{{ user?.name }}</span>
               <span class="text-muted-foreground text-xs truncate">
-                {{ user?.email || '' }}
+                {{ user?.email || "" }}
               </span>
             </div>
             <ChevronsUpDown class="ml-auto size-4" />
@@ -78,7 +79,7 @@ const handleLogout = () => {
               <div class="flex-1 grid text-sm text-left leading-tight">
                 <span class="font-semibold truncate">{{ user?.name }}</span>
                 <span class="text-muted-foreground text-xs truncate">
-                  {{ user?.email || '' }}
+                  {{ user?.email || "" }}
                 </span>
               </div>
             </div>
@@ -94,10 +95,18 @@ const handleLogout = () => {
               Notifications
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem class="cursor-pointer" @click="handleLogout">
-              <LogOut />
-              Logout
-            </DropdownMenuItem>
+            <ConfirmDialog
+              title="Are you absolutely sure?"
+              message="Are you certain you want to log out? This action will end your current session."
+              confirmText="Logout"
+              cancelText="Cancel"
+              :onConfirm="handleLogout"
+            >
+              <DropdownMenuItem class="cursor-pointer" @select.prevent>
+                <LogOut />
+                Logout
+              </DropdownMenuItem>
+            </ConfirmDialog>
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>

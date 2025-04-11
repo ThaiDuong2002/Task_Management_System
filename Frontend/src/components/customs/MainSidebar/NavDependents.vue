@@ -20,7 +20,7 @@ defineProps<{
 
 <template>
   <SidebarGroup class="group-data-[collapsible=icon]:hidden">
-    <SidebarGroupLabel>Dependent Assignments</SidebarGroupLabel>
+    <SidebarGroupLabel>Group Assignments</SidebarGroupLabel>
     <SidebarMenu>
       <SidebarMenuItem v-for="item in dependencies" :key="item.name">
         <SidebarMenuButton as-child>
