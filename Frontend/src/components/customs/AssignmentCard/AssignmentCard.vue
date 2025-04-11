@@ -16,7 +16,17 @@ import {
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import type { IAssignmentResponse } from "@/utils/interfaces";
-import { CalendarRange, Check, Edit2, Star, Trash2 } from "lucide-vue-next";
+import {
+  CalendarRange,
+  Check,
+  CheckCircle2,
+  Edit2,
+  ListChecks,
+  RefreshCcw,
+  Star,
+  Trash2,
+} from "lucide-vue-next";
+import ConfirmDialog from "../ConfirmDialog/ConfirmDialog.vue";
 
 defineProps<{
   assignment: IAssignmentResponse;
@@ -44,7 +54,18 @@ defineProps<{
                       })
                     "
                   >
-                    <Check class="size-3 text-white" />
+                    <Check
+                      v-if="assignment.status === 'Completed'"
+                      class="size-3 text-white"
+                    />
+                    <RefreshCcw
+                      v-if="assignment.status === 'In progress'"
+                      class="size-3 text-white"
+                    />
+                    <ListChecks
+                      v-if="assignment.status === 'Pending'"
+                      class="size-3 text-white"
+                    />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -63,18 +84,26 @@ defineProps<{
     </ContextMenuTrigger>
     <ContextMenuContent>
       <ContextMenuItem>
-        <Edit2 class="mr-1" />
-        Edit
+        <CheckCircle2 class="mr-1" />
+        Mark as Completed
       </ContextMenuItem>
       <ContextMenuItem>
         <Star class="mr-1" />
         Mark as Important
       </ContextMenuItem>
       <ContextMenuSeparator />
-      <ContextMenuItem>
-        <Trash2 class="mr-1 text-red-500" />
-        <p class="text-red-500">Delete</p>
-      </ContextMenuItem>
+      <ConfirmDialog
+        title="Are you absolutely sure?"
+        message="This action will permanently delete this assignment and cannot be undone."
+        confirmText="Delete"
+        cancelText="Cancel"
+        :onConfirm="() => console.log('Confirmed')"
+      >
+        <ContextMenuItem @select.prevent>
+          <Trash2 class="mr-1 text-red-500" />
+          <p class="text-red-500">Delete</p>
+        </ContextMenuItem>
+      </ConfirmDialog>
     </ContextMenuContent>
   </ContextMenu>
 </template>
