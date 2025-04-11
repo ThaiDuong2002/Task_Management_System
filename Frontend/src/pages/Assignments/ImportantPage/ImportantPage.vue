@@ -36,6 +36,7 @@ import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
     <div class="flex flex-col flex-1 bg-pink-100 p-4 pt-0">
       <div class="flex flex-col gap-2 mx-[10%] my-10 h-full">
         <AssignmentCard
+          :color="'text-pink-500'"
           :assignment="{
             id: '1',
             userId: '123',
@@ -49,6 +50,7 @@ import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
           }"
         />
         <AssignmentCard
+          :color="'text-pink-500'"
           :assignment="{
             id: '1',
             userId: '123',
@@ -62,6 +64,7 @@ import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
           }"
         />
         <AssignmentCard
+          :color="'text-pink-500'"
           :assignment="{
             id: '1',
             userId: '123',
@@ -75,6 +78,7 @@ import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
           }"
         />
         <AssignmentCard
+          :color="'text-pink-500'"
           :assignment="{
             id: '1',
             userId: '123',

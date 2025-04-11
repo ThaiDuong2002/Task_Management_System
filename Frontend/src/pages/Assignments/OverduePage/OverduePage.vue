@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { AssignmentCard } from "@/components/customs/AssignmentCard";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -33,6 +34,64 @@ import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
       </div>
     </header>
     <div class="flex flex-col flex-1 gap-4 bg-amber-100 p-4 pt-0">
+      <div class="flex flex-col gap-2 mx-[10%] my-10 h-full">
+        <AssignmentCard
+          :color="'text-amber-500'"
+          :assignment="{
+            id: '1',
+            userId: '123',
+            title: 'Important Assignment',
+            description: 'This is a description of the important assignment.',
+            dueDate: '2023-10-31',
+            status: 'In progress',
+            priority: 'High',
+            createdAt: '2023-10-01',
+            updatedAt: '2023-10-15',
+          }"
+        />
+        <AssignmentCard
+          :color="'text-amber-500'"
+          :assignment="{
+            id: '1',
+            userId: '123',
+            title: 'Important Assignment',
+            description: 'This is a description of the important assignment.',
+            dueDate: '2023-10-31',
+            status: 'In progress',
+            priority: 'High',
+            createdAt: '2023-10-01',
+            updatedAt: '2023-10-15',
+          }"
+        />
+        <AssignmentCard
+          :color="'text-amber-500'"
+          :assignment="{
+            id: '1',
+            userId: '123',
+            title: 'Important Assignment',
+            description: 'This is a description of the important assignment.',
+            dueDate: '2023-10-31',
+            status: 'In progress',
+            priority: 'High',
+            createdAt: '2023-10-01',
+            updatedAt: '2023-10-15',
+          }"
+        />
+        <AssignmentCard
+          :color="'text-amber-500'"
+          :assignment="{
+            id: '1',
+            userId: '123',
+            title: 'Important Assignment',
+            description: 'This is a description of the important assignment.',
+            dueDate: '2023-10-31',
+            status: 'In progress',
+            priority: 'High',
+            createdAt: '2023-10-01',
+            updatedAt: '2023-10-15',
+          }"
+        />
+      </div>
     </div>
   </SidebarInset>
 </template>
