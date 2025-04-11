@@ -36,7 +36,7 @@ const onSubmit = handleSubmit(async (values) => {
   try {
     const response = await AuthenticationService.login({ email, password });
     auth.setAuth(response);
-    router.push("/assignments");
+    router.push("/assignments/today");
   } catch (error: any) {
     if (error instanceof InvalidCredentialsException) {
       setError({

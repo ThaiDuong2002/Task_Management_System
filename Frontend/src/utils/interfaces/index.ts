@@ -1,3 +1,4 @@
+export * from "@/utils/interfaces/IAssignmentResponse";
 export * from "@/utils/interfaces/IErrorResponse";
 export * from "@/utils/interfaces/ILoginInput";
 export * from "@/utils/interfaces/ILoginResponse";
