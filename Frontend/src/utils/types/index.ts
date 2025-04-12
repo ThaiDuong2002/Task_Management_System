@@ -1,1 +1,1 @@
-export * from "./AuthState";
+export * from "@/utils/types/AuthState";

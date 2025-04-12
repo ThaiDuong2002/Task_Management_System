@@ -1,1 +1,1 @@
-export { default as isTokenExpired } from "./IsTokenExpired";
+export { default as isTokenExpired } from "@/utils/functions/IsTokenExpired";

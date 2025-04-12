@@ -1,4 +1,4 @@
-export { default as useAssignmentStore } from "./AssignmentStore";
-export { default as useAuthStore } from "./AuthStore";
-export { default as useGroupAssignmentStore } from "./GroupAssignmentStore";
-export * from "./locals";
+export { default as useAssignmentStore } from "@/stores/AssignmentStore";
+export { default as useAuthStore } from "@/stores/AuthStore";
+export { default as useGroupAssignmentStore } from "@/stores/GroupAssignmentStore";
+export * from "@/stores/locals";

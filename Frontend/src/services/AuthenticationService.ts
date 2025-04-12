@@ -1,3 +1,4 @@
+import { commonInstance } from "@/services/api/AxiosService";
 import {
   DuplicateEmailException,
   InvalidCredentialsException,
@@ -10,7 +11,6 @@ import type {
   IToken,
   IUser,
 } from "@/utils/interfaces";
-import { commonInstance } from "./api/AxiosService";
 
 class AuthenticationService {
   private static instance: AuthenticationService;

@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import MainHeader from "@/components/customs/MainSidebar/MainHeader.vue";
+import NavDependents from "@/components/customs/MainSidebar/NavDependents.vue";
+import NavIndependents from "@/components/customs/MainSidebar/NavIndependents.vue";
+import NavUser from "@/components/customs/MainSidebar/NavUser.vue";
 import {
   Sidebar,
   SidebarContent,
@@ -8,10 +12,6 @@ import {
 } from "@/components/ui/sidebar";
 import { useAuthStore } from "@/stores";
 import { sidebarGroups } from "@/utils/constants";
-import MainHeader from "./MainHeader.vue";
-import NavDependents from "./NavDependents.vue";
-import NavIndependents from "./NavIndependents.vue";
-import NavUser from "./NavUser.vue";
 
 const props = withDefaults(defineProps<SidebarProps>(), {
   collapsible: "icon",

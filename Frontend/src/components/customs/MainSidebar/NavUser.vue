@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ConfirmDialog } from "@/components/customs/ConfirmDialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -18,7 +19,6 @@ import {
 import { useAuthStore } from "@/stores";
 import { Bell, ChevronsUpDown, CircleUser, LogOut } from "lucide-vue-next";
 import { useRouter } from "vue-router";
-import ConfirmDialog from "../ConfirmDialog/ConfirmDialog.vue";
 
 const { isMobile } = useSidebar();
 const auth = useAuthStore();

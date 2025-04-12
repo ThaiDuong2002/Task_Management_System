@@ -1,2 +1,2 @@
-export * from "./ApiDomain";
-export * from "./SidebarGroups";
+export * from "@/utils/constants/ApiDomain";
+export * from "@/utils/constants/SidebarGroups";

@@ -1,4 +1,4 @@
-import { BaseModel } from "./BaseModel";
+import { BaseModel } from "@/utils/models/BaseModel";
 
 class User extends BaseModel {
   public username!: string;

@@ -1,3 +1,4 @@
+import AuthenticationService from "@/services/AuthenticationService";
 import {
   GetAccessToken,
   GetRefreshToken,
@@ -6,7 +7,6 @@ import {
 } from "@/stores";
 import { apiDomain } from "@/utils/constants";
 import axios, { type AxiosInstance } from "axios";
-import AuthenticationService from "../AuthenticationService";
 
 class AxiosService {
   private static authInstance: AxiosInstance;

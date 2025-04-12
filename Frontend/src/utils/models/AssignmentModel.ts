@@ -1,4 +1,4 @@
-import { BaseModel } from "./BaseModel";
+import { BaseModel } from "@/utils/models/BaseModel";
 
 class Assignment extends BaseModel {
   public userId!: string;

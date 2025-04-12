@@ -1,5 +1,5 @@
-import type { IToken } from "./IToken";
-import type { IUser } from "./IUser";
+import type { IToken } from "@/utils/interfaces/IToken";
+import type { IUser } from "@/utils/interfaces/IUser";
 
 interface ILoginResponse {
   user: IUser;

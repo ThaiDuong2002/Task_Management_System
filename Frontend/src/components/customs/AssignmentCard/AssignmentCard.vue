@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ConfirmDialog } from "@/components/customs/ConfirmDialog";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -20,13 +21,11 @@ import {
   CalendarRange,
   Check,
   CheckCircle2,
-  Edit2,
   ListChecks,
   RefreshCcw,
   Star,
   Trash2,
 } from "lucide-vue-next";
-import ConfirmDialog from "../ConfirmDialog/ConfirmDialog.vue";
 
 defineProps<{
   assignment: IAssignmentResponse;

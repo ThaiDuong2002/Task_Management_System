@@ -1,4 +1,4 @@
-import type { IToken, IUser } from "../interfaces";
+import type { IToken, IUser } from "@/utils/interfaces";
 
 export type AuthState = {
   user: IUser | null;
