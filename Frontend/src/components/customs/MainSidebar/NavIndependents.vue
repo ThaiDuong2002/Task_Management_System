@@ -31,10 +31,10 @@ const isActive = (url: string) => {
     <SidebarMenu>
       <SidebarMenuItem v-for="item in independencies" :key="item.name">
         <SidebarMenuButton as-child :is-active="isActive(item.url)">
-          <a :href="item.url">
+          <RouterLink :to="item.url">
             <component :is="item.icon" />
             <span>{{ item.name }}</span>
-          </a>
+          </RouterLink>
         </SidebarMenuButton>
       </SidebarMenuItem>
     </SidebarMenu>

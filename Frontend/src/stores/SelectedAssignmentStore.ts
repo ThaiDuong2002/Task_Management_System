@@ -20,12 +20,14 @@ const useSelectedAssignmentStore = defineStore("selectedAssignment", {
   actions: {
     toggleSidebar() {
       if (this.isSidebarOpen) {
-        this.assignment = null;
         this.isSidebarOpen = false;
       } else {
         this.isSidebarOpen = true;
       }
     },
+    closeSidebar() {
+      this.isSidebarOpen = false;
+    }
   },
 });
 

@@ -16,7 +16,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { useAuthStore } from "@/stores";
+import { useAuthStore, useSelectedAssignmentStore } from "@/stores";
 import { Bell, ChevronsUpDown, CircleUser, LogOut } from "lucide-vue-next";
 import { useRouter } from "vue-router";
 
@@ -37,7 +37,10 @@ const handleLogout = () => {
   router.push({ name: "login" });
 };
 
+const item = useSelectedAssignmentStore();
+
 const handleProfile = () => {
+  item.closeSidebar();
   router.push({ name: "profile" });
 };
 </script>

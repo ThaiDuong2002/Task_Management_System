@@ -112,9 +112,9 @@ const onSubmit = handleSubmit(async (values) => {
           <div class="flex flex-col justify-center items-center mt-4">
             <p class="text-gray-500 text-sm text-center">
               Don't have an account?
-              <router-link to="/register" class="text-blue-500 hover:underline">
+              <RouterLink to="/register" class="text-blue-500 hover:underline">
                 Register
-              </router-link>
+              </RouterLink>
             </p>
           </div>
         </CardContent>
