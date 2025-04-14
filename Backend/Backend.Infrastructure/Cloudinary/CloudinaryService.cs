@@ -1,32 +1,35 @@
 ﻿using Backend.Application.Common.Interfaces.Cloudinary;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
 
 namespace Backend.Infrastructure.Cloudinary;
 
 public class CloudinaryService : ICloudinaryService
 {
-    public Task<string> UploadImageAsync(IFormFile file, string folderName)
+    private readonly CloudinaryDotNet.Cloudinary _cloudinary;
+
+    public CloudinaryService(CloudinaryDotNet.Cloudinary cloudinary)
     {
-        throw new NotImplementedException();
+        _cloudinary = cloudinary;
     }
 
-    public Task<string> UploadImageAsync(string imageUrl, string folderName)
+    public async Task<string?> UploadImageAsync(IFormFile file, string folderName)
     {
-        throw new NotImplementedException();
-    }
+        if (file.Length <= 0) return null;
 
-    public Task<string> UploadImageAsync(byte[] imageBytes, string folderName)
-    {
-        throw new NotImplementedException();
-    }
+        await using var stream = file.OpenReadStream();
 
-    public Task<bool> DeleteImageAsync(string imageUrl)
-    {
-        throw new NotImplementedException();
-    }
+        var uploadParams = new ImageUploadParams
+        {
+            File = new FileDescription(file.Name, stream),
+            Folder = folderName,
+            Transformation = new Transformation().Height(500).Width(500).Crop("fill").Gravity("face")
+        };
 
-    public Task<bool> DeleteImageAsync(byte[] imageBytes)
-    {
-        throw new NotImplementedException();
+        var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+        if (uploadResult.Error != null) throw new Exception(uploadResult.Error.Message);
+
+        return uploadResult.SecureUrl.ToString();
     }
 }
