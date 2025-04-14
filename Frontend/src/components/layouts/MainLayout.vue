@@ -8,19 +8,9 @@ import { SidebarProvider } from "@/components/ui/sidebar";
   <SidebarProvider>
     <MainSidebar />
     <slot />
-    <DetailSidebar
-      :assignment="{
-        id: '1',
-        userId: '123',
-        title: 'Important Assignment',
-        description: 'This is a description of the important assignment.',
-        dueDate: '2023-10-31',
-        status: 'In progress',
-        priority: 'High',
-        createdAt: '2023-10-01',
-        updatedAt: '2023-10-15',
-      }"
-    />
+  </SidebarProvider>
+  <SidebarProvider :open="true">
+    <DetailSidebar />
   </SidebarProvider>
 </template>
 

@@ -44,6 +44,10 @@ router.beforeEach(async (to, from, next) => {
     if (to.name === "group-assignments") {
       return next({ name: "group-important" });
     }
+
+    if (to.name === "user") {
+      return next({ name: "profile" });
+    }
   }
 
   next();

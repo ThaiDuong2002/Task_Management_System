@@ -23,26 +23,28 @@ import {
   SidebarContent,
   SidebarHeader,
   SidebarSeparator,
+  type SidebarProps,
 } from "@/components/ui/sidebar";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import type { IAssignmentResponse } from "@/utils/interfaces";
+import { useSelectedAssignmentStore } from "@/stores";
 import { CalendarIcon } from "lucide-vue-next";
 import { ref } from "vue";
 
-defineProps<{
-  assignment: IAssignmentResponse;
-}>();
+const props = withDefaults(defineProps<SidebarProps>(), {
+  collapsible: "offcanvas",
+});
 
 const placeholder = ref();
+const item = useSelectedAssignmentStore();
 </script>
 
 <template>
-  <Sidebar class="hidden top-0 sticky lg:flex border-l h-svh">
+  <Sidebar v-bind="props" side="right" collapsible="offcanvas">
     <SidebarHeader>
       <Card class="shadow-none p-2 rounded-sm">
         <Input
-          v-model="assignment.title"
+          v-model="item.assignment!.title"
           placeholder="Enter title here"
           class="shadow-none border-0 active:border-0 focus-visible:outline-none focus-visible:ring-0"
         />
@@ -50,7 +52,7 @@ const placeholder = ref();
       <Card class="shadow-none p-2 rounded-sm">
         <Label for="description">Description</Label>
         <Textarea
-          v-model="assignment.description"
+          v-model="item.assignment!.description"
           placeholder="Enter description here"
           class="shadow-none border-0 active:border-0 focus-visible:outline-none focus-visible:ring-0 resize-none"
         />

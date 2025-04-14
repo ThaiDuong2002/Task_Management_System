@@ -16,6 +16,9 @@ const GroupOverduePage = () =>
 const GroupCompletedPage = () =>
   import("@/pages/GroupAssignments/CompletedPage/CompletedPage.vue");
 
+const UserProfilePage = () =>
+  import("@/pages/UserProfilePage/UserProfilePage.vue");
+
 const guardRoutes: RouteRecordRaw[] = [
   {
     path: "/assignments",
@@ -75,6 +78,22 @@ const guardRoutes: RouteRecordRaw[] = [
     ],
     meta: {
       title: "Group Assignments",
+      requiresAuth: true,
+      layout: "main",
+    },
+  },
+  {
+    path: "/user",
+    name: "user",
+    children: [
+      {
+        path: "profile",
+        name: "profile",
+        component: UserProfilePage,
+      },
+    ],
+    meta: {
+      title: "User Profile",
       requiresAuth: true,
       layout: "main",
     },

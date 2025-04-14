@@ -2,7 +2,7 @@ import {
   AlarmClock,
   CalendarClock,
   CalendarRange,
-  GalleryVertical,
+  CircleCheck,
   Star,
 } from "lucide-vue-next";
 
@@ -30,7 +30,7 @@ export const sidebarGroups = {
     },
     {
       name: "Completed",
-      icon: GalleryVertical,
+      icon: CircleCheck,
       url: "/assignments/completed",
     },
   ],
@@ -47,7 +47,7 @@ export const sidebarGroups = {
     },
     {
       name: "Completed",
-      icon: GalleryVertical,
+      icon: CircleCheck,
       url: "/group-assignments/completed",
     },
   ],

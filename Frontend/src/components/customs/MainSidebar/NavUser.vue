@@ -24,7 +24,7 @@ const { isMobile } = useSidebar();
 const auth = useAuthStore();
 const router = useRouter();
 
-const props = defineProps<{
+defineProps<{
   user?: {
     name: string;
     email: string;
@@ -35,6 +35,10 @@ const props = defineProps<{
 const handleLogout = () => {
   auth.logout();
   router.push({ name: "login" });
+};
+
+const handleProfile = () => {
+  router.push({ name: "profile" });
 };
 </script>
 
@@ -86,9 +90,9 @@ const handleLogout = () => {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem class="cursor-pointer">
+            <DropdownMenuItem class="cursor-pointer" @click="handleProfile">
               <CircleUser />
-              Account
+              Profile
             </DropdownMenuItem>
             <DropdownMenuItem class="cursor-pointer">
               <Bell />
