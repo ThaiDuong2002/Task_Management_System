@@ -1,12 +1,15 @@
 using System.Text;
 using Backend.Application.Common.Interfaces.Authentication;
+using Backend.Application.Common.Interfaces.Cloudinary;
 using Backend.Application.Common.Interfaces.Persistence;
 using Backend.Application.Common.Interfaces.Services;
 using Backend.Infrastructure.Authentication;
 using Backend.Infrastructure.Authentication.Identity;
+using Backend.Infrastructure.Cloudinary;
 using Backend.Infrastructure.Persistence;
 using Backend.Infrastructure.Persistence.Repositories;
 using Backend.Infrastructure.Services;
+using CloudinaryDotNet;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -27,7 +30,8 @@ public static class DependencyInjection
         services
             .AddPersistence(configuration)
             .AddAuth(configuration)
-            .AddLogging();
+            .AddLogging()
+            .AddCloudinary(configuration);
 
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 
@@ -48,6 +52,21 @@ public static class DependencyInjection
         });
 
         services.AddSingleton<ILoggerService, LoggerService>();
+        return services;
+    }
+
+    private static IServiceCollection AddCloudinary(this IServiceCollection services,
+        ConfigurationManager configuration)
+    {
+        services.Configure<CloudinarySettings>(configuration.GetSection(CloudinarySettings.SectionName));
+
+        services.AddSingleton(service =>
+        {
+            var config = service.GetRequiredService<IOptions<CloudinarySettings>>().Value;
+            return new CloudinaryDotNet.Cloudinary(new Account(config.CloudName, config.ApiKey, config.ApiSecret));
+        });
+
+        services.AddScoped<ICloudinaryService, CloudinaryService>();
         return services;
     }
 
