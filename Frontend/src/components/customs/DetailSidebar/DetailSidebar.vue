@@ -28,7 +28,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { useSelectedAssignmentStore } from "@/stores";
-import { CalendarIcon } from "lucide-vue-next";
+import { CalendarIcon, SidebarClose } from "lucide-vue-next";
 import { ref } from "vue";
 
 const props = withDefaults(defineProps<SidebarProps>(), {
@@ -38,11 +38,25 @@ const props = withDefaults(defineProps<SidebarProps>(), {
 
 const placeholder = ref();
 const item = useSelectedAssignmentStore();
+
+const closeSidebar = () => {
+  item.closeSidebar();
+};
 </script>
 
 <template>
   <Sidebar v-bind="props">
-    <SidebarHeader>
+    <SidebarHeader class="flex justify-between items-end p-2">
+      <Button
+        size="icon"
+        variant="ghost"
+        class="rounded-full cursor-pointer"
+        @click="closeSidebar"
+      >
+        <SidebarClose class="w-5 h-5" />
+      </Button>
+    </SidebarHeader>
+    <SidebarContent class="p-2">
       <Card class="shadow-none p-2 rounded-sm">
         <Input
           v-model="item.assignment.title"
@@ -94,8 +108,7 @@ const item = useSelectedAssignmentStore();
           </SelectContent>
         </Select>
       </Card>
-    </SidebarHeader>
-    <SidebarContent> </SidebarContent>
+    </SidebarContent>
   </Sidebar>
 </template>
 
