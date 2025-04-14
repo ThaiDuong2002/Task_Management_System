@@ -27,7 +27,9 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<A
     {
         if (await _userRepository.GetUserByEmail(command.Email) is not null)
             return Errors.User.DuplicateEmail;
-        ;
+        
+        if (await _userRepository.GetUserByUserName(command.UserName) is not null)
+            return Errors.User.DuplicateUserName;
 
         // Create user (generate unique id)
         var user = new User

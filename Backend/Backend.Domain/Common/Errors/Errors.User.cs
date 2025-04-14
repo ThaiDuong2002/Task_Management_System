@@ -11,6 +11,11 @@ public static partial class Errors
             "Email is already in use."
         );
 
+        public static Error DuplicateUserName => Error.Conflict(
+            "User.DuplicateUserName",
+            "Username is already in use."
+        );
+
         public static Error FailedToRegister => Error.Failure(
             "User.FailedToRegister",
             "Failed to register user."
@@ -24,6 +29,11 @@ public static partial class Errors
         public static Error NotFound => Error.NotFound(
             "User.NotFound",
             "User not found."
+        );
+
+        public static Error UpdateFailed => Error.Failure(
+            "User.UpdateFailed",
+            "Failed to update user."
         );
     }
 }

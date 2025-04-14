@@ -1,4 +1,5 @@
-﻿using Backend.Application.Services.Users.Queries.GetUserByEmail;
+﻿using Backend.Application.Services.Users.Commands.UpdateUser;
+using Backend.Application.Services.Users.Queries.GetUserByEmail;
 using Backend.Application.Services.Users.Queries.GetUserById;
 using Backend.Contracts.Users;
 using MapsterMapper;
@@ -37,6 +38,18 @@ public class UsersController : ApiController
 
         return result.Match(
             user => Ok(_mapper.Map<UserResponse>(user)),
+            errors => Problem(errors)
+        );
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateUser(Guid id, UpdateUserRequest request)
+    {
+        var result =
+            await _mediator.Send(new UpdateUserCommand(id, request.FirstName, request.LastName, request.UserName));
+
+        return result.Match(
+            user => Ok(_mapper.Map<UpdateUserResponse>(user)),
             errors => Problem(errors)
         );
     }

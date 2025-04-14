@@ -14,5 +14,8 @@ public class UserMappingConfig : IRegister
             .Map(dest => dest.FirstName, src => src.FirstName)
             .Map(dest => dest.LastName, src => src.LastName)
             .Map(dest => dest.Email, src => src.Email);
+
+        config.NewConfig<UpdateUserResult, UpdateUserResponse>()
+            .Map(dest => dest.Id, src => src.Id);
     }
 }
