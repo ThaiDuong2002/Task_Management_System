@@ -16,6 +16,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
+import { useSelectedAssignmentStore } from "@/stores";
 import type { IAssignmentResponse } from "@/utils/interfaces";
 import {
   CalendarRange,
@@ -31,12 +32,21 @@ defineProps<{
   assignment: IAssignmentResponse;
   color: string;
 }>();
+
+const item = useSelectedAssignmentStore();
+
+const handleCardClick = () => {
+  item.toggleSidebar();
+};
 </script>
 
 <template>
   <ContextMenu>
     <ContextMenuTrigger>
-      <Card class="hover:bg-gray-50 shadow-none p-0.5 border-0 cursor-pointer">
+      <Card
+        class="hover:bg-gray-50 shadow-none p-0.5 border-0 cursor-pointer"
+        @click="handleCardClick"
+      >
         <div class="flex justify-between items-center p-4">
           <div class="flex items-center gap-4">
             <TooltipProvider>

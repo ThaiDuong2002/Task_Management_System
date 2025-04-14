@@ -33,6 +33,7 @@ import { ref } from "vue";
 
 const props = withDefaults(defineProps<SidebarProps>(), {
   collapsible: "offcanvas",
+  side: "right",
 });
 
 const placeholder = ref();
@@ -40,11 +41,11 @@ const item = useSelectedAssignmentStore();
 </script>
 
 <template>
-  <Sidebar v-bind="props" side="right" collapsible="offcanvas">
+  <Sidebar v-bind="props">
     <SidebarHeader>
       <Card class="shadow-none p-2 rounded-sm">
         <Input
-          v-model="item.assignment!.title"
+          v-model="item.assignment.title"
           placeholder="Enter title here"
           class="shadow-none border-0 active:border-0 focus-visible:outline-none focus-visible:ring-0"
         />
@@ -52,7 +53,7 @@ const item = useSelectedAssignmentStore();
       <Card class="shadow-none p-2 rounded-sm">
         <Label for="description">Description</Label>
         <Textarea
-          v-model="item.assignment!.description"
+          v-model="item.assignment.description"
           placeholder="Enter description here"
           class="shadow-none border-0 active:border-0 focus-visible:outline-none focus-visible:ring-0 resize-none"
         />
