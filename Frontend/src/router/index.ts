@@ -31,11 +31,18 @@ router.beforeEach(async (to, from, next) => {
   }
 
   if (!to.meta.requiresAuth && auth.isAuthenticated) {
-    if (to.name === "login") {
+    if (to.name === "login" || to.name === "register") {
       return next({ name: "today" });
     }
-    if (to.name === "register") {
+  }
+
+  if (to.meta.requiresAuth && auth.isAuthenticated) {
+    if (to.name === "assignments") {
       return next({ name: "today" });
+    }
+
+    if (to.name === "group-assignments") {
+      return next({ name: "group-important" });
     }
   }
 

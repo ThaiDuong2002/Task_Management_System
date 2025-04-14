@@ -9,14 +9,14 @@ import {
 export const sidebarGroups = {
   independencies: [
     {
-      name: "Important",
-      icon: Star,
-      url: "/assignments/important",
-    },
-    {
       name: "Today",
       icon: CalendarClock,
       url: "/assignments/today",
+    },
+    {
+      name: "Important",
+      icon: Star,
+      url: "/assignments/important",
     },
     {
       name: "Upcoming",

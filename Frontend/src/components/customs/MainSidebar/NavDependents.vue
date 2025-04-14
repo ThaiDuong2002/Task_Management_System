@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/sidebar";
 import type { LucideProps } from "lucide-vue-next";
 import type { FunctionalComponent } from "vue";
+import { useRoute } from "vue-router";
 
 defineProps<{
   dependencies: {
@@ -16,6 +17,12 @@ defineProps<{
     url: string;
   }[];
 }>();
+
+const route = useRoute();
+
+const isActive = (url: string) => {
+  return route.path === url;
+};
 </script>
 
 <template>
@@ -23,7 +30,7 @@ defineProps<{
     <SidebarGroupLabel>Group Assignments</SidebarGroupLabel>
     <SidebarMenu>
       <SidebarMenuItem v-for="item in dependencies" :key="item.name">
-        <SidebarMenuButton as-child>
+        <SidebarMenuButton as-child :is-active="isActive(item.url)">
           <a :href="item.url">
             <component :is="item.icon" />
             <span>{{ item.name }}</span>
