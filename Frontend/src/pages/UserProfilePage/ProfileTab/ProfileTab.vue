@@ -3,6 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import ImageDialog from "@/pages/UserProfilePage/ProfileTab/ImageDialog.vue";
 import { useAuthStore } from "@/stores";
 
 const auth = useAuthStore();
@@ -26,9 +27,11 @@ const auth = useAuthStore();
             Customize your account by adding a profile photo. This image will be
             displayed on apps and devices that utilize your account.
           </p>
-          <Button variant="outline" class="cursor-pointer">
-            Change Photo
-          </Button>
+          <ImageDialog>
+            <Button variant="outline" class="cursor-pointer">
+              Change Photo
+            </Button>
+          </ImageDialog>
         </div>
       </div>
       <Separator class="mb-4" />
