@@ -4,18 +4,18 @@ import * as z from "zod";
 const RegisterSchema = z
   .object({
     username: z
-      .string()
+      .string({ message: "Username is required" })
       .min(3, { message: "Username must be at least 3 characters long" })
       .max(20, { message: "Username must be at most 20 characters long" }),
     firstName: z
-      .string()
+      .string({ message: "First name is required" })
       .min(1, { message: "First name must be at least 1 characters long" }),
     lastName: z
-      .string()
+      .string({ message: "Last name is required" })
       .min(1, { message: "Last name must be at least 1 characters long" }),
     email: z.string().email({ message: "Invalid email address" }),
     password: z
-      .string()
+      .string({ message: "Password is required" })
       .min(8, { message: "Password must be at least 8 characters long" })
       .max(20, { message: "Password must be at most 20 characters long" })
       .regex(
@@ -26,7 +26,7 @@ const RegisterSchema = z
         }
       ),
     confirmPassword: z
-      .string()
+      .string({ message: "Confirm password is required" })
       .min(8, {
         message: "Confirm password must be at least 8 characters long",
       })

@@ -5,6 +5,7 @@ import { Card, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import ImageDialog from "@/pages/UserProfilePage/ProfileTab/ImageDialog.vue";
 import { useAuthStore } from "@/stores";
+import FullnameDialog from "./FullnameDialog.vue";
 import UsernameDialog from "./UsernameDialog.vue";
 
 const auth = useAuthStore();
@@ -63,18 +64,20 @@ const auth = useAuthStore();
         </div>
         <div class="items-center gap-4 grid grid-cols-2">
           <div class="gap-4 grid grid-cols-2">
-            <div class="text-muted-foreground text-start">Display Name</div>
+            <div class="text-muted-foreground text-start">Fullname</div>
             <div class="text-start">
               {{ auth.user?.firstName }} {{ auth.user?.lastName }}
             </div>
           </div>
           <div class="flex flex-row justify-end items-center gap-2">
-            <Button
-              variant="ghost"
-              class="hover:bg-white text-blue-400 hover:text-blue-600 hover:underline cursor-pointer"
-            >
-              Edit Display Name
-            </Button>
+            <FullnameDialog>
+              <Button
+                variant="ghost"
+                class="hover:bg-white text-blue-400 hover:text-blue-600 hover:underline cursor-pointer"
+              >
+                Edit fullname
+              </Button>
+            </FullnameDialog>
           </div>
         </div>
       </div>

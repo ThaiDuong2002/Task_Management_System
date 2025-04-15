@@ -4,11 +4,11 @@ import * as z from "zod";
 const ChangePasswordSchema = z
   .object({
     oldPassword: z
-      .string()
+      .string({ message: "Old password is required" })
       .min(8, { message: "Old password must be at least 8 characters long" })
       .max(20, { message: "Old password must be at most 20 characters long" }),
     newPassword: z
-      .string()
+      .string({ message: "New password is required" })
       .min(8, { message: "New password must be at least 8 characters long" })
       .max(20, { message: "Password must be at most 20 characters long" })
       .regex(
@@ -19,7 +19,7 @@ const ChangePasswordSchema = z
         }
       ),
     confirmPassword: z
-      .string()
+      .string({ message: "Confirm password is required" })
       .min(8, {
         message: "Confirm password must be at least 8 characters long",
       })
