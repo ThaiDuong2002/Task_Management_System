@@ -76,7 +76,7 @@ const handleClose = () => {
       </DialogHeader>
       <form @submit.prevent="onSubmit" class="space-y-4">
         <FormField name="image" :validate-on-blur="!isFieldDirty('image')">
-          <FormItem v-auto-animate class="">
+          <FormItem v-auto-animate >
             <FormLabel
               :class="{ 'text-destructive': fileRejections.length !== 0 }"
             >

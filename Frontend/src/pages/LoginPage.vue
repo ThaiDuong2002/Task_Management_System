@@ -105,8 +105,9 @@ const onSubmit = handleSubmit(async (values) => {
                 type="submit"
                 size="lg"
                 class="w-full text-lg cursor-pointer"
-                >Login</Button
               >
+                Login
+              </Button>
             </div>
           </form>
           <div class="flex flex-col justify-center items-center mt-4">
