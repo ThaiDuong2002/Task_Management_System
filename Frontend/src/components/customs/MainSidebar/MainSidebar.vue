@@ -35,7 +35,8 @@ const data = sidebarGroups;
         :user="{
           name: auth.user?.userName!,
           email: auth.user?.email!,
-          avatar: 'https://www.shadcn-vue.com/avatars/shadcn.jpg' }"
+          avatar: 'https://www.shadcn-vue.com/avatars/shadcn.jpg'
+        }"
       />
     </SidebarFooter>
   </Sidebar>
