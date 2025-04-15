@@ -26,13 +26,17 @@ const isActive = (url: string) => {
 </script>
 
 <template>
-  <SidebarGroup class="group-data-[collapsible=icon]:hidden">
+  <SidebarGroup>
     <SidebarGroupLabel>Assignments</SidebarGroupLabel>
     <SidebarMenu>
       <SidebarMenuItem v-for="item in independencies" :key="item.name">
-        <SidebarMenuButton as-child :is-active="isActive(item.url)">
+        <SidebarMenuButton
+          as-child
+          :is-active="isActive(item.url)"
+          :tooltip="item.name"
+        >
           <RouterLink :to="item.url">
-            <component :is="item.icon" />
+            <component :is="item.icon" v-if="item.icon" />
             <span>{{ item.name }}</span>
           </RouterLink>
         </SidebarMenuButton>

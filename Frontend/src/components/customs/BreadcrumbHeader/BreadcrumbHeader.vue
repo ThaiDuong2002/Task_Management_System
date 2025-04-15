@@ -9,7 +9,7 @@ import {
 
 defineProps<{
   title: string;
-  subtitle: string;
+  subtitle?: string;
 }>();
 </script>
 
@@ -19,8 +19,8 @@ defineProps<{
       <BreadcrumbItem>
         <BreadcrumbPage>{{ title }}</BreadcrumbPage>
       </BreadcrumbItem>
-      <BreadcrumbSeparator class="hidden md:block" />
-      <BreadcrumbItem>
+      <BreadcrumbSeparator class="hidden md:block" v-if="subtitle" />
+      <BreadcrumbItem v-if="subtitle">
         <BreadcrumbPage>{{ subtitle }}</BreadcrumbPage>
       </BreadcrumbItem>
     </BreadcrumbList>
