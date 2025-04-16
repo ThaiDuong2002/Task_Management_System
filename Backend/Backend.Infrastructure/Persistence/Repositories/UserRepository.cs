@@ -130,9 +130,28 @@ public class UserRepository : IUserRepository
         await _userManager.SetAuthenticationTokenAsync(user!, "RefreshTokenProvider", "RefreshToken", refreshToken);
     }
 
+    public async Task DeleteRefreshToken(string userId)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+        await _userManager.RemoveAuthenticationTokenAsync(user!, "RefreshTokenProvider", "RefreshToken");
+    }
+
     public async Task<string?> GetRefreshToken(string userId)
     {
         var user = await _userManager.FindByIdAsync(userId);
         return await _userManager.GetAuthenticationTokenAsync(user!, "RefreshTokenProvider", "RefreshToken");
+    }
+
+    public async Task<int> ChangePassword(string userId, string passwordHash)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+
+        if (user is null) return 0;
+
+        user.PasswordHash = passwordHash;
+        user.SecurityStamp = Guid.NewGuid().ToString();
+
+        _dbContext.Users.Update(user);
+        return await _dbContext.SaveChangesAsync();
     }
 }

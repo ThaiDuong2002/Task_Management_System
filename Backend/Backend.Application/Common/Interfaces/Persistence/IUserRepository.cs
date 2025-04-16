@@ -10,5 +10,7 @@ public interface IUserRepository
     Task<Guid?> Create(User user);
     Task<int> Update(User user);
     Task StoreRefreshToken(string userId, string refreshToken);
+    Task DeleteRefreshToken(string userId);
     Task<string?> GetRefreshToken(string userId);
+    Task<int> ChangePassword(string userId, string passwordHash);
 }

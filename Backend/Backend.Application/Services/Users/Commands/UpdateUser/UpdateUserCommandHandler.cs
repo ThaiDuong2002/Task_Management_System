@@ -22,9 +22,11 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Error
         if (user is null) return Errors.User.NotFound;
 
         // 2. Update the user
-        user.FirstName = command.FirstName;
-        user.LastName = command.LastName;
-        user.UserName = command.UserName;
+        if (!string.IsNullOrEmpty(command.FirstName)) user.FirstName = command.FirstName;
+
+        if (!string.IsNullOrEmpty(command.LastName)) user.LastName = command.LastName;
+
+        if (!string.IsNullOrEmpty(command.UserName)) user.UserName = command.UserName;
 
         // 3. Save the changes
         var result = await _userRepository.Update(user);

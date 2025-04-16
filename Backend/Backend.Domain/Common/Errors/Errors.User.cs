@@ -26,6 +26,11 @@ public static partial class Errors
             "Invalid credentials."
         );
 
+        public static Error InvalidPassword => Error.Validation(
+            "User.InvalidPassword",
+            "Invalid password."
+        );
+
         public static Error NotFound => Error.NotFound(
             "User.NotFound",
             "User not found."

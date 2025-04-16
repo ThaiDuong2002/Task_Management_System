@@ -17,5 +17,8 @@ public class UserMappingConfig : IRegister
 
         config.NewConfig<UpdateUserResult, UpdateUserResponse>()
             .Map(dest => dest.Id, src => src.Id);
+
+        config.NewConfig<ChangePasswordResult, ChangePasswordResponse>()
+            .Map(dest => dest.Id, src => src.Id);
     }
 }
