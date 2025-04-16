@@ -55,7 +55,7 @@ public class UsersController : ApiController
         );
     }
 
-    [HttpPut("password/{id}")]
+    [HttpPut("{id}/password")]
     public async Task<IActionResult> UpdateUserPassword(Guid id, ChangePasswordRequest request)
     {
         var result = await _mediator.Send(new ChangePasswordCommand(id, request.OldPassword, request.NewPassword));

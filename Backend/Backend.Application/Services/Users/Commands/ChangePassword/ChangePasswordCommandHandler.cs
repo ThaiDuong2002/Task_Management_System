@@ -36,7 +36,7 @@ public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordComman
         var result = await _userRepository.ChangePassword(user.Id!.Value.ToString(), user.PasswordHash);
 
         // 5. Check if the update was successful
-        if (result == 0) return Errors.User.UpdateFailed;
+        if (result == 0) return Errors.User.ChangePasswordFailed;
         
         // 6. Delete the refresh token
         await _userRepository.DeleteRefreshToken(user.Id!.Value.ToString());

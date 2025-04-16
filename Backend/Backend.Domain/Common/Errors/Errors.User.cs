@@ -40,5 +40,15 @@ public static partial class Errors
             "User.UpdateFailed",
             "Failed to update user."
         );
+
+        public static Error UserNameAlreadyExists => Error.Conflict(
+            "User.UserNameAlreadyExists",
+            "Username already exists."
+        );
+
+        public static Error ChangePasswordFailed => Error.Failure(
+            "User.ChangePasswordFailed",
+            "Failed to change password."
+        );
     }
 }

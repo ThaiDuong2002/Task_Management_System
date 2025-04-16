@@ -26,7 +26,14 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Error
 
         if (!string.IsNullOrEmpty(command.LastName)) user.LastName = command.LastName;
 
-        if (!string.IsNullOrEmpty(command.UserName)) user.UserName = command.UserName;
+        if (!string.IsNullOrEmpty(command.UserName))
+        {
+            // Check if the username is already taken
+            var existingUser = await _userRepository.GetUserByUserName(command.UserName);
+            if (existingUser != null && existingUser.Id != user.Id)
+                return Errors.User.UserNameAlreadyExists;
+            user.UserName = command.UserName;
+        }
 
         // 3. Save the changes
         var result = await _userRepository.Update(user);
