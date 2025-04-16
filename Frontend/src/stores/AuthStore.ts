@@ -83,6 +83,12 @@ const useAuthStore = defineStore("auth", {
         throw error;
       }
     },
+    setUser(user: any) {
+      this.user = {
+        ...this.user,
+        ...user,
+      };
+    },
   },
 });
 

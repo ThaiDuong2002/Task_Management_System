@@ -25,7 +25,7 @@ class UserService {
     return UserService.instance;
   }
 
-  async updateUserName(input: IUpdateUserInput): Promise<IUpdateUserResponse> {
+  async updateUser(input: IUpdateUserInput): Promise<IUpdateUserResponse> {
     const auth = useAuthStore();
     try {
       const response = await authInstance.put(`/users/${auth.user?.id}`, input);

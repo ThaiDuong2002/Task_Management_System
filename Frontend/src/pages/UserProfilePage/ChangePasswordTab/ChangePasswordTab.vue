@@ -15,17 +15,35 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { UserService } from "@/services";
+import InvalidPasswordException from "@/utils/exceptions/InvalidPasswordException";
 import ChangePasswordSchema from "@/validations/ChangePasswordSchema";
-import { useForm } from "vee-validate";
+import { useForm, useSetFormErrors } from "vee-validate";
 
 const { isFieldDirty, handleSubmit } = useForm({
   validationSchema: ChangePasswordSchema,
 });
 
-const onSubmit = handleSubmit(async (values) => {
-  const { oldPassword, newPassword, confirmPassword } = values;
+const setError = useSetFormErrors();
 
-  console.log(oldPassword, newPassword, confirmPassword);
+const onSubmit = handleSubmit(async (values) => {
+  const { oldPassword, newPassword } = values;
+  try {
+    await UserService.changePassword({
+      oldPassword,
+      newPassword,
+    });
+  } catch (error: any) {
+    if (error instanceof InvalidPasswordException) {
+      setError({
+        oldPassword: error.message,
+      });
+    } else {
+      setError({
+        confirmPassword: error.message,
+      });
+    }
+  }
 });
 </script>
 

@@ -16,8 +16,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { UserService } from "@/services";
+import { useAuthStore } from "@/stores";
 import UsernameSchema from "@/validations/UsernameSchema";
-import { useForm } from "vee-validate";
+import { useForm, useSetFormErrors } from "vee-validate";
 
 const { isFieldDirty, handleSubmit } = useForm({
   initialValues: {
@@ -26,8 +28,21 @@ const { isFieldDirty, handleSubmit } = useForm({
   validationSchema: UsernameSchema,
 });
 
-const onSubmit = handleSubmit((values) => {
-  console.log(values);
+const setError = useSetFormErrors();
+const auth = useAuthStore();
+
+const onSubmit = handleSubmit(async (values) => {
+  const { username } = values;
+
+  try {
+    await UserService.updateUser({
+      userName: username,
+    });
+
+    auth.setUser({ userName: username });
+  } catch (error: any) {
+    setError({ username: error.message });
+  }
 });
 </script>
 
