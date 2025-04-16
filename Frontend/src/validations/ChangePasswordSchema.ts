@@ -35,6 +35,13 @@ const ChangePasswordSchema = z
         message: "Passwords do not match",
       });
     }
+    if (data.newPassword === data.oldPassword) {
+      ctx.addIssue({
+        path: ["newPassword"],
+        code: z.ZodIssueCode.custom,
+        message: "New Password must be different from old password",
+      });
+    }
   });
 
 export default toTypedSchema(ChangePasswordSchema);

@@ -9,7 +9,6 @@ import ChangePasswordFailedException from "@/utils/exceptions/ChangePasswordFail
 import InvalidPasswordException from "@/utils/exceptions/InvalidPasswordException";
 import type {
   IChangePasswordInput,
-  IChangePasswordResponse,
   IUpdateUserInput,
   IUpdateUserResponse,
 } from "@/utils/interfaces";
@@ -47,17 +46,11 @@ class UserService {
     }
   }
 
-  async changePassword(
-    input: IChangePasswordInput
-  ): Promise<IChangePasswordResponse> {
+  async changePassword(input: IChangePasswordInput): Promise<void> {
     try {
       const auth = useAuthStore();
-      const response = await authInstance.put(
-        `/users/${auth.user?.id}/password`,
-        input
-      );
 
-      return response.data as IChangePasswordResponse;
+      await authInstance.put(`/users/${auth.user?.id}/password`, input);
     } catch (error: any) {
       if (error.response.data.errors["User.InvalidPassword"].length > 0) {
         throw new InvalidPasswordException(

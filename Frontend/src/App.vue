@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { DefaultLayout, MainLayout } from "@/components/layouts";
+import { Toaster } from "@/components/ui/sonner";
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 
@@ -15,6 +16,7 @@ const currentLayout = computed(() => {
 </script>
 
 <template>
+  <Toaster class="pointer-events-auto"/>
   <component :is="currentLayout">
     <router-view />
   </component>

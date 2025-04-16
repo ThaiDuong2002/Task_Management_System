@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -20,6 +21,8 @@ import { UserService } from "@/services";
 import { useAuthStore } from "@/stores";
 import FullnameSchema from "@/validations/FullnameSchema";
 import { useForm, useSetFormErrors } from "vee-validate";
+import { ref } from "vue";
+import { toast } from "vue-sonner";
 
 const { isFieldDirty, handleSubmit } = useForm({
   initialValues: {
@@ -31,6 +34,14 @@ const { isFieldDirty, handleSubmit } = useForm({
 
 const setError = useSetFormErrors();
 const auth = useAuthStore();
+const isOpen = ref(false);
+
+const openDialog = () => {
+  isOpen.value = true;
+};
+const closeDialog = () => {
+  isOpen.value = false;
+};
 
 const onSubmit = handleSubmit(async (values) => {
   const { firstName, lastName } = values;
@@ -44,6 +55,14 @@ const onSubmit = handleSubmit(async (values) => {
       firstName,
       lastName,
     });
+
+    closeDialog();
+
+    toast.success("Fullname updated successfully", {
+      description: "Your fullname has been updated successfully.",
+    });
+
+    setError({ firstName: "", lastName: "" });
   } catch (error: any) {
     setError({ lastName: error.message });
   }
@@ -51,11 +70,15 @@ const onSubmit = handleSubmit(async (values) => {
 </script>
 
 <template>
-  <Dialog>
-    <DialogTrigger as-child>
+  <Dialog :open="isOpen">
+    <DialogClose />
+    <DialogTrigger as-child @click="openDialog">
       <slot />
     </DialogTrigger>
-    <DialogContent>
+    <DialogContent
+      v-on:interact-outside="closeDialog"
+      v-on:close-auto-focus="closeDialog"
+    >
       <DialogHeader>
         <DialogTitle>Change Fullname</DialogTitle>
         <DialogDescription>Change your fullname</DialogDescription>

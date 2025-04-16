@@ -46,8 +46,8 @@ const auth = useAuthStore();
   <Card class="mt-2.5">
     <CardHeader>
       <div class="flex flex-col gap-4">
-        <div class="items-center gap-4 grid grid-cols-2">
-          <div class="gap-4 grid grid-cols-2">
+        <div class="items-center gap-4 grid grid-cols-3">
+          <div class="gap-4 grid grid-cols-2 col-span-2">
             <div class="text-muted-foreground text-start">Username</div>
             <div class="text-start">{{ auth.user?.userName }}</div>
           </div>
@@ -55,15 +55,15 @@ const auth = useAuthStore();
             <UsernameDialog>
               <Button
                 variant="ghost"
-                class="hover:bg-white text-blue-400 hover:text-blue-600 hover:underline cursor-pointer"
+                class="hover:bg-white w-auto text-blue-400 hover:text-blue-600 hover:underline cursor-pointer"
               >
                 Edit username
               </Button>
             </UsernameDialog>
           </div>
         </div>
-        <div class="items-center gap-4 grid grid-cols-2">
-          <div class="gap-4 grid grid-cols-2">
+        <div class="items-center gap-4 grid grid-cols-3">
+          <div class="gap-4 grid grid-cols-2 col-span-2">
             <div class="text-muted-foreground text-start">Fullname</div>
             <div class="text-start">
               {{ auth.user?.firstName }} {{ auth.user?.lastName }}

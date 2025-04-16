@@ -69,6 +69,8 @@ class AxiosService {
               useAuthStore().logout();
               window.location.href = "/login";
             }
+          } else {
+            throw error;
           }
         }
       }
