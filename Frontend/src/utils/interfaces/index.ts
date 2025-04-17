@@ -1,4 +1,6 @@
+export * from "@/utils/interfaces/IAssignmentInput";
 export * from "@/utils/interfaces/IAssignmentResponse";
+export * from "@/utils/interfaces/IAssignmentsInput";
 export * from "@/utils/interfaces/IChangeImageInput";
 export * from "@/utils/interfaces/IChangeImageResponse";
 export * from "@/utils/interfaces/IChangePasswordInput";
@@ -8,6 +10,8 @@ export * from "@/utils/interfaces/ILoginInput";
 export * from "@/utils/interfaces/ILoginResponse";
 export * from "@/utils/interfaces/IRegisterInput";
 export * from "@/utils/interfaces/IToken";
+export * from "@/utils/interfaces/IUpdateAssignmentInput";
+export * from "@/utils/interfaces/IUpdateAssignmentResponse";
 export * from "@/utils/interfaces/IUpdateUserInput";
 export * from "@/utils/interfaces/IUpdateUserResponse";
 export * from "@/utils/interfaces/IUser";

@@ -75,6 +75,8 @@ const useAuthStore = defineStore("auth", {
           refreshToken: response.token.refreshToken,
         };
 
+        StoreToken(this.token);
+
         this.isAuthenticated = true;
 
         this.isLoading = false;
