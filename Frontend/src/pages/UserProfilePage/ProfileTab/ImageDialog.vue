@@ -25,6 +25,16 @@ import { useDropzone } from "vue3-dropzone";
 
 const auth = useAuthStore();
 const preview = ref<string | ArrayBuffer | null>(null);
+const isOpen = ref(false);
+
+const openDialog = () => {
+  isOpen.value = true;
+};
+const closeDialog = () => {
+  isOpen.value = false;
+  preview.value = null;
+  resetField("image");
+};
 
 const { isFieldDirty, handleSubmit, setFieldValue, setErrors, resetField } =
   useForm({
@@ -55,21 +65,24 @@ const { fileRejections, getRootProps, getInputProps, isDragActive } =
 const onSubmit = handleSubmit(async (values) => {
   const { image } = values;
   try {
-    const imageUrl = await UserService.changeImage({ image });
-    console.log(imageUrl);
+    const result = await UserService.changeImage({ image });
+
+    auth.setUser({
+      imageUrl: result.imageUrl,
+    });
+
+    closeDialog();
   } catch (error) {}
 });
-
-const handleClose = () => {
-  preview.value = null;
-  resetField("image");
-};
 </script>
 
 <template>
-  <Dialog>
-    <DialogTrigger as-child><slot /></DialogTrigger>
-    <DialogContent @close-auto-focus="handleClose">
+  <Dialog :open="isOpen">
+    <DialogTrigger as-child @click="openDialog"><slot /></DialogTrigger>
+    <DialogContent
+      v-on:interact-outside="closeDialog"
+      v-on:close-auto-focus="closeDialog"
+    >
       <DialogHeader>
         <DialogTitle>Change Profile Photo</DialogTitle>
         <DialogDescription>

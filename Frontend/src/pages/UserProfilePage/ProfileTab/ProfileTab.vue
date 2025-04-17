@@ -17,8 +17,8 @@ const auth = useAuthStore();
       <div class="flex flex-row justify-start items-center gap-5">
         <Avatar class="mb-4 w-40 h-40">
           <AvatarImage
-            src="https://www.shadcn-vue.com/avatars/shadcn.jpg"
-            alt="User Avatar"
+            :src="auth.user?.imageUrl || ''"
+            :alt="auth.user?.userName"
           />
           <AvatarFallback>
             {{ auth.user?.userName.substring(0, 2).toUpperCase() }}

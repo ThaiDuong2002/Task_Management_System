@@ -19,6 +19,7 @@ public class UserConfigurations : IEntityTypeConfiguration<UserIdentity>
 
         builder.Property(u => u.FirstName)
             .HasMaxLength(256)
+            .HasDefaultValue("https://res.cloudinary.com/dfkj5k4nn/image/upload/v1744865061/User/shadcn.jpg")
             .IsRequired();
 
         builder.Property(u => u.LastName)

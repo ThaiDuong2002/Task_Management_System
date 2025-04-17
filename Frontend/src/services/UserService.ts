@@ -30,7 +30,6 @@ class UserService {
     const auth = useAuthStore();
     const formData = new FormData();
     formData.append("image", input.image);
-    console.log(formData.get('image'));
 
     try {
       const response = await authInstance.put(
