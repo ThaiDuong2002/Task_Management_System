@@ -1,4 +1,6 @@
 export * from "@/utils/interfaces/IAssignmentResponse";
+export * from "@/utils/interfaces/IChangeImageInput";
+export * from "@/utils/interfaces/IChangeImageResponse";
 export * from "@/utils/interfaces/IChangePasswordInput";
 export * from "@/utils/interfaces/IChangePasswordResponse";
 export * from "@/utils/interfaces/IErrorResponse";

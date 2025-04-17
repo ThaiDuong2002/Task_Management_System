@@ -15,6 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import FormLabel from "@/components/ui/form/FormLabel.vue";
+import { UserService } from "@/services";
 import { useAuthStore } from "@/stores";
 import ChangeImageSchema from "@/validations/ChangeImageSchema";
 import { ImagePlus } from "lucide-vue-next";
@@ -51,10 +52,12 @@ const { fileRejections, getRootProps, getInputProps, isDragActive } =
     maxSize: 1024 * 1024,
   });
 
-const onSubmit = handleSubmit((values) => {
-  console.log(values);
-  console.log(getRootProps());
-  console.log(getInputProps());
+const onSubmit = handleSubmit(async (values) => {
+  const { image } = values;
+  try {
+    const imageUrl = await UserService.changeImage({ image });
+    console.log(imageUrl);
+  } catch (error) {}
 });
 
 const handleClose = () => {
@@ -76,7 +79,7 @@ const handleClose = () => {
       </DialogHeader>
       <form @submit.prevent="onSubmit" class="space-y-4">
         <FormField name="image" :validate-on-blur="!isFieldDirty('image')">
-          <FormItem v-auto-animate >
+          <FormItem v-auto-animate>
             <FormLabel
               :class="{ 'text-destructive': fileRejections.length !== 0 }"
             >

@@ -14,6 +14,7 @@ public class AuthenticationMappingConfig : IRegister
             .Map(dest => dest.User.LastName, src => src.User.LastName)
             .Map(dest => dest.User.Email, src => src.User.Email)
             .Map(dest => dest.User.Id, src => src.User.Id)
+            .Map(dest => dest.User.ImageUrl, src => src.User.ImageUrl)
             .Map(dest => dest.Token.AccessToken, src => src.TokenResult.AccessToken)
             .Map(dest => dest.Token.RefreshToken, src => src.TokenResult.RefreshToken);
 

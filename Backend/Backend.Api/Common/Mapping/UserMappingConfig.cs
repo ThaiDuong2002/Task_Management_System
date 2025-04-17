@@ -20,5 +20,8 @@ public class UserMappingConfig : IRegister
 
         config.NewConfig<ChangePasswordResult, ChangePasswordResponse>()
             .Map(dest => dest.Id, src => src.Id);
+
+        config.NewConfig<UploadImageResult, UploadImageResponse>()
+            .Map(dest => dest.ImageUrl, src => src.ImageUrl);
     }
 }

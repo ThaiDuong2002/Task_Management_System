@@ -13,4 +13,5 @@ public interface IUserRepository
     Task DeleteRefreshToken(string userId);
     Task<string?> GetRefreshToken(string userId);
     Task<int> ChangePassword(string userId, string passwordHash);
+    Task<int> ChangeImage(Guid id, string imageUrl);
 }

@@ -25,6 +25,10 @@ public class UserConfigurations : IEntityTypeConfiguration<UserIdentity>
             .HasMaxLength(256)
             .IsRequired();
 
+        builder.Property(u => u.ImageUrl)
+            .HasMaxLength(256)
+            .IsRequired();
+
         builder.Property(u => u.CreatedAt)
             .IsRequired();
 

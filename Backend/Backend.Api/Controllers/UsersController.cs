@@ -1,5 +1,7 @@
-﻿using Backend.Application.Services.Users.Commands.ChangePassword;
+﻿using Backend.Api.Common.Uploads;
+using Backend.Application.Services.Users.Commands.ChangePassword;
 using Backend.Application.Services.Users.Commands.UpdateUser;
+using Backend.Application.Services.Users.Commands.UploadImage;
 using Backend.Application.Services.Users.Queries.GetUserByEmail;
 using Backend.Application.Services.Users.Queries.GetUserById;
 using Backend.Contracts.Users;
@@ -51,6 +53,22 @@ public class UsersController : ApiController
 
         return result.Match(
             user => Ok(_mapper.Map<UpdateUserResponse>(user)),
+            errors => Problem(errors)
+        );
+    }
+
+    [HttpPut("{id}/image")]
+    [MultipartFormData]
+    [DisableFormValueModelBinding]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
+    public async Task<IActionResult> ChangeImage(Guid id)
+    {
+        HttpContext.Request.EnableBuffering();
+        var result = await _mediator.Send(new UploadImageCommand(id, Request.ContentType!, HttpContext.Request.Body));
+
+        return result.Match(
+            image => Ok(_mapper.Map<UploadImageResponse>(image)),
             errors => Problem(errors)
         );
     }

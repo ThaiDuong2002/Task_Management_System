@@ -50,5 +50,10 @@ public static partial class Errors
             "User.ChangePasswordFailed",
             "Failed to change password."
         );
+
+        public static Error UploadImageFailed => Error.Failure(
+            "User.UploadImageFailed",
+            "Failed to upload image."
+        );
     }
 }

@@ -61,6 +61,7 @@ public class UserRepository : IUserRepository
             LastName = result.LastName,
             Email = result.Email!,
             UserName = result.UserName!,
+            ImageUrl = result.ImageUrl,
             PasswordHash = result.PasswordHash!
         };
     }
@@ -101,7 +102,8 @@ public class UserRepository : IUserRepository
             UserName = result.UserName!,
             PasswordHash = result.PasswordHash!,
             CreatedAt = result.CreatedAt,
-            UpdatedAt = result.UpdatedAt
+            UpdatedAt = result.UpdatedAt,
+            ImageUrl = result.ImageUrl
         };
     }
 
@@ -150,6 +152,17 @@ public class UserRepository : IUserRepository
 
         user.PasswordHash = passwordHash;
         user.SecurityStamp = Guid.NewGuid().ToString();
+
+        _dbContext.Users.Update(user);
+        return await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task<int> ChangeImage(Guid id, string imageUrl)
+    {
+        var user = await _userManager.FindByIdAsync(id.ToString());
+        if (user is null) return 0;
+
+        user.ImageUrl = imageUrl;
 
         _dbContext.Users.Update(user);
         return await _dbContext.SaveChangesAsync();

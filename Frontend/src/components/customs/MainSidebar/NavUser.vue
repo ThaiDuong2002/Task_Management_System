@@ -24,14 +24,6 @@ const { isMobile } = useSidebar();
 const auth = useAuthStore();
 const router = useRouter();
 
-defineProps<{
-  user?: {
-    name: string;
-    email: string;
-    avatar: string;
-  };
-}>();
-
 const handleLogout = () => {
   auth.logout();
   router.push({ name: "login" });
@@ -55,15 +47,18 @@ const handleProfile = () => {
             class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
           >
             <Avatar class="rounded-lg w-8 h-8">
-              <AvatarImage :src="user?.avatar || ''" :alt="user?.name" />
+              <AvatarImage :src="auth.user?.imageUrl || ''"
+              :alt="auth.user?.userName" />
               <AvatarFallback class="rounded-lg">
-                {{ user?.name?.substring(0, 2).toUpperCase() }}
+                {{ auth.user?.userName.substring(0, 2).toUpperCase() }}
               </AvatarFallback>
             </Avatar>
             <div class="flex-1 grid text-sm text-left leading-tight">
-              <span class="font-semibold truncate">{{ user?.name }}</span>
+              <span class="font-semibold truncate">{{
+                auth.user?.userName
+              }}</span>
               <span class="text-muted-foreground text-xs truncate">
-                {{ user?.email || "" }}
+                {{ auth.user?.email || "" }}
               </span>
             </div>
             <ChevronsUpDown class="ml-auto size-4" />
@@ -78,15 +73,16 @@ const handleProfile = () => {
           <DropdownMenuLabel class="p-0 font-normal">
             <div class="flex items-center gap-2 px-1 py-1.5 text-sm text-left">
               <Avatar class="rounded-lg w-8 h-8">
-                <AvatarImage :src="user?.avatar || ''" :alt="user?.name" />
+                <AvatarImage :src="auth.user?.imageUrl || ''"
+                :alt="auth.user?.userName" />
                 <AvatarFallback class="rounded-lg">
-                  {{ user?.name?.substring(0, 2).toUpperCase() }}
+                   {{ auth.user?.userName.substring(0, 2).toUpperCase() }}
                 </AvatarFallback>
               </Avatar>
               <div class="flex-1 grid text-sm text-left leading-tight">
-                <span class="font-semibold truncate">{{ user?.name }}</span>
+                <span class="font-semibold truncate">{{ auth.user?.userName }}</span>
                 <span class="text-muted-foreground text-xs truncate">
-                  {{ user?.email || "" }}
+                  {{ auth.user?.email || "" }}
                 </span>
               </div>
             </div>

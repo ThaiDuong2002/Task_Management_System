@@ -31,13 +31,7 @@ const data = sidebarGroups;
       <NavDependents :dependencies="data.dependencies" />
     </SidebarContent>
     <SidebarFooter>
-      <NavUser
-        :user="{
-          name: auth.user?.userName!,
-          email: auth.user?.email!,
-          avatar: 'https://www.shadcn-vue.com/avatars/shadcn.jpg'
-        }"
-      />
+      <NavUser />
     </SidebarFooter>
   </Sidebar>
 </template>

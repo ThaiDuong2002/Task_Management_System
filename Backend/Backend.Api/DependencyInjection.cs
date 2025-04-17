@@ -12,6 +12,16 @@ public static class DependencyInjection
 
         services.AddSingleton<ProblemDetailsFactory, BackendProblemDetailsFactory>();
         services.AddMappings();
+
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAll", policy =>
+            {
+                policy.WithOrigins("http://localhost:5173")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            });
+        });
         return services;
     }
 }

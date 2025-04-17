@@ -8,6 +8,8 @@ import {
 import ChangePasswordFailedException from "@/utils/exceptions/ChangePasswordFailedException";
 import InvalidPasswordException from "@/utils/exceptions/InvalidPasswordException";
 import type {
+  IChangeImageInput,
+  IChangeImageResponse,
   IChangePasswordInput,
   IUpdateUserInput,
   IUpdateUserResponse,
@@ -22,6 +24,29 @@ class UserService {
       UserService.instance = new UserService();
     }
     return UserService.instance;
+  }
+
+  async changeImage(input: IChangeImageInput): Promise<IChangeImageResponse> {
+    const auth = useAuthStore();
+    const formData = new FormData();
+    formData.append("image", input.image);
+    console.log(formData.get('image'));
+
+    try {
+      const response = await authInstance.put(
+        `/users/${auth.user?.id}/image`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      return response.data as IChangeImageResponse;
+    } catch (error: any) {
+      throw new Error("");
+    }
   }
 
   async updateUser(input: IUpdateUserInput): Promise<IUpdateUserResponse> {
