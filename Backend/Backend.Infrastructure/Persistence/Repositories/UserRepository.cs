@@ -34,6 +34,7 @@ public class UserRepository : IUserRepository
             LastName = user.LastName,
             PasswordHash = user.PasswordHash,
             SecurityStamp = Guid.NewGuid().ToString(),
+            ImageUrl = "https://res.cloudinary.com/dfkj5k4nn/image/upload/v1744865061/User/shadcn.jpg",
             CreatedAt = user.CreatedAt,
             UpdatedAt = user.UpdatedAt
         };

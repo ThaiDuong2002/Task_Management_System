@@ -16,10 +16,10 @@ import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
         <BreadcrumbHeader title="Assignments" subtitle="Today" />
       </div>
     </header>
-    <div class="flex flex-col flex-1 gap-4 bg-blue-100 p-4 pt-0">
+    <div class="flex flex-col flex-1 gap-4 bg-red-100 p-4 pt-0">
       <div class="flex flex-col gap-2 mx-[10%] my-10 h-full">
         <AssignmentCard
-          :color="'text-blue-500'"
+          :color="'text-red-500'"
           :assignment="{
             id: '1',
             userId: '123',
@@ -33,7 +33,7 @@ import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
           }"
         />
         <AssignmentCard
-          :color="'text-blue-500'"
+          :color="'text-red-500'"
           :assignment="{
             id: '1',
             userId: '123',
@@ -47,7 +47,7 @@ import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
           }"
         />
         <AssignmentCard
-          :color="'text-blue-500'"
+          :color="'text-red-500'"
           :assignment="{
             id: '1',
             userId: '123',
@@ -61,7 +61,7 @@ import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
           }"
         />
         <AssignmentCard
-          :color="'text-blue-500'"
+          :color="'text-red-500'"
           :assignment="{
             id: '1',
             userId: '123',

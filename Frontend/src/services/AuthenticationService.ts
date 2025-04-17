@@ -3,6 +3,7 @@ import {
   DuplicateEmailException,
   InvalidCredentialsException,
   RegisterFailedException,
+  UserNameAlreadyExistsException,
 } from "@/utils/exceptions";
 import type {
   ILoginInput,
@@ -42,13 +43,17 @@ class AuthenticationService {
 
       return response.data as IUser;
     } catch (error: any) {
+      if (error.response.data.errorCodes.length > 0) {
+        if (error.response.data.errorCodes[0] === "User.DuplicateEmail") {
+          throw new DuplicateEmailException(error.response.data.title);
+        } else {
+          throw new UserNameAlreadyExistsException(error.response.data.title);
+        }
+      }
       if (error.response.data.errors["User.FailedToRegister"].length > 0) {
         throw new RegisterFailedException(
           error.response.data.errors["User.FailedToRegister"][0]
         );
-      } else if (error.response.data.errorCodes.length > 0) {
-        console.log(error.response.data.errorCodes[0]);
-        throw new DuplicateEmailException(error.response.data.errorCodes[0]);
       } else {
         throw new Error("Registration failed!");
       }

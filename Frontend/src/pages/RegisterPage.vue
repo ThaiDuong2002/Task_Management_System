@@ -20,6 +20,7 @@ import { AuthenticationService } from "@/services";
 import {
   DuplicateEmailException,
   RegisterFailedException,
+  UserNameAlreadyExistsException,
 } from "@/utils/exceptions";
 import { RegisterSchema } from "@/validations";
 import { useForm, useSetFormErrors } from "vee-validate";
@@ -52,6 +53,10 @@ const onSubmit = handleSubmit(async (values) => {
     } else if (error instanceof DuplicateEmailException) {
       setError({
         email: error.message,
+      });
+    } else if (error instanceof UserNameAlreadyExistsException) {
+      setError({
+        username: error.message,
       });
     } else {
       setError({
@@ -199,5 +204,7 @@ const onSubmit = handleSubmit(async (values) => {
     </MaxWidthWrapper>
   </div>
 </template>
+
+<style lang="scss" scoped></style>
 
 <style lang="scss" scoped></style>
