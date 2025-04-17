@@ -52,12 +52,14 @@ public class AssignmentRepository : IAssignmentRepository
         return await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<List<Assignment>> GetAll(int? page, int? limit, string? status, string? priority)
+    public async Task<List<Assignment>> GetAll(Guid id, int? page, int? limit, string? status, string? priority)
     {
         _logger.LogInformation(
             $"Getting all assignments with status: {status}, priority: {priority}, page: {page}, limit: {limit}");
 
         var query = _dbContext.Assignments.AsQueryable();
+
+        query = query.Where(a => a.UserId == id);
 
         if (status is not null) query = query.Where(a => a.Status.Value == status);
 

@@ -5,6 +5,7 @@ using MediatR;
 namespace Backend.Application.Services.Assignments.Queries.GetAssignments;
 
 public record GetAssignmentsQuery(
+    Guid Id,
     int? Page,
     int? Limit,
     string? Status,

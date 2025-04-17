@@ -28,7 +28,6 @@ const data = sidebarGroups;
     </SidebarHeader>
     <SidebarContent>
       <NavIndependents :independencies="data.independencies" />
-      <NavDependents :dependencies="data.dependencies" />
     </SidebarContent>
     <SidebarFooter>
       <NavUser />

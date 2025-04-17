@@ -10,4 +10,5 @@ public interface IJwtTokenGenerator
     bool IsTokenExpired(string token);
     ClaimsPrincipal? GetPrincipalFromExpiredToken(string token);
     ClaimsPrincipal? GetPrincipalFromToken(string token);
+    string GetUserIdFromToken(string token);
 }

@@ -124,4 +124,12 @@ public class JwtTokenGenerator : IJwtTokenGenerator
 
         return principal;
     }
+
+    public string GetUserIdFromToken(string token)
+    {
+        var handler = new JwtSecurityTokenHandler();
+        var jwtToken = handler.ReadJwtToken(token);
+        var userId = jwtToken.Claims.First(c => c.Type == JwtRegisteredClaimNames.Sub).Value;
+        return userId;
+    }
 }
