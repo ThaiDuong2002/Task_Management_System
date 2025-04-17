@@ -51,7 +51,6 @@ const onSubmit = handleSubmit(async (values) => {
 
     auth.setUser({ userName: username });
     closeDialog();
-    console.log(isOpen.value);
 
     toast.success("Username updated successfully", {
       description: "Your username has been updated successfully.",
