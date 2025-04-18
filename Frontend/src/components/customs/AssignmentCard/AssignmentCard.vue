@@ -28,11 +28,14 @@ import {
   Star,
   Trash2,
 } from "lucide-vue-next";
+import { useRoute } from "vue-router";
 
 defineProps<{
   assignment: Assignment;
   color: string;
 }>();
+
+const route = useRoute();
 
 const item = useSelectedAssignmentStore();
 
@@ -88,7 +91,11 @@ const handleCardClick = () => {
           <div class="flex flex-row items-center gap-2">
             <AlarmClock :class="color" />
             <p class="text-gray-500 text-sm">
-              {{ format(assignment.dueDate, "HH:mm a") }}
+              {{
+                route.path === "/assignments/today"
+                  ? format(assignment.dueDate, "HH:mm a")
+                  : format(assignment.dueDate, "dd/MM/yyyy, HH:mm a")
+              }}
             </p>
           </div>
         </div>

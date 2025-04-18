@@ -15,7 +15,7 @@ const fetchTodayAssignments = async () => {
   const result = await AssignmentService.getAssignments({
     userId: auth.user?.id!,
     page: 1,
-    limit: 3,
+    limit: 10,
     options: "today",
   });
 
@@ -39,7 +39,7 @@ onMounted(fetchTodayAssignments);
     <div class="flex flex-col flex-1 gap-4 bg-red-100 p-4 pt-0">
       <div class="flex flex-col gap-2 mx-[10%] my-10 h-full">
         <AssignmentCard
-        v-for="assignment in assignments.list"
+          v-for="assignment in assignments.list"
           :color="'text-red-500'"
           :assignment="assignment"
         />

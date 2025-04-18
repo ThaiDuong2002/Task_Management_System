@@ -3,6 +3,26 @@ import { AssignmentCard } from "@/components/customs/AssignmentCard";
 import { BreadcrumbHeader } from "@/components/customs/BreadcrumbHeader";
 import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
+import { AssignmentService } from "@/services";
+import { useAssignmentsStore, useAuthStore } from "@/stores";
+import { transformResponseToAssignments } from "@/utils/mappers";
+import { onMounted } from "vue";
+
+const auth = useAuthStore();
+const assignments = useAssignmentsStore();
+
+const fetchTodayAssignments = async () => {
+  const result = await AssignmentService.getAssignments({
+    userId: auth.user?.id!,
+    page: 1,
+    limit: 10,
+    status: "Completed"
+  });
+
+  assignments.setAssignments(transformResponseToAssignments(result));
+};
+
+onMounted(fetchTodayAssignments);
 </script>
 
 <template>
@@ -19,60 +39,9 @@ import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
     <div class="flex flex-col flex-1 gap-4 bg-blue-100 p-4 pt-0">
       <div class="flex flex-col gap-2 mx-[10%] my-10 h-full">
         <AssignmentCard
+          v-for="assignment in assignments.list"
           :color="'text-blue-500'"
-          :assignment="{
-            id: '1',
-            userId: '123',
-            title: 'Important Assignment',
-            description: 'This is a description of the important assignment.',
-            dueDate: '2023-10-31',
-            status: 'In progress',
-            priority: 'High',
-            createdAt: '2023-10-01',
-            updatedAt: '2023-10-15',
-          }"
-        />
-        <AssignmentCard
-          :color="'text-blue-500'"
-          :assignment="{
-            id: '1',
-            userId: '123',
-            title: 'Important Assignment',
-            description: 'This is a description of the important assignment.',
-            dueDate: '2023-10-31',
-            status: 'In progress',
-            priority: 'High',
-            createdAt: '2023-10-01',
-            updatedAt: '2023-10-15',
-          }"
-        />
-        <AssignmentCard
-          :color="'text-blue-500'"
-          :assignment="{
-            id: '1',
-            userId: '123',
-            title: 'Important Assignment',
-            description: 'This is a description of the important assignment.',
-            dueDate: '2023-10-31',
-            status: 'In progress',
-            priority: 'High',
-            createdAt: '2023-10-01',
-            updatedAt: '2023-10-15',
-          }"
-        />
-        <AssignmentCard
-          :color="'text-blue-500'"
-          :assignment="{
-            id: '1',
-            userId: '123',
-            title: 'Important Assignment',
-            description: 'This is a description of the important assignment.',
-            dueDate: '2023-10-31',
-            status: 'In progress',
-            priority: 'High',
-            createdAt: '2023-10-01',
-            updatedAt: '2023-10-15',
-          }"
+          :assignment="assignment"
         />
       </div>
     </div>

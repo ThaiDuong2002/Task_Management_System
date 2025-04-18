@@ -70,9 +70,9 @@ public class AssignmentRepository : IAssignmentRepository
                 .Where(a => a.DueDate.Date == DateTime.UtcNow.Date)
                 .Where(a => a.DueDate > DateTime.UtcNow);
 
-        if (status is not null) query = query.Where(a => a.Status.Value == status);
+        if (status is not null) query = query.Where(a => a.Status == Status.Create(status));
 
-        if (priority is not null) query = query.Where(a => a.Priority.Value == priority);
+        if (priority is not null) query = query.Where(a => a.Priority == Priority.Create(priority));
 
         query = query.OrderByDescending(a => a.CreatedAt);
 
