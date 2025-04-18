@@ -80,6 +80,8 @@ class AssignmentService {
     } catch (error: any) {
       if (error.response.data.errors["DueDate"].length > 0) {
         throw new Error(error.response.data.errors["DueDate"][0]);
+      } else if (error.response.data.errors["Title"].length > 0) {
+        throw new Error(error.response.data.errors["Title"][0]);
       } else {
         throw new Error("An error occurred while updating the assignment.");
       }

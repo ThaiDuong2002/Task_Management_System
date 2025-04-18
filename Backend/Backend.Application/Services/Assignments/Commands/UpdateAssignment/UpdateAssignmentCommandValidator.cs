@@ -6,6 +6,10 @@ public class UpdateAssignmentCommandValidator : AbstractValidator<UpdateAssignme
 {
     public UpdateAssignmentCommandValidator()
     {
+        RuleFor(x => x.Title)
+            .Must(title => title == null || title.Length > 0)
+            .WithMessage("Title cannot be empty.");
+        
         RuleFor(x => x.Status)
             .Must(status => status == null || new[] { "Pending", "In progress", "Completed" }
                 .Contains(status))

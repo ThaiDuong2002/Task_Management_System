@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import TimePicker from "@/components/customs/DatetimePicker/TimePicker.vue";
 import {
   CalendarCell,
   CalendarCellTrigger,
@@ -20,7 +21,6 @@ import {
   useForwardPropsEmits,
 } from "reka-ui";
 import { computed, type HTMLAttributes, ref, watch } from "vue";
-import TimePicker from "@/components/customs/DatetimePicker/TimePicker.vue";
 const props = defineProps<
   CalendarRootProps & { class?: HTMLAttributes["class"] }
 >();
@@ -75,6 +75,7 @@ watch([selectedCalendarDate, selectedTime], () => {
       :class="cn('p-3', props.class)"
       v-bind="forwarded"
       v-model="selectedCalendarDate"
+      close-on-select
     >
       <CalendarHeader>
         <CalendarPrevButton />

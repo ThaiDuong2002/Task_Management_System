@@ -54,6 +54,8 @@ const onConfirmDelete = async () => {
 
     assignments.deleteAssignment(props.assignment.id);
 
+    item.closeSidebar();
+
     toast.success("Assignment deleted successfully", {
       description: "Assignment deleted successfully",
     });

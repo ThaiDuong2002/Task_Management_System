@@ -21,6 +21,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { AssignmentService } from "@/services";
 import { useAssignmentsStore, useSelectedAssignmentStore } from "@/stores";
+import { isSameDate } from "@/utils/functions";
 import { format } from "date-fns";
 import {
   CalendarIcon,
@@ -151,14 +152,25 @@ const handleNotImportant = async () => {
 };
 
 const handleSave = async () => {
+  if (!item.assignment.title || item.assignment.dueDate < new Date()) {
+    return;
+  }
+
   try {
     await AssignmentService.updateAssignment(item.assignment.id, {
       title: item.assignment.title,
       description: item.assignment.description,
       dueDate: item.assignment.dueDate.toISOString(),
     });
-
-    assignments.updateAssignment(item.assignment);
+    
+    if (
+      route.path === "/assignments/today" &&
+      isSameDate(item.assignment.dueDate, new Date())
+    ) {
+      assignments.updateAssignment(item.assignment);
+    } else {
+      assignments.deleteAssignment(item.assignment.id);
+    }
 
     toast.success("Assignment updated successfully", {
       description: "Assignment updated successfully",
@@ -185,6 +197,12 @@ const handleSave = async () => {
     </SidebarHeader>
     <SidebarContent class="p-2">
       <Card class="shadow-none p-2 rounded-sm">
+        <p
+          v-if="item.assignment.title.length === 0"
+          class="text-destructive text-sm"
+        >
+          Title is required
+        </p>
         <Input
           v-model="item.assignment.title"
           placeholder="Enter title here"
@@ -199,6 +217,12 @@ const handleSave = async () => {
           class="shadow-none border-0 active:border-0 focus-visible:outline-none focus-visible:ring-0 resize-none"
         />
         <SidebarSeparator class="m-0 p-0" />
+        <p
+          v-if="item.assignment.dueDate < new Date()"
+          class="text-destructive text-sm"
+        >
+          Due date must be in the future
+        </p>
         <Popover>
           <PopoverTrigger as-child>
             <Button
@@ -216,7 +240,7 @@ const handleSave = async () => {
           </PopoverTrigger>
           <PopoverContent class="p-0 w-auto">
             <!-- <Calendar calendar-label="Date of birth" initial-focus /> -->
-            <DatetimePicker v-model="item.assignment.dueDate" />
+            <DatetimePicker v-model="item.assignment.dueDate" initial-focus />
           </PopoverContent>
         </Popover>
       </Card>
