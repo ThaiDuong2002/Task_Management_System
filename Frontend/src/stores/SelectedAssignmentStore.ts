@@ -18,12 +18,9 @@ const useSelectedAssignmentStore = defineStore("selectedAssignment", {
       isSidebarOpen: false,
     } as SelectedAssignmentState),
   actions: {
-    toggleSidebar() {
-      if (this.isSidebarOpen) {
-        this.isSidebarOpen = false;
-      } else {
-        this.isSidebarOpen = true;
-      }
+    toggleSidebar(id: string) {
+      if (id === this.assignment.id) this.isSidebarOpen = !this.isSidebarOpen;
+      else this.isSidebarOpen = true;
     },
     closeSidebar() {
       this.isSidebarOpen = false;

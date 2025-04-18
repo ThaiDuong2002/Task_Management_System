@@ -44,7 +44,7 @@ const item = useSelectedAssignmentStore();
 const assignments = useAssignmentsStore();
 
 const handleCardClick = () => {
-  item.toggleSidebar();
+  item.toggleSidebar(props.assignment.id);
   item.setAssignment(props.assignment);
 };
 
@@ -70,10 +70,7 @@ const handleComplete = async () => {
       status: "Completed",
     });
 
-    assignments.updateAssignment({
-      ...props.assignment,
-      status: "Completed",
-    });
+    assignments.deleteAssignment(props.assignment.id);
 
     toast.success("Assignment completed successfully", {
       description: "Assignment completed successfully",
@@ -160,7 +157,7 @@ const handleNotImportant = async () => {
   <ContextMenu>
     <ContextMenuTrigger>
       <Card
-        class="hover:bg-gray-50 shadow-none p-0.5 border-0 cursor-pointer"
+        :class="cn('hover:bg-gray-50 shadow-none p-0.5 border-0 cursor-pointer', assignment.priority === 'High' ? 'border-2 border-red-500' : '')"
         @click="handleCardClick"
       >
         <div class="flex justify-between items-center p-4">
