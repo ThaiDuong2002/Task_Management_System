@@ -25,5 +25,5 @@
       "@/composables/*": ["./src/composables/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "src/components/customs/DatetimePicker/index.js"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "src/components/customs/DatetimePicker/index.ts"]
 }
