@@ -16,21 +16,25 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import { useSelectedAssignmentStore } from "@/stores";
+import { AssignmentService } from "@/services";
+import { useAssignmentsStore, useSelectedAssignmentStore } from "@/stores";
 import type { Assignment } from "@/utils/types";
 import { format } from "date-fns";
 import {
   AlarmClock,
   Check,
   CheckCircle2,
+  CircleX,
   ListChecks,
   RefreshCcw,
   Star,
+  StarOff,
   Trash2,
 } from "lucide-vue-next";
 import { useRoute } from "vue-router";
+import { toast } from "vue-sonner";
 
-defineProps<{
+const props = defineProps<{
   assignment: Assignment;
   color: string;
 }>();
@@ -38,9 +42,27 @@ defineProps<{
 const route = useRoute();
 
 const item = useSelectedAssignmentStore();
+const assignments = useAssignmentsStore();
 
 const handleCardClick = () => {
   item.toggleSidebar();
+  item.setAssignment(props.assignment);
+};
+
+const onConfirmDelete = async () => {
+  try {
+    await AssignmentService.deleteAssignment(props.assignment.id);
+
+    assignments.deleteAssignment(props.assignment.id);
+
+    toast.success("Assignment deleted successfully", {
+      description: "Assignment deleted successfully",
+    });
+  } catch (error) {
+    toast.error("Failed to delete assignment", {
+      description: "Please try again later",
+    });
+  }
 };
 </script>
 
@@ -63,9 +85,9 @@ const handleCardClick = () => {
                       cn('rounded-full cursor-pointer', {
                         'bg-blue-500': assignment.status === 'Completed',
                         'bg-green-500': assignment.status === 'In progress',
-                        'bg-amber-500': assignment.status === 'Pending',
                       })
                     "
+                    @click.stop=""
                   >
                     <Check
                       v-if="assignment.status === 'Completed'"
@@ -73,10 +95,6 @@ const handleCardClick = () => {
                     />
                     <RefreshCcw
                       v-if="assignment.status === 'In progress'"
-                      class="size-3 text-white"
-                    />
-                    <ListChecks
-                      v-if="assignment.status === 'Pending'"
                       class="size-3 text-white"
                     />
                   </Button>
@@ -103,12 +121,22 @@ const handleCardClick = () => {
     </ContextMenuTrigger>
     <ContextMenuContent>
       <ContextMenuItem>
-        <CheckCircle2 class="mr-1" />
-        Mark as Completed
+        <CheckCircle2 class="mr-1" v-if="assignment.status !== 'Completed'" />
+        <CircleX class="mr-1" v-else />
+        {{
+          assignment.status === "Completed"
+            ? "Mark as Not Completed"
+            : "Mark as Completed"
+        }}
       </ContextMenuItem>
       <ContextMenuItem>
-        <Star class="mr-1" />
-        Mark as Important
+        <Star class="mr-1" v-if="assignment.priority !== 'High'" />
+        <StarOff class="mr-1" v-else />
+        {{
+          assignment.priority === "High"
+            ? "Mark as Not Important"
+            : "Mark as Important"
+        }}
       </ContextMenuItem>
       <ContextMenuSeparator />
       <ConfirmDialog
@@ -116,7 +144,7 @@ const handleCardClick = () => {
         message="This action will permanently delete this assignment and cannot be undone."
         confirmText="Delete"
         cancelText="Cancel"
-        :onConfirm="() => console.log('Confirmed')"
+        :onConfirm="onConfirmDelete"
       >
         <ContextMenuItem @select.prevent>
           <Trash2 class="mr-1 text-red-500" />

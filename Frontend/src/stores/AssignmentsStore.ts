@@ -11,6 +11,15 @@ const useAssignmentsStore = defineStore("assignment", {
     setAssignments(assignments: Assignment[]) {
       this.list = assignments;
     },
+    deleteAssignment(id: string) {
+      this.list = this.list.filter((assignment) => assignment.id !== id);
+    },
+    addAssignment(assignment: Assignment) {
+      this.list.push(assignment);
+    },
+    updateAssignment(assignment: Assignment) {
+      this.list = this.list.map((a) => (a.id === assignment.id ? assignment : a));
+    },
   },
 });
 

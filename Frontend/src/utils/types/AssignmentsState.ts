@@ -1,7 +1,7 @@
 import type { Assignment } from "@/utils/types";
 
 type AssignmentsState = {
-  list: Assignment[] | [];
+  list: Assignment[];
   isLoading: boolean;
 };
 

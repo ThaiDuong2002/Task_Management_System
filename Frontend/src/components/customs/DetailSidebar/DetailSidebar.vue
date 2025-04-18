@@ -28,7 +28,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { useSelectedAssignmentStore } from "@/stores";
-import { CalendarIcon, SidebarClose } from "lucide-vue-next";
+import { CalendarIcon, PanelRightClose } from "lucide-vue-next";
 import { ref } from "vue";
 
 const props = withDefaults(defineProps<SidebarProps>(), {
@@ -53,7 +53,7 @@ const closeSidebar = () => {
         class="rounded-full cursor-pointer"
         @click="closeSidebar"
       >
-        <SidebarClose class="w-5 h-5" />
+        <PanelRightClose class="w-5 h-5" />
       </Button>
     </SidebarHeader>
     <SidebarContent class="p-2">

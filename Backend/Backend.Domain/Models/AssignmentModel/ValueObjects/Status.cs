@@ -5,7 +5,7 @@ namespace Backend.Domain.Models.AssignmentModel.ValueObjects;
 public class Status : ValueObject
 {
     public static readonly Status Pending = new("Pending");
-    public static readonly Status InProgress = new("InProgress");
+    public static readonly Status InProgress = new("In progress");
     public static readonly Status Completed = new("Completed");
     public static readonly Status Default = Pending;
 
@@ -31,7 +31,7 @@ public class Status : ValueObject
         return value switch
         {
             "Pending" => Pending,
-            "InProgress" => InProgress,
+            "In progress" => InProgress,
             "Completed" => Completed,
             _ => Default
         };

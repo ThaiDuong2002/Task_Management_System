@@ -1,4 +1,4 @@
-import type { SelectedAssignmentState } from "@/utils/types";
+import type { Assignment, SelectedAssignmentState } from "@/utils/types";
 import { defineStore } from "pinia";
 
 const useSelectedAssignmentStore = defineStore("selectedAssignment", {
@@ -27,7 +27,10 @@ const useSelectedAssignmentStore = defineStore("selectedAssignment", {
     },
     closeSidebar() {
       this.isSidebarOpen = false;
-    }
+    },
+    setAssignment(assignment: Assignment) {
+      this.assignment = assignment;
+    },
   },
 });
 
