@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import { DatetimePicker } from "@/components/customs/DatetimePicker";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,26 +10,29 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarHeader,
   SidebarSeparator,
   type SidebarProps,
 } from "@/components/ui/sidebar";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import { useSelectedAssignmentStore } from "@/stores";
-import { CalendarIcon, PanelRightClose } from "lucide-vue-next";
+import { AssignmentService } from "@/services";
+import { useAssignmentsStore, useSelectedAssignmentStore } from "@/stores";
+import { format } from "date-fns";
+import {
+  CalendarIcon,
+  CheckCircle2,
+  CircleX,
+  PanelRightClose,
+  Star,
+  StarOff,
+} from "lucide-vue-next";
 import { ref } from "vue";
+import { useRoute } from "vue-router";
+import { toast } from "vue-sonner";
 
 const props = withDefaults(defineProps<SidebarProps>(), {
   collapsible: "offcanvas",
@@ -37,10 +40,134 @@ const props = withDefaults(defineProps<SidebarProps>(), {
 });
 
 const placeholder = ref();
+const route = useRoute();
 const item = useSelectedAssignmentStore();
+const assignments = useAssignmentsStore();
 
 const closeSidebar = () => {
   item.closeSidebar();
+};
+
+const handleComplete = async () => {
+  try {
+    await AssignmentService.updateAssignment(item.assignment.id, {
+      status: "Completed",
+    });
+
+    assignments.deleteAssignment(item.assignment.id);
+
+    item.closeSidebar();
+
+    toast.success("Assignment completed successfully", {
+      description: "Assignment completed successfully",
+    });
+  } catch (error) {
+    toast.error("Failed to complete assignment", {
+      description: "Please try again later",
+    });
+  }
+};
+const handleInProgress = async () => {
+  try {
+    await AssignmentService.updateAssignment(item.assignment.id, {
+      status: "In progress",
+    });
+
+    if (route.path === "/assignments/completed") {
+      assignments.deleteAssignment(item.assignment.id);
+    }
+
+    item.closeSidebar();
+
+    assignments.updateAssignment({
+      ...item.assignment,
+      status: "In progress",
+    });
+
+    toast.success("Assignment in progress successfully", {
+      description: "Assignment in progress successfully",
+    });
+  } catch (error) {
+    toast.error("Failed to in progress assignment", {
+      description: "Please try again later",
+    });
+  }
+};
+
+const handleImportant = async () => {
+  try {
+    await AssignmentService.updateAssignment(item.assignment.id, {
+      priority: "High",
+    });
+
+    assignments.updateAssignment({
+      ...item.assignment,
+      priority: "High",
+    });
+
+    item.setAssignment({
+      ...item.assignment,
+      priority: "High",
+    });
+
+    toast.success("Assignment marked as important successfully", {
+      description: "Assignment marked as important successfully",
+    });
+  } catch (error) {
+    toast.error("Failed to mark assignment as important", {
+      description: "Please try again later",
+    });
+  }
+};
+
+const handleNotImportant = async () => {
+  try {
+    await AssignmentService.updateAssignment(item.assignment.id, {
+      priority: "Medium",
+    });
+
+    if (route.path === "/assignments/important") {
+      assignments.deleteAssignment(item.assignment.id);
+    }
+
+    assignments.updateAssignment({
+      ...item.assignment,
+      priority: "Medium",
+    });
+
+    item.setAssignment({
+      ...item.assignment,
+      priority: "Medium",
+    });
+
+    toast.success("Assignment marked as not important successfully", {
+      description: "Assignment marked as not important successfully",
+    });
+  } catch (error) {
+    toast.error("Failed to mark assignment as not important", {
+      description: "Please try again later",
+    });
+  }
+};
+
+const handleSave = async () => {
+  try {
+    await AssignmentService.updateAssignment(item.assignment.id, {
+      title: item.assignment.title,
+      description: item.assignment.description,
+      dueDate: item.assignment.dueDate.toISOString(),
+    });
+
+    assignments.updateAssignment(item.assignment);
+
+    toast.success("Assignment updated successfully", {
+      description: "Assignment updated successfully",
+    });
+  } catch (error: any) {
+    toast.error("Failed to update assignment", {
+      description: error.message,
+    });
+  }
 };
 </script>
 
@@ -80,35 +207,66 @@ const closeSidebar = () => {
                 cn('ps-3 font-normal text-start', 'text-muted-foreground')
               "
             >
-              <span>{{ "Pick a date" }}</span>
+              <span>{{
+                format(item.assignment.dueDate, "dd/MM/yyyy, HH:mm a") ||
+                "Pick a date"
+              }}</span>
               <CalendarIcon class="opacity-50 ms-auto w-4 h-4" />
             </Button>
           </PopoverTrigger>
           <PopoverContent class="p-0 w-auto">
-            <Calendar
-              v-model:placeholder="placeholder"
-              calendar-label="Date of birth"
-              initial-focus
-            />
+            <!-- <Calendar calendar-label="Date of birth" initial-focus /> -->
+            <DatetimePicker v-model="item.assignment.dueDate" />
           </PopoverContent>
         </Popover>
-        <SidebarSeparator class="m-0 p-0" />
-        <Label for="status">Status</Label>
-        <Select>
-          <SelectTrigger class="w-full">
-            <SelectValue placeholder="Select status" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectLabel>Choose a status</SelectLabel>
-            <SelectGroup>
-              <SelectItem value="In progress">In Progress</SelectItem>
-              <SelectItem value="Completed">Completed</SelectItem>
-              <SelectItem value="Pending">Pending</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+      </Card>
+      <Card class="gap-1 shadow-none p-2 rounded-sm">
+        <Button
+          variant="ghost"
+          class="cursor-pointer"
+          size="sm"
+          @click="
+            item.assignment.status === 'Completed'
+              ? handleInProgress()
+              : handleComplete()
+          "
+        >
+          <CheckCircle2
+            class="mr-1"
+            v-if="item.assignment.status !== 'Completed'"
+          />
+          <CircleX class="mr-1" v-else />
+          {{
+            item.assignment.status === "Completed"
+              ? "Mark as Not Completed"
+              : "Mark as Completed"
+          }}
+        </Button>
+        <Button
+          variant="ghost"
+          class="cursor-pointer"
+          size="sm"
+          @click="
+            item.assignment.priority == 'High'
+              ? handleNotImportant()
+              : handleImportant()
+          "
+        >
+          <Star class="mr-1" v-if="item.assignment.priority !== 'High'" />
+          <StarOff class="mr-1" v-else />
+          {{
+            item.assignment.priority === "High"
+              ? "Mark as Not Important"
+              : "Mark as Important"
+          }}
+        </Button>
       </Card>
     </SidebarContent>
+    <SidebarFooter>
+      <Button size="sm" class="w-full cursor-pointer" @click="handleSave"
+        >Save</Button
+      >
+    </SidebarFooter>
   </Sidebar>
 </template>
 

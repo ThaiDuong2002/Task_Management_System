@@ -78,7 +78,11 @@ class AssignmentService {
 
       return response.data as IUpdateAssignmentResponse;
     } catch (error: any) {
-      throw new Error("An error occurred while updating the assignment.");
+      if (error.response.data.errors["DueDate"].length > 0) {
+        throw new Error(error.response.data.errors["DueDate"][0]);
+      } else {
+        throw new Error("An error occurred while updating the assignment.");
+      }
     }
   }
 

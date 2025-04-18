@@ -157,7 +157,12 @@ const handleNotImportant = async () => {
   <ContextMenu>
     <ContextMenuTrigger>
       <Card
-        :class="cn('hover:bg-gray-50 shadow-none p-0.5 border-0 cursor-pointer', assignment.priority === 'High' ? 'border-2 border-red-500' : '')"
+        :class="
+          cn(
+            'hover:bg-gray-50 shadow-none p-0.5 border-0 cursor-pointer',
+            assignment.priority === 'High' ? 'border-2 border-red-500' : ''
+          )
+        "
         @click="handleCardClick"
       >
         <div class="flex justify-between items-center p-4">
