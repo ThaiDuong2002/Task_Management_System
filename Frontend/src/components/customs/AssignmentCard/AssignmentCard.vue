@@ -25,7 +25,6 @@ import {
   Check,
   CheckCircle2,
   CircleX,
-  ListChecks,
   RefreshCcw,
   Star,
   StarOff,
@@ -64,6 +63,51 @@ const onConfirmDelete = async () => {
     });
   }
 };
+
+const handleComplete = async () => {
+  try {
+    await AssignmentService.updateAssignment(props.assignment.id, {
+      status: "Completed",
+    });
+
+    assignments.updateAssignment({
+      ...props.assignment,
+      status: "Completed",
+    });
+
+    toast.success("Assignment completed successfully", {
+      description: "Assignment completed successfully",
+    });
+  } catch (error) {
+    toast.error("Failed to complete assignment", {
+      description: "Please try again later",
+    });
+  }
+};
+const handleInProgress = async () => {
+  try {
+    await AssignmentService.updateAssignment(props.assignment.id, {
+      status: "In progress",
+    });
+
+    if (route.path === "/assignments/completed") {
+      assignments.deleteAssignment(props.assignment.id);
+    }
+
+    assignments.updateAssignment({
+      ...props.assignment,
+      status: "In progress",
+    });
+
+    toast.success("Assignment in progress successfully", {
+      description: "Assignment in progress successfully",
+    });
+  } catch (error) {
+    toast.error("Failed to in progress assignment", {
+      description: "Please try again later",
+    });
+  }
+};
 </script>
 
 <template>
@@ -87,7 +131,11 @@ const onConfirmDelete = async () => {
                         'bg-green-500': assignment.status === 'In progress',
                       })
                     "
-                    @click.stop=""
+                    @click.stop="
+                      assignment.status === 'Completed'
+                        ? handleInProgress()
+                        : handleComplete()
+                    "
                   >
                     <Check
                       v-if="assignment.status === 'Completed'"
@@ -120,7 +168,13 @@ const onConfirmDelete = async () => {
       </Card>
     </ContextMenuTrigger>
     <ContextMenuContent>
-      <ContextMenuItem>
+      <ContextMenuItem
+        @click="
+          assignment.status == 'Completed'
+            ? handleInProgress()
+            : handleComplete()
+        "
+      >
         <CheckCircle2 class="mr-1" v-if="assignment.status !== 'Completed'" />
         <CircleX class="mr-1" v-else />
         {{

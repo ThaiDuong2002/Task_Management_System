@@ -52,14 +52,14 @@ public sealed class Assignment : AggregateRoot<AssignmentId>
             DateTime.UtcNow, DateTime.UtcNow);
     }
 
-    public void Update(string title, string? description, Status status, Priority priority,
-        DateTime dueDate)
+    public void Update(string? title, string? description, Status? status, Priority? priority,
+        DateTime? dueDate)
     {
-        Title = title;
-        Description = description;
-        Status = status;
-        Priority = priority;
-        DueDate = dueDate;
+        Title = title ?? Title;
+        Description = description ?? Description;
+        Status = status ?? Status;
+        Priority = priority ?? Priority;
+        DueDate = dueDate ?? DueDate;
         UpdatedAt = DateTime.UtcNow;
     }
 }
