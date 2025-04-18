@@ -6,6 +6,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { useSelectedAssignmentStore } from "@/stores";
 import type { LucideProps } from "lucide-vue-next";
 import type { FunctionalComponent } from "vue";
 import { useRoute } from "vue-router";
@@ -19,6 +20,7 @@ defineProps<{
 }>();
 
 const route = useRoute();
+const item = useSelectedAssignmentStore();
 
 const isActive = (url: string) => {
   return route.path === url;
@@ -29,15 +31,19 @@ const isActive = (url: string) => {
   <SidebarGroup>
     <SidebarGroupLabel>Assignments</SidebarGroupLabel>
     <SidebarMenu>
-      <SidebarMenuItem v-for="item in independencies" :key="item.name">
+      <SidebarMenuItem
+        v-for="independency in independencies"
+        :key="independency.name"
+      >
         <SidebarMenuButton
           as-child
-          :is-active="isActive(item.url)"
-          :tooltip="item.name"
+          :is-active="isActive(independency.url)"
+          :tooltip="independency.name"
+          @click="item.closeSidebar"
         >
-          <RouterLink :to="item.url">
-            <component :is="item.icon" v-if="item.icon" />
-            <span>{{ item.name }}</span>
+          <RouterLink :to="independency.url">
+            <component :is="independency.icon" v-if="independency.icon" />
+            <span>{{ independency.name }}</span>
           </RouterLink>
         </SidebarMenuButton>
       </SidebarMenuItem>

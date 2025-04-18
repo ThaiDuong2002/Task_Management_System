@@ -27,8 +27,8 @@ public class UpdateAssignmentCommandHandler : IRequestHandler<UpdateAssignmentCo
         assignment.Update(
             command.Title,
             command.Description,
-            Status.Create(command.Status),
-            Priority.Create(command.Priority),
+            command.Status == null ? null : Status.Create(command.Status),
+            command.Priority == null ? null : Priority.Create(command.Priority),
             command.DueDate
         );
 

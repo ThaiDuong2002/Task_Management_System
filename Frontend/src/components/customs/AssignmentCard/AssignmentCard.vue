@@ -108,6 +108,52 @@ const handleInProgress = async () => {
     });
   }
 };
+
+const handleImportant = async () => {
+  try {
+    await AssignmentService.updateAssignment(props.assignment.id, {
+      priority: "High",
+    });
+
+    assignments.updateAssignment({
+      ...props.assignment,
+      priority: "High",
+    });
+
+    toast.success("Assignment marked as important successfully", {
+      description: "Assignment marked as important successfully",
+    });
+  } catch (error) {
+    toast.error("Failed to mark assignment as important", {
+      description: "Please try again later",
+    });
+  }
+};
+
+const handleNotImportant = async () => {
+  try {
+    await AssignmentService.updateAssignment(props.assignment.id, {
+      priority: "Medium",
+    });
+
+    if (route.path === "/assignments/important") {
+      assignments.deleteAssignment(props.assignment.id);
+    }
+
+    assignments.updateAssignment({
+      ...props.assignment,
+      priority: "Medium",
+    });
+
+    toast.success("Assignment marked as not important successfully", {
+      description: "Assignment marked as not important successfully",
+    });
+  } catch (error) {
+    toast.error("Failed to mark assignment as not important", {
+      description: "Please try again later",
+    });
+  }
+};
 </script>
 
 <template>
@@ -183,7 +229,13 @@ const handleInProgress = async () => {
             : "Mark as Completed"
         }}
       </ContextMenuItem>
-      <ContextMenuItem>
+      <ContextMenuItem
+        @click="
+          assignment.priority == 'High'
+            ? handleNotImportant()
+            : handleImportant()
+        "
+      >
         <Star class="mr-1" v-if="assignment.priority !== 'High'" />
         <StarOff class="mr-1" v-else />
         {{
