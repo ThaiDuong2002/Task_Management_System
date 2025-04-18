@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import TimePicker from "@/components/customs/DatetimePicker/TimePicker.vue";
+import { TimePicker } from "@/components/customs/DatetimePicker";
 import {
   CalendarCell,
   CalendarCellTrigger,

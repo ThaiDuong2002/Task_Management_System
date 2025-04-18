@@ -31,7 +31,6 @@ import {
   Star,
   StarOff,
 } from "lucide-vue-next";
-import { ref } from "vue";
 import { useRoute } from "vue-router";
 import { toast } from "vue-sonner";
 
@@ -40,7 +39,6 @@ const props = withDefaults(defineProps<SidebarProps>(), {
   side: "right",
 });
 
-const placeholder = ref();
 const route = useRoute();
 const item = useSelectedAssignmentStore();
 const assignments = useAssignmentsStore();
@@ -162,7 +160,7 @@ const handleSave = async () => {
       description: item.assignment.description,
       dueDate: item.assignment.dueDate.toISOString(),
     });
-    
+
     if (
       route.path === "/assignments/today" &&
       isSameDate(item.assignment.dueDate, new Date())
