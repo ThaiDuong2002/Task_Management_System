@@ -47,12 +47,12 @@ public class AssignmentRepository : IAssignmentRepository
     {
         _logger.LogInformation($"Creating assignment with id: {assignment.Id}");
 
-        Console.WriteLine(assignment.Id.Value);
         await _dbContext.Assignments.AddAsync(assignment);
         return await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<List<Assignment>> GetAll(Guid id, int? page, int? limit, string? status, string? priority)
+    public async Task<List<Assignment>> GetAll(Guid id, int? page, int? limit, string? status, string? priority,
+        string? options)
     {
         _logger.LogInformation(
             $"Getting all assignments with status: {status}, priority: {priority}, page: {page}, limit: {limit}");
@@ -61,9 +61,15 @@ public class AssignmentRepository : IAssignmentRepository
 
         query = query.Where(a => a.UserId == id);
 
+        if (options == "upcoming") query = query.Where(a => a.DueDate > DateTime.UtcNow);
+
+        if (options == "overdue") query = query.Where(a => a.DueDate < DateTime.UtcNow);
+
         if (status is not null) query = query.Where(a => a.Status.Value == status);
 
         if (priority is not null) query = query.Where(a => a.Priority.Value == priority);
+
+        query = query.OrderByDescending(a => a.CreatedAt);
 
         if (page.HasValue && limit.HasValue) query = query.Skip((page.Value - 1) * limit.Value).Take(limit.Value);
 

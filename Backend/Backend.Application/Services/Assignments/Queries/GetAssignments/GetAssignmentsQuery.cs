@@ -9,5 +9,6 @@ public record GetAssignmentsQuery(
     int? Page,
     int? Limit,
     string? Status,
-    string? Priority
+    string? Priority,
+    string? Options
 ) : IRequest<ErrorOr<List<Assignment>>>;

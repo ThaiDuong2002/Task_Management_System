@@ -18,7 +18,8 @@ public class GetAssignmentsQueryHandler : IRequestHandler<GetAssignmentsQuery, E
         CancellationToken cancellationToken)
     {
         var assignments =
-            await _assignmentRepository.GetAll(query.Id, query.Page, query.Limit, query.Status, query.Priority);
+            await _assignmentRepository.GetAll(query.Id, query.Page, query.Limit, query.Status, query.Priority,
+                query.Options);
 
         return assignments;
     }

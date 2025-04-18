@@ -24,9 +24,10 @@ public class AssignmentsController : ApiController
 
     [HttpGet]
     public async Task<IActionResult> GetAssignments([FromBody] GetAssignmentRequest request, [FromQuery] int? page,
-        int? limit, string? status, string? priority)
+        int? limit, string? status, string? priority, string? options)
     {
-        var result = await _mediator.Send(new GetAssignmentsQuery(request.UserId, page, limit, status, priority));
+        var result =
+            await _mediator.Send(new GetAssignmentsQuery(request.UserId, page, limit, status, priority, options));
 
         return result.Match(
             assignments => Ok(_mapper.Map<List<AssignmentResponse>>(assignments)),
