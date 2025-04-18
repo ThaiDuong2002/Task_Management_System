@@ -10,5 +10,5 @@ public record CreateAssignmentCommand(
     string? Description,
     string? Status,
     string? Priority,
-    DateTime DueDate
+    DateTime? DueDate
 ) : IRequest<ErrorOr<Assignment>>;

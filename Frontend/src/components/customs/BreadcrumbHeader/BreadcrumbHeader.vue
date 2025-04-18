@@ -17,7 +17,7 @@ defineProps<{
   <Breadcrumb>
     <BreadcrumbList>
       <BreadcrumbItem>
-        <BreadcrumbPage>{{ title }}</BreadcrumbPage>
+        <BreadcrumbPage class="text-xl truncate">{{ title }}</BreadcrumbPage>
       </BreadcrumbItem>
       <BreadcrumbSeparator class="hidden md:block" v-if="subtitle" />
       <BreadcrumbItem v-if="subtitle">

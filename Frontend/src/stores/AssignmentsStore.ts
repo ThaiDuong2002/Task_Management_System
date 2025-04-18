@@ -15,10 +15,12 @@ const useAssignmentsStore = defineStore("assignment", {
       this.list = this.list.filter((assignment) => assignment.id !== id);
     },
     addAssignment(assignment: Assignment) {
-      this.list.push(assignment);
+      this.list.unshift(assignment);
     },
     updateAssignment(assignment: Assignment) {
-      this.list = this.list.map((a) => (a.id === assignment.id ? assignment : a));
+      this.list = this.list.map((a) =>
+        a.id === assignment.id ? assignment : a
+      );
     },
   },
 });

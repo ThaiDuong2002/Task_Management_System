@@ -31,7 +31,7 @@ public class CreateAssignmentCommandHandler : IRequestHandler<CreateAssignmentCo
             command.Description,
             Status.Create(command.Status),
             Priority.Create(command.Priority),
-            command.DueDate
+            command.DueDate ?? DateTime.UtcNow + TimeSpan.FromHours(1)
         );
 
         var result = await _assignmentRepository.Create(assignment);

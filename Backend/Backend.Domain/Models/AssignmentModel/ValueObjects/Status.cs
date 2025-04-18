@@ -7,7 +7,7 @@ public class Status : ValueObject
     public static readonly Status Pending = new("Pending");
     public static readonly Status InProgress = new("In progress");
     public static readonly Status Completed = new("Completed");
-    public static readonly Status Default = Pending;
+    public static readonly Status Default = InProgress;
 
     private Status(string value)
     {
