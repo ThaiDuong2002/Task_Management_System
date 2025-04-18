@@ -23,7 +23,19 @@ class AssignmentService {
     input: IAssignmentsInput
   ): Promise<IAssignmentResponse[]> {
     try {
-      const response = await authInstance.post("/assignments", input);
+      const params = {
+        page: input.page,
+        limit: input.limit,
+        status: input.status,
+        priority: input.priority,
+        options: input.options,
+      };
+      const response = await authInstance.get(
+        `/assignments/list/${input.userId}`,
+        {
+          params: params,
+        }
+      );
 
       return response.data as IAssignmentResponse[];
     } catch (error: any) {
@@ -79,4 +91,4 @@ class AssignmentService {
   }
 }
 
-export default AssignmentService;
+export default AssignmentService.getInstance();

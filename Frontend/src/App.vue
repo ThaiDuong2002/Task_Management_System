@@ -16,7 +16,7 @@ const currentLayout = computed(() => {
 </script>
 
 <template>
-  <Toaster class="pointer-events-auto"/>
+  <Toaster class="pointer-events-auto" />
   <component :is="currentLayout">
     <router-view />
   </component>

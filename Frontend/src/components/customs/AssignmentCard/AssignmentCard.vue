@@ -17,9 +17,10 @@ import {
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { useSelectedAssignmentStore } from "@/stores";
-import type { IAssignmentResponse } from "@/utils/interfaces";
+import type { Assignment } from "@/utils/types";
+import { format } from "date-fns";
 import {
-  CalendarRange,
+  AlarmClock,
   Check,
   CheckCircle2,
   ListChecks,
@@ -29,7 +30,7 @@ import {
 } from "lucide-vue-next";
 
 defineProps<{
-  assignment: IAssignmentResponse;
+  assignment: Assignment;
   color: string;
 }>();
 
@@ -85,8 +86,10 @@ const handleCardClick = () => {
             <p class="text-base">{{ assignment.title }}</p>
           </div>
           <div class="flex flex-row items-center gap-2">
-            <CalendarRange :class="color" />
-            <p class="text-gray-500 text-sm">{{ assignment.dueDate }}</p>
+            <AlarmClock :class="color" />
+            <p class="text-gray-500 text-sm">
+              {{ format(assignment.dueDate, "HH:mm a") }}
+            </p>
           </div>
         </div>
       </Card>

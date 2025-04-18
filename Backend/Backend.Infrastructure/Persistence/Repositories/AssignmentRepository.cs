@@ -65,6 +65,11 @@ public class AssignmentRepository : IAssignmentRepository
 
         if (options == "overdue") query = query.Where(a => a.DueDate < DateTime.UtcNow);
 
+        if (options == "today")
+            query = query
+                .Where(a => a.DueDate.Date == DateTime.UtcNow.Date)
+                .Where(a => a.DueDate > DateTime.UtcNow);
+
         if (status is not null) query = query.Where(a => a.Status.Value == status);
 
         if (priority is not null) query = query.Where(a => a.Priority.Value == priority);
