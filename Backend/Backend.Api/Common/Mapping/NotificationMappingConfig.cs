@@ -13,6 +13,10 @@ public class NotificationMappingConfig : IRegister
             .Map(dest => dest.AssignmentId, src => src.AssignmentId.Value)
             .Map(dest => dest.Id, src => src.Id.Value)
             .Map(dest => dest.Type, src => src.Type.Value)
-            .Map(dest => dest.Message, src => src.Message);
+            .Map(dest => dest.Message, src => src.Message)
+            .Map(dest => dest.IsRead, src => src.IsRead)
+            .Map(dest => dest.ScheduledTime, src => src.ScheduledTime)
+            .Map(dest => dest.CreatedAt, src => src.CreatedAt)
+            .Map(dest => dest.UpdatedAt, src => src.UpdatedAt);
     }
 }

@@ -6,5 +6,8 @@ public record NotificationResponse(
     string AssignmentId,
     string Message,
     string Type,
-    DateTime CreatedAt
+    bool IsRead,
+    DateTime ScheduledTime,
+    DateTime CreatedAt,
+    DateTime UpdatedAt
 );

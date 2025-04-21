@@ -1,4 +1,4 @@
-import { authInstance } from "@/services/api/AxiosService";
+import { authInstance } from "@/services";
 import { useAuthStore } from "@/stores";
 import {
   UserNameAlreadyExistsException,

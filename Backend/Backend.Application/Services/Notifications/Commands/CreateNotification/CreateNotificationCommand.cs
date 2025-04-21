@@ -8,5 +8,6 @@ public record CreateNotificationCommand(
     Guid UserId,
     string AssignmentId,
     string Message,
-    string Type
+    string Type,
+    DateTime ScheduledTime
 ) : IRequest<ErrorOr<Notification>>;

@@ -1,4 +1,4 @@
-import { commonInstance } from "@/services/api/AxiosService";
+import { commonInstance } from "@/services";
 import {
   DuplicateEmailException,
   InvalidCredentialsException,

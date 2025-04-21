@@ -1,5 +1,5 @@
-﻿using Backend.Application.Notifications.Queries.GetNotifications;
-using Backend.Application.Services.Notifications.Commands.CreateNotification;
+﻿using Backend.Application.Services.Notifications.Commands.CreateNotification;
+using Backend.Application.Services.Notifications.Queries.GetNotifications;
 using Backend.Contracts.Notifications;
 using MapsterMapper;
 using MediatR;
@@ -20,11 +20,9 @@ public class NotificationsController : ApiController
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> ListNotifications(Guid id, [FromQuery] int page = 1, int limit = 10)
+    public async Task<IActionResult> ListNotifications(Guid id, [FromQuery] int? page, int? limit)
     {
-        var query = _mapper.Map<GetNotificationsQuery>((id, page, limit));
-
-        var result = await _mediator.Send(query);
+        var result = await _mediator.Send(new GetNotificationsQuery(id, page, limit));
 
         return result.Match(
             assignments => Ok(_mapper.Map<List<NotificationResponse>>(assignments)),

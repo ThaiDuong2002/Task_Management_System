@@ -8,6 +8,8 @@ export * from "@/utils/interfaces/IChangePasswordResponse";
 export * from "@/utils/interfaces/IErrorResponse";
 export * from "@/utils/interfaces/ILoginInput";
 export * from "@/utils/interfaces/ILoginResponse";
+export * from "@/utils/interfaces/INotificationInput";
+export * from "@/utils/interfaces/INotificationResponse";
 export * from "@/utils/interfaces/IRegisterInput";
 export * from "@/utils/interfaces/IToken";
 export * from "@/utils/interfaces/IUpdateAssignmentInput";

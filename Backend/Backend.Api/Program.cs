@@ -1,6 +1,7 @@
 using Backend.Api;
 using Backend.Application;
 using Backend.Infrastructure;
+using Backend.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,7 @@ builder.WebHost.ConfigureKestrel(options => options.Limits.MaxRequestBodySize = 
 var app = builder.Build();
 
 app.UseExceptionHandler("/error");
+app.MapHub<NotificationHub>("/hubs/notifications");
 
 app.UseCors("AllowAll");
 app.UseHttpsRedirection();

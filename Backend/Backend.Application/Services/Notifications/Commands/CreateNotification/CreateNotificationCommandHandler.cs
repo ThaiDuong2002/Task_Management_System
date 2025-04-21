@@ -19,17 +19,18 @@ public class CreateNotificationCommandHandler : IRequestHandler<CreateNotificati
     public async Task<ErrorOr<Notification>> Handle(CreateNotificationCommand command,
         CancellationToken cancellationToken)
     {
-        await Task.CompletedTask;
-
         var notification = Notification.Create(
             command.UserId,
             AssignmentId.Create(Guid.Parse(command.AssignmentId)),
             NotificationType.Create(command.Type),
             command.Message,
+            false,
+            command.ScheduledTime,
+            DateTime.UtcNow,
             DateTime.UtcNow
         );
 
-        _notificationRepository.Create(notification);
+        await _notificationRepository.Create(notification);
 
         return notification;
     }

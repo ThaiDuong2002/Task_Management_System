@@ -18,6 +18,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Quartz;
 using Serilog;
 
 namespace Backend.Infrastructure;
@@ -31,7 +32,8 @@ public static class DependencyInjection
             .AddPersistence(configuration)
             .AddAuth(configuration)
             .AddLogging()
-            .AddCloudinary(configuration);
+            .AddCloudinary(configuration)
+            .AddNotification();
 
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 
@@ -99,14 +101,14 @@ public static class DependencyInjection
         services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
         services.AddScoped<ISecurePasswordProvider, SecurePasswordProvider>();
+        services.AddSingleton<INotificationHub, NotificationHub>();
 
         services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-        }).AddJwtBearer(
-            options => options.TokenValidationParameters = new TokenValidationParameters
+        }).AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuer = true,
                 ValidateAudience = true,
@@ -117,6 +119,25 @@ public static class DependencyInjection
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret))
             }
         );
+
+        return services;
+    }
+
+    private static IServiceCollection AddNotification(this IServiceCollection services)
+    {
+        services.AddSignalR();
+        services.AddScoped<NotificationJob>();
+        services.AddQuartz(option =>
+        {
+            option.AddJob<NotificationJob>(job => job.WithIdentity("NotificationJob"));
+            option.AddTrigger(trigger =>
+                trigger.ForJob("NotificationJob")
+                    .WithIdentity("NotificationJobTrigger")
+                    .WithSimpleSchedule(x =>
+                        x.WithIntervalInMinutes(1).RepeatForever()));
+        });
+
+        services.AddQuartzHostedService(options => { options.WaitForJobsToComplete = true; });
 
         return services;
     }

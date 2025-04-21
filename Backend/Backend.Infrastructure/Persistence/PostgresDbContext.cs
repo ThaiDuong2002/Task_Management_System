@@ -1,5 +1,6 @@
 ﻿using Backend.Domain.Models.AssignmentModel;
 using Backend.Domain.Models.DependencyModel;
+using Backend.Domain.Models.NotificationModel;
 using Backend.Infrastructure.Authentication.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -15,6 +16,7 @@ public class PostgresDbContext : IdentityDbContext<UserIdentity, IdentityRole<Gu
 
     public DbSet<Assignment> Assignments { get; set; } = null!;
     public DbSet<Dependency> Dependencies { get; set; } = null!;
+    public DbSet<Notification> Notifications { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
